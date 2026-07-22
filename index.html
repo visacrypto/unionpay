@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnionPay on Solana</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0a0e1a;
+            color: #e0e6ff;
+        }
+        /* ===== HEADER / NAVIGATION ===== */
+        header {
+            background: rgba(10, 14, 26, 0.95);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #1e8bff;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e8bff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        nav a {
+            color: #b0c7ff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        nav a:hover, nav a.active {
+            background: rgba(30, 139, 255, 0.2);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(30, 139, 255, 0.3);
+        }
+        /* ===== MAIN CONTENT ===== */
+        .page {
+            display: none;
+            padding: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #1e8bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #b0c7ff;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #1e8bff, #0077e6);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(30, 139, 255, 0.4);
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(30, 139, 255, 0.7);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1e8bff;
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: #1e8bff;
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: rgba(20, 30, 60, 0.7);
+            backdrop-filter: blur(5px);
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid #1e3a6b;
+            transition: 0.3s;
+        }
+        .card:hover {
+            border-color: #1e8bff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .card i {
+            font-size: 2.5rem;
+            color: #1e8bff;
+            margin-bottom: 1rem;
+        }
+        img.preview-img {
+            max-width: 100%;
+            border-radius: 15px;
+            border: 1px solid #1e3a6b;
+            margin: 1rem 0;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #1e3a6b;
+            font-size: 0.9rem;
+        }
+        .footer-links a {
+            color: #b0c7ff;
+            text-decoration: none;
+            margin-right: 1.5rem;
+        }
+        .footer-links a:hover {
+            color: #fff;
+        }
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav {
+                justify-content: center;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .page {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header>
+    <div class="logo">
+        <img src="up-logo-primary.png" alt="UnionPay Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%2240%22%3E%3Crect width=%22100%22 height=%2240%22 fill=%22%231e8bff%22/%3E%3Ctext x=%225%22 y=%2225%22 fill=%22white%22 font-size=%2220%22 font-family=%22Arial%22%3EUnionPay%3C/text%3E%3C/svg%3E'">
+        <span>UnionPay</span>
+    </div>
+    <nav id="mainNav">
+        <a class="nav-link active" data-page="home">Главная</a>
+        <a class="nav-link" data-page="about">О токене</a>
+        <a class="nav-link" data-page="tokenomics">Токеномика</a>
+        <a class="nav-link" data-page="roadmap">Дорожная карта</a>
+        <a class="nav-link" data-page="ecosystem">Экосистема</a>
+        <a class="nav-link" data-page="buy">Как купить</a>
+        <a class="nav-link" data-page="news">Новости</a>
+        <a class="nav-link" data-page="contact">Контакты</a>
+    </nav>
+</header>
+
+<!-- ==================== PAGE 1: HOME ==================== -->
+<section class="page active" id="page-home">
+    <h1><i class="fas fa-credit-card"></i> UnionPay на Solana</h1>
+    <p style="font-size:1.4rem; margin-bottom:2rem;">Платёжный токен нового поколения. Мост между традиционными финансами и DeFi.</p>
+    <img src="up-hero-banner.jpg" alt="UnionPay Banner" class="preview-img" onerror="this.style.display='none'">
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin:2rem 0;">
+        <a href="https://www.geckoterminal.com/solana/pools/79rc1gaZXYfQTdpqjXWmZcRvmFhMx5GJRCBMtRAD4ngr" target="_blank" class="btn"><i class="fas fa-chart-line"></i> Смотреть пул</a>
+        <a href="#" class="btn btn-outline" onclick="navigateTo('buy')"><i class="fas fa-shopping-cart"></i> Купить токен</a>
+    </div>
+    <div class="card-grid">
+        <div class="card"><i class="fas fa-link"></i><h3>Мост с Visa</h3><p>Интеграция с платёжной системой Visa для реальных расчётов.</p></div>
+        <div class="card"><i class="fas fa-bolt"></i><h3>Скорость Solana</h3><p>Транзакции за доли секунды с комиссией &lt; $0.01.</p></div>
+        <div class="card"><i class="fas fa-globe"></i><h3>Международный</h3><p>Принимается в 183 странах через партнёрскую сеть.</p></div>
+    </div>
+    <div class="footer-links">
+        <span>© 2026 UnionPay on Solana</span>
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">Официальный сайт UnionPay</a></span>
+    </div>
+</section>
+
+<!-- ==================== PAGE 2: ABOUT ==================== -->
+<section class="page" id="page-about">
+    <h2>О токене UnionPay</h2>
+    <p><strong>Адрес контракта:</strong> <code style="background:#1a1f33;padding:0.3rem 0.8rem;border-radius:8px;">71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T</code></p>
+    <p style="margin:1.5rem 0;">UnionPay — это SPL-токен на блокчейне Solana, созданный для объединения традиционных платёжных систем с децентрализованными финансами. Токен обеспечивает мгновенные, дешёвые и безопасные транзакции по всему миру.</p>
+    <a href="https://solscan.io/token/71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T" target="_blank" class="btn"><i class="fas fa-eye"></i> Проверить на Solscan</a>
+    <div class="footer-links">
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay International</a></span>
+    </div>
+</section>
+
+<!-- ==================== PAGE 3: TOKENOMICS ==================== -->
+<section class="page" id="page-tokenomics">
+    <h2>Токеномика</h2>
+    <img src="up-tokenomics.png" alt="Tokenomics" class="preview-img" onerror="this.style.display='none'">
+    <p>Распределение токенов: экосистема, команда, маркетинг, ликвидность.</p>
+    <a href="https://coinmarketcap.com" target="_blank" class="btn"><i class="fas fa-coins"></i> Смотреть цену на CMC</a>
+    <div class="footer-links">
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay International</a></span>
+    </div>
+</section>
+
+<!-- ==================== PAGE 4: ROADMAP ==================== -->
+<section class="page" id="page-roadmap">
+    <h2>Дорожная карта</h2>
+    <img src="up-roadmap.png" alt="Roadmap" class="preview-img" onerror="this.style.display='none'">
+    <p>Этапы развития: запуск, листинг на DEX, интеграция с платежными шлюзами.</p>
+    <a href="https://www.dextools.io/app/en/solana/pair-explorer" target="_blank" class="btn"><i class="fas fa-chart-bar"></i> Аналитика на DEXTools</a>
+    <div class="footer-links">
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay International</a></span>
+    </div>
+</section>
+
+<!-- ==================== PAGE 5: ECOSYSTEM ==================== -->
+<section class="page" id="page-ecosystem">
+    <h2>Экосистема</h2>
+    <img src="up-ecosystem.png" alt="Ecosystem" class="preview-img" onerror="this.style.display='none'">
+    <p>Партнёры: Meteora, Raydium, Solana, Visa, UnionPay International.</p>
+    <a href="https://www.geckoterminal.com/solana/pools/7pyt9ppby7nXAe1wfJTg2dztXrMe5wohRrAxhfes5Kpc" target="_blank" class="btn"><i class="fas fa-pool"></i> Второй пул на GeckoTerminal</a>
+    <div class="footer-links">
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay International</a></span>
+    </div>
+</section>
+
+<!-- ==================== PAGE 6: HOW TO BUY ==================== -->
+<section class="page" id="page-buy">
+    <h2>Как купить UnionPay?</h2>
+    <ol style="margin:1.5rem 0; padding-left:1.5rem; font-size:1.1rem; line-height:2;">
+        <li>Установите кошелёк Phantom или Solflare.</li>
+        <li>Пополните кошелёк SOL или USDC.</li>
+        <li>Перейдите на <a href="https://raydium.io" target="_blank" style="color:#1e8bff;">Raydium</a> и найдите пул UnionPay.</li>
+        <li>Обменяйте SOL/USDC на UP (UnionPay).</li>
+    </ol>
+    <div class="video-container">
+        <video controls>
+            <source src="up-overview.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+    </div>
+    <a href="https://raydium.io" target="_blank" class="btn"><i class="fas fa-rocket"></i> Купить на Raydium</a>
+    <div class="footer-links">
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay International</a></span>
+    </div>
+</section>
+
+<!-- ==================== PAGE 7: NEWS ==================== -->
+<section class="page" id="page-news">
+    <h2>Новости и обновления</h2>
+    <div class="card-grid">
+        <div class="card"><i class="fas fa-newspaper"></i><h3>Листинг на Meteora</h3><p>Токен доступен для торговли с парой EURI.</p></div>
+        <div class="card"><i class="fas fa-video"></i><h3>Тизер-ролик</h3><p>Смотрите новый тизер проекта.</p></div>
+    </div>
+    <div class="video-container">
+        <video controls>
+            <source src="up-teaser.mp4" type="video/mp4">
+            Ваш браузер не поддерживает видео.
+        </video>
+    </div>
+    <a href="https://visa.com/newsroom" target="_blank" class="btn"><i class="fas fa-blog"></i> Читать новости Visa</a>
+    <div class="footer-links">
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay International</a></span>
+    </div>
+</section>
+
+<!-- ==================== PAGE 8: CONTACT ==================== -->
+<section class="page" id="page-contact">
+    <h2>Контакты</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:2rem; align-items:center;">
+        <div>
+            <p><i class="fab fa-telegram" style="color:#1e8bff;"></i> <a href="https://t.me/unionpay_solana" target="_blank" style="color:#fff;">t.me/unionpay_solana</a></p>
+            <p><i class="fas fa-envelope"></i> support@unionpay-solana.io</p>
+            <p><i class="fas fa-globe"></i> <a href="https://www.unionpayintl.com/en/" target="_blank" style="color:#fff;">unionpayintl.com</a></p>
+        </div>
+        <div>
+            <img src="up-qr-mockup.png" alt="QR Code" style="max-width:200px; border-radius:15px;" onerror="this.style.display='none'">
+        </div>
+    </div>
+    <div class="footer-links">
+        <span><a href="https://www.unionpayintl.com/en/" target="_blank">Перейти на официальный сайт UnionPay</a></span>
+    </div>
+</section>
+
+<!-- ==================== JAVASCRIPT: NAVIGATION ==================== -->
+<script>
+    // Переключение страниц
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+
+    function navigateTo(pageId) {
+        // Скрыть все страницы
+        pages.forEach(p => p.classList.remove('active'));
+        // Показать нужную
+        const target = document.getElementById('page-' + pageId);
+        if (target) target.classList.add('active');
+        // Обновить активную ссылку
+        navLinks.forEach(link => link.classList.remove('active'));
+        navLinks.forEach(link => {
+            if (link.dataset.page === pageId) link.classList.add('active');
+        });
+        // Прокрутка вверх
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const page = this.dataset.page;
+            if (page) navigateTo(page);
+        });
+    });
+
+    // Для ссылок из кнопок (например, "Купить токен")
+    window.navigateTo = navigateTo;
+
+    // Обработка внешних ссылок в контенте (чтобы не ломали навигацию)
+    document.querySelectorAll('a[target="_blank"]').forEach(a => {
+        // Оставляем как есть
+    });
+</script>
+
+</body>
+</html>
