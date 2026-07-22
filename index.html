@@ -1,50 +1,27 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UnionPay — платёжный токен на Solana</title>
-    <meta name="description" content="UnionPay (UP) — SPL-токен на блокчейне Solana. Мост между традиционными финансами и DeFi.">
-    <!-- Open Graph -->
-    <meta property="og:title" content="UnionPay — платёжный токен на Solana">
-    <meta property="og:description" content="Купите UP токен на Raydium. Адрес контракта: 71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T">
-    <meta property="og:image" content="up-og-image.jpg">
-    <link rel="icon" href="favicon.ico">
-    <!-- Fonts & Icons -->
+    <title>UnionPay — Crypto Card on Solana</title>
+    <meta name="description" content="UnionPay Virtual Crypto Card. Spend your UP tokens anywhere, anytime.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- TradingView Widget -->
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: #0a0b1a;
-            color: #e8edf5;
-            line-height: 1.6;
+            background: #0a0e1a;
+            color: #e0e6ff;
             overflow-x: hidden;
         }
-        /* ===== PARTICLE BACKGROUND ===== */
-        #particles-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        /* ===== GLASSMORPHISM ===== */
+        /* ===== GLASS ===== */
         .glass {
-            background: rgba(20, 30, 60, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
+            background: rgba(20, 30, 60, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
         }
         /* ===== HEADER ===== */
         header {
@@ -52,393 +29,220 @@
             top: 0;
             z-index: 100;
             padding: 1rem 2rem;
-            background: rgba(10, 11, 26, 0.85);
+            background: rgba(10, 14, 26, 0.88);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(30, 139, 255, 0.2);
+            border-bottom: 1px solid rgba(30, 139, 255, 0.15);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
         }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: #fff;
-            text-decoration: none;
-        }
-        .logo img {
-            height: 36px;
-            width: auto;
-        }
-        .logo span {
-            background: linear-gradient(90deg, #1e8bff, #00d4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        nav {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        nav a {
-            color: #a0b4e0;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: 0.3s;
-            position: relative;
-        }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #1e8bff;
-            transition: 0.3s;
-        }
-        nav a:hover::after {
-            width: 100%;
-        }
-        nav a:hover {
-            color: #fff;
-        }
-        .btn-wallet {
-            background: linear-gradient(135deg, #1e8bff, #0066cc);
-            padding: 0.6rem 1.4rem;
-            border-radius: 40px;
-            color: #fff !important;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 20px rgba(30, 139, 255, 0.3);
-        }
-        .btn-wallet:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 35px rgba(30, 139, 255, 0.6);
-        }
+        .logo { display:flex; align-items:center; gap:12px; font-weight:800; font-size:1.4rem; color:#fff; text-decoration:none; }
+        .logo img { height:36px; }
+        .logo span { background:linear-gradient(90deg,#1e8bff,#00d4ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        nav { display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap; }
+        nav a { color:#a0b4e0; text-decoration:none; font-size:0.95rem; font-weight:500; transition:0.3s; position:relative; cursor:pointer; }
+        nav a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#1e8bff; transition:0.3s; }
+        nav a:hover::after { width:100%; }
+        nav a:hover { color:#fff; }
+        .lang-select { display:flex; gap:4px; flex-wrap:wrap; }
+        .lang-btn { background:transparent; border:none; color:#8899bb; font-size:0.7rem; font-weight:600; cursor:pointer; padding:4px 8px; border-radius:6px; transition:0.3s; }
+        .lang-btn:hover, .lang-btn.active { background:#1e8bff; color:#fff; }
+        .btn-wallet { background:linear-gradient(135deg,#1e8bff,#0066cc); padding:0.6rem 1.4rem; border-radius:40px; color:#fff !important; border:none; font-weight:600; cursor:pointer; transition:0.3s; box-shadow:0 0 20px rgba(30,139,255,0.3); }
+        .btn-wallet:hover { transform:scale(1.05); box-shadow:0 0 35px rgba(30,139,255,0.6); }
         /* ===== HERO ===== */
         .hero {
-            position: relative;
-            z-index: 1;
-            padding: 6rem 2rem 4rem;
-            max-width: 1300px;
+            padding: 4rem 2rem 3rem;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
         }
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #ffffff, #1e8bff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: #b0c4e8;
-            margin: 1.5rem 0;
-        }
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
+        .hero h1 { font-size:3.8rem; font-weight:800; line-height:1.1; background:linear-gradient(135deg,#fff,#1e8bff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .hero p { font-size:1.2rem; color:#b0c4e8; margin:1.5rem 0; }
+        .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; }
         .btn-primary {
-            background: linear-gradient(135deg, #1e8bff, #0077e6);
-            padding: 0.9rem 2.5rem;
-            border-radius: 50px;
-            color: #fff;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 30px rgba(30, 139, 255, 0.4);
+            background:linear-gradient(135deg,#1e8bff,#0077e6);
+            padding:0.9rem 2.5rem;
+            border-radius:50px;
+            color:#fff;
+            font-weight:700;
+            border:none;
+            cursor:pointer;
+            transition:0.3s;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            box-shadow:0 0 30px rgba(30,139,255,0.4);
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 50px rgba(30, 139, 255, 0.7);
-        }
+        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 0 50px rgba(30,139,255,0.7); }
         .btn-secondary {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 0.9rem 2.5rem;
-            border-radius: 50px;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            background:rgba(255,255,255,0.05);
+            backdrop-filter:blur(5px);
+            border:1px solid rgba(255,255,255,0.12);
+            padding:0.9rem 2.5rem;
+            border-radius:50px;
+            color:#fff;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
         }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.12);
-            border-color: #1e8bff;
+        .btn-secondary:hover { background:rgba(255,255,255,0.1); border-color:#1e8bff; }
+        /* ===== 3D CARD ===== */
+        #card-3d-container {
+            width:100%;
+            height:420px;
+            border-radius:28px;
+            overflow:hidden;
+            background:radial-gradient(circle at 30% 30%, #0a1a4a, #050810);
+            box-shadow:0 0 80px rgba(30,139,255,0.12);
+            position:relative;
         }
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
+        /* ===== TICKER ===== */
+        .ticker {
+            background:rgba(20,30,60,0.5);
+            backdrop-filter:blur(8px);
+            border-top:1px solid rgba(30,139,255,0.1);
+            border-bottom:1px solid rgba(30,139,255,0.1);
+            padding:0.6rem 0;
+            overflow:hidden;
+            white-space:nowrap;
+            position:relative;
+            z-index:1;
         }
-        .hero-stats .stat {
-            background: rgba(20, 30, 60, 0.5);
-            backdrop-filter: blur(5px);
-            padding: 1rem;
-            border-radius: 16px;
-            text-align: center;
-            border: 1px solid rgba(30, 139, 255, 0.2);
+        .ticker-track {
+            display:inline-block;
+            animation: scrollTicker 30s linear infinite;
         }
-        .hero-stats .stat .number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1e8bff;
+        .ticker-track span { margin:0 2rem; color:#b0c4e8; font-size:0.9rem; }
+        .ticker-track .price { color:#00d4ff; font-weight:600; }
+        @keyframes scrollTicker { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
+        /* ===== CARD BUILDER ===== */
+        .card-builder {
+            max-width:1300px;
+            margin:3rem auto;
+            padding:0 2rem;
+            position:relative;
+            z-index:1;
         }
-        .hero-stats .stat .label {
-            font-size: 0.8rem;
-            color: #8899bb;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .builder-grid {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:3rem;
+            align-items:start;
         }
-        /* ===== 3D TOKEN (Three.js placeholder) ===== */
-        #token-3d-container {
-            width: 100%;
-            height: 400px;
-            border-radius: 24px;
-            overflow: hidden;
-            background: radial-gradient(circle at center, #0a1a3a, #050810);
-            box-shadow: 0 0 60px rgba(30, 139, 255, 0.15);
-            position: relative;
+        .builder-preview {
+            background:linear-gradient(135deg,#0a1a4a,#0d2040);
+            border-radius:28px;
+            padding:2rem;
+            border:1px solid rgba(30,139,255,0.15);
+            text-align:center;
         }
-        #token-3d-container canvas {
-            width: 100% !important;
-            height: 100% !important;
-            display: block;
+        .builder-preview .card-image {
+            width:100%;
+            max-width:360px;
+            border-radius:20px;
+            box-shadow:0 20px 60px rgba(0,0,0,0.6);
+            transition:0.3s;
         }
-        /* ===== WIDGETS ===== */
-        .widgets-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            max-width: 1300px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
+        .builder-controls {
+            display:grid;
+            gap:1.5rem;
         }
-        .widget {
-            padding: 1.5rem;
-            border-radius: 20px;
-            background: rgba(20, 30, 60, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.05);
+        .builder-controls label { font-weight:600; color:#b0c4e8; display:block; margin-bottom:0.4rem; }
+        .builder-controls input, .builder-controls select {
+            width:100%;
+            padding:0.8rem 1.2rem;
+            background:rgba(20,30,60,0.5);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:14px;
+            color:#fff;
+            font-size:1rem;
+            transition:0.3s;
         }
-        .widget h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #b0c4e8;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .builder-controls input:focus, .builder-controls select:focus {
+            border-color:#1e8bff;
+            outline:none;
+            box-shadow:0 0 25px rgba(30,139,255,0.15);
         }
-        .widget h3 i {
-            color: #1e8bff;
+        .builder-controls .btn-create {
+            width:100%;
+            padding:1rem;
+            background:linear-gradient(135deg,#1e8bff,#0077e6);
+            border:none;
+            border-radius:16px;
+            color:#fff;
+            font-weight:700;
+            font-size:1.1rem;
+            cursor:pointer;
+            transition:0.3s;
+            box-shadow:0 0 30px rgba(30,139,255,0.3);
         }
-        /* ===== LIVE TRANSACTIONS ===== */
-        .tx-list {
-            max-height: 200px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #1e8bff transparent;
+        .builder-controls .btn-create:hover { transform:scale(1.02); box-shadow:0 0 50px rgba(30,139,255,0.5); }
+        /* ===== FEATURES ===== */
+        .features {
+            max-width:1300px;
+            margin:3rem auto;
+            padding:0 2rem;
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:1.5rem;
+            position:relative;
+            z-index:1;
         }
-        .tx-list::-webkit-scrollbar {
-            width: 4px;
+        .feature-card {
+            padding:1.8rem;
+            border-radius:20px;
+            background:rgba(20,30,60,0.3);
+            backdrop-filter:blur(8px);
+            border:1px solid rgba(255,255,255,0.04);
+            text-align:center;
+            transition:0.3s;
         }
-        .tx-list::-webkit-scrollbar-thumb {
-            background: #1e8bff;
-            border-radius: 10px;
-        }
-        .tx-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            font-size: 0.9rem;
-            color: #a0b4e0;
-        }
-        .tx-item .hash {
-            color: #1e8bff;
-            font-family: monospace;
-        }
-        .tx-item .amount {
-            font-weight: 600;
-            color: #00d4ff;
-        }
-        /* ===== ROADMAP ===== */
-        .roadmap {
-            max-width: 1300px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        .roadmap-timeline {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            padding: 2rem 0;
-        }
-        .roadmap-timeline::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #1e8bff, #00d4ff, #1e8bff);
-            transform: translateY(-50%);
-        }
-        .roadmap-item {
-            background: rgba(20, 30, 60, 0.5);
-            backdrop-filter: blur(5px);
-            padding: 1.5rem;
-            border-radius: 16px;
-            width: 22%;
-            border: 1px solid rgba(30, 139, 255, 0.15);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            transition: 0.3s;
-        }
-        .roadmap-item:hover {
-            border-color: #1e8bff;
-            transform: translateY(-5px);
-        }
-        .roadmap-item .phase {
-            font-weight: 700;
-            color: #1e8bff;
-            font-size: 1.2rem;
-        }
-        .roadmap-item .desc {
-            font-size: 0.9rem;
-            color: #a0b4e0;
-            margin-top: 0.5rem;
-        }
-        /* ===== FAQ ===== */
-        .faq-section {
-            max-width: 900px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        .faq-item {
-            background: rgba(20, 30, 60, 0.3);
-            backdrop-filter: blur(5px);
-            border-radius: 16px;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(255,255,255,0.05);
-            overflow: hidden;
-        }
-        .faq-question {
-            padding: 1.2rem 1.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: 0.3s;
-        }
-        .faq-question:hover {
-            background: rgba(30, 139, 255, 0.05);
-        }
-        .faq-question i {
-            transition: 0.3s;
-        }
-        .faq-answer {
-            padding: 0 1.8rem 1.2rem;
-            color: #a0b4e0;
-            display: none;
-        }
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
+        .feature-card:hover { border-color:#1e8bff; transform:translateY(-5px); }
+        .feature-card i { font-size:2.5rem; color:#1e8bff; margin-bottom:1rem; }
+        .feature-card h4 { color:#fff; margin-bottom:0.5rem; }
+        .feature-card p { color:#8899bb; font-size:0.9rem; }
         /* ===== FOOTER ===== */
         footer {
-            position: relative;
-            z-index: 1;
-            padding: 3rem 2rem 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            max-width: 1300px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 2rem;
+            position:relative;
+            z-index:1;
+            padding:3rem 2rem 1.5rem;
+            border-top:1px solid rgba(255,255,255,0.05);
+            max-width:1300px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns:2fr 1fr 1fr 1fr;
+            gap:2rem;
         }
-        footer h4 {
-            color: #fff;
-            margin-bottom: 0.8rem;
-        }
-        footer a {
-            color: #8899bb;
-            text-decoration: none;
-            display: block;
-            padding: 0.3rem 0;
-            transition: 0.3s;
-        }
-        footer a:hover {
-            color: #1e8bff;
-        }
-        .footer-bottom {
-            grid-column: 1 / -1;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 1.5rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #667799;
-        }
+        footer h4 { color:#fff; margin-bottom:0.8rem; }
+        footer a { color:#8899bb; text-decoration:none; display:block; padding:0.3rem 0; transition:0.3s; }
+        footer a:hover { color:#1e8bff; }
+        .footer-bottom { grid-column:1/-1; border-top:1px solid rgba(255,255,255,0.05); padding-top:1.5rem; text-align:center; font-size:0.85rem; color:#667799; }
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .hero { grid-template-columns: 1fr; text-align: center; }
-            .hero-actions { justify-content: center; }
-            .widgets-grid { grid-template-columns: 1fr; }
-            .roadmap-timeline { flex-wrap: wrap; gap: 1rem; }
-            .roadmap-item { width: 45%; }
-            footer { grid-template-columns: 1fr 1fr; }
+        @media (max-width:1024px) {
+            .hero { grid-template-columns:1fr; text-align:center; }
+            .hero-actions { justify-content:center; }
+            .builder-grid { grid-template-columns:1fr; }
+            .features { grid-template-columns:1fr 1fr; }
+            footer { grid-template-columns:1fr 1fr; }
         }
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero-stats { grid-template-columns: 1fr; }
-            .roadmap-item { width: 100%; }
-            footer { grid-template-columns: 1fr; }
-            nav { gap: 0.8rem; }
+        @media (max-width:600px) {
+            .hero h1 { font-size:2.2rem; }
+            .features { grid-template-columns:1fr; }
+            footer { grid-template-columns:1fr; }
+            nav { gap:0.8rem; }
         }
     </style>
 </head>
 <body>
-
-<!-- ===== PARTICLES ===== -->
-<canvas id="particles-canvas"></canvas>
 
 <!-- ===== HEADER ===== -->
 <header>
@@ -446,118 +250,119 @@
         <img src="up-logo-primary.png" alt="UnionPay" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%231e8bff%22/%3E%3Ctext x=%228%22 y=%2228%22 fill=%22white%22 font-size=%2220%22 font-family=%22Arial%22%3EUP%3C/text%3E%3C/svg%3E'">
         <span>UnionPay</span>
     </a>
-    <nav>
-        <a href="#" onclick="navigate('home')">Главная</a>
-        <a href="#" onclick="navigate('tokenomics')">Токеномика</a>
-        <a href="#" onclick="navigate('roadmap')">Roadmap</a>
-        <a href="#" onclick="navigate('faq')">FAQ</a>
-        <button class="btn-wallet" onclick="connectWallet()">
-            <i class="fas fa-wallet"></i> Подключить
-        </button>
-    </nav>
+    <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+        <nav>
+            <a href="#" onclick="navigate('home')">Cards</a>
+            <a href="#" onclick="navigate('builder')">Create Card</a>
+            <a href="#" onclick="navigate('features')">Features</a>
+            <a href="https://solscan.io/token/71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T" target="_blank">Contract</a>
+        </nav>
+        <div class="lang-select">
+            <button class="lang-btn active" onclick="setLang('en')">EN</button>
+            <button class="lang-btn" onclick="setLang('ru')">RU</button>
+            <button class="lang-btn" onclick="setLang('es')">ES</button>
+            <button class="lang-btn" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" onclick="setLang('de')">DE</button>
+            <button class="lang-btn" onclick="setLang('zh')">ZH</button>
+            <button class="lang-btn" onclick="setLang('ja')">JA</button>
+            <button class="lang-btn" onclick="setLang('ar')">AR</button>
+        </div>
+        <button class="btn-wallet" onclick="connectWallet()"><i class="fas fa-wallet"></i> Connect</button>
+    </div>
 </header>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker">
+    <div class="ticker-track">
+        <span>UP/USD <span class="price" id="tickerPrice">$0.1842</span></span>
+        <span>24h Vol <span class="price" id="tickerVol">$2.4M</span></span>
+        <span>Holders <span class="price" id="tickerHolders">4,281</span></span>
+        <span>✦</span>
+        <span>UP/USD <span class="price">$0.1842</span></span>
+        <span>24h Vol <span class="price">$2.4M</span></span>
+        <span>Holders <span class="price">4,281</span></span>
+        <span>✦</span>
+        <span>UP/USD <span class="price">$0.1842</span></span>
+        <span>24h Vol <span class="price">$2.4M</span></span>
+        <span>Holders <span class="price">4,281</span></span>
+        <span>✦</span>
+        <span>UP/USD <span class="price">$0.1842</span></span>
+        <span>24h Vol <span class="price">$2.4M</span></span>
+        <span>Holders <span class="price">4,281</span></span>
+        <span>✦</span>
+    </div>
+</div>
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="section-home">
     <div>
-        <h1>Платёжный токен<br>нового поколения</h1>
-        <p>UnionPay (UP) — SPL-токен на Solana. Мост между традиционными финансами и DeFi. Мгновенные, дешёвые и безопасные транзакции по всему миру.</p>
+        <h1>Spend Your Crypto<br>Anywhere</h1>
+        <p>UnionPay Virtual Cards on Solana. Generate a Visa/Mastercard-style card in seconds and spend your UP tokens at millions of merchants worldwide.</p>
         <div class="hero-actions">
-            <a href="https://raydium.io" target="_blank" class="btn-primary">
-                <i class="fas fa-rocket"></i> Купить на Raydium
-            </a>
-            <a href="https://solscan.io/token/71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T" target="_blank" class="btn-secondary">
-                <i class="fas fa-eye"></i> Контракт
-            </a>
+            <a href="#" class="btn-primary" onclick="navigate('builder')"><i class="fas fa-credit-card"></i> Create Your Card</a>
+            <a href="https://raydium.io" target="_blank" class="btn-secondary"><i class="fas fa-rocket"></i> Buy UP on Raydium</a>
         </div>
-        <div class="hero-stats">
-            <div class="stat"><div class="number" id="priceUsd">$0.00</div><div class="label">Цена</div></div>
-            <div class="stat"><div class="number" id="volume24h">$0</div><div class="label">Объём 24ч</div></div>
-            <div class="stat"><div class="number" id="holders">0</div><div class="label">Холдеры</div></div>
+        <div style="display:flex; gap:2rem; margin-top:2rem; flex-wrap:wrap;">
+            <div><span style="color:#1e8bff;font-weight:700;">0.001 SOL</span><br><span style="color:#8899bb;font-size:0.8rem;">per transaction</span></div>
+            <div><span style="color:#1e8bff;font-weight:700;">183+</span><br><span style="color:#8899bb;font-size:0.8rem;">countries supported</span></div>
+            <div><span style="color:#1e8bff;font-weight:700;">Instant</span><br><span style="color:#8899bb;font-size:0.8rem;">card generation</span></div>
         </div>
     </div>
-    <div id="token-3d-container">
-        <!-- Three.js будет рендерить здесь -->
+    <div id="card-3d-container">
+        <!-- Three.js 3D Card -->
     </div>
 </section>
 
-<!-- ===== WIDGETS ===== -->
-<div class="widgets-grid">
-    <div class="widget">
-        <h3><i class="fas fa-chart-line"></i> График цены (TradingView)</h3>
-        <div id="tradingview-widget" style="height:300px;"></div>
-    </div>
-    <div class="widget">
-        <h3><i class="fas fa-clock"></i> Последние транзакции</h3>
-        <div class="tx-list" id="txList">
-            <div class="tx-item"><span class="hash">0x7f3a...b1c2</span><span class="amount">+1,200 UP</span></div>
-            <div class="tx-item"><span class="hash">0x9d4e...e8f1</span><span class="amount">+500 UP</span></div>
-            <div class="tx-item"><span class="hash">0x2b8c...a7d9</span><span class="amount">+3,400 UP</span></div>
-            <div class="tx-item"><span class="hash">0x5f1a...c3b8</span><span class="amount">+750 UP</span></div>
-            <div class="tx-item"><span class="hash">0x8e2d...f4c7</span><span class="amount">+2,100 UP</span></div>
+<!-- ===== CARD BUILDER ===== -->
+<section class="card-builder" id="section-builder">
+    <h2 style="font-size:2.5rem; margin-bottom:2rem;">Create Your Virtual Card</h2>
+    <div class="builder-grid">
+        <div class="builder-preview">
+            <h3 style="color:#b0c4e8; margin-bottom:1rem;">Preview</h3>
+            <img src="up-hero-banner.jpg" alt="Card Preview" class="card-image" id="cardPreview" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22360%22 height=%22220%22%3E%3Crect width=%22360%22 height=%22220%22 fill=%22%231e3a6b%22 rx=%2220%22/%3E%3Ctext x=%2220%22 y=%2240%22 fill=%22white%22 font-size=%2224%22 font-family=%22Arial%22%3EUnionPay%3C/text%3E%3Ctext x=%2220%22 y=%22180%22 fill=%22%2388aadd%22 font-size=%2218%22 font-family=%22monospace%22%3E••••  ••••  ••••  1234%3C/text%3E%3C/svg%3E'">
+            <div style="display:flex; justify-content:space-between; margin-top:1rem; color:#8899bb; font-size:0.9rem;">
+                <span id="cardLimitDisplay">Limit: $1,000</span>
+                <span id="cardColorDisplay">Color: Blue</span>
+            </div>
         </div>
-    </div>
-</div>
-
-<!-- ===== ROADMAP ===== -->
-<section class="roadmap" id="section-roadmap">
-    <h2 style="font-size:2.5rem; margin-bottom:2rem;">Дорожная карта</h2>
-    <div class="roadmap-timeline">
-        <div class="roadmap-item"><div class="phase">Q1 2026</div><div class="desc">Запуск токена, листинг на Meteora</div></div>
-        <div class="roadmap-item"><div class="phase">Q2 2026</div><div class="desc">Интеграция с Raydium, старт маркетинга</div></div>
-        <div class="roadmap-item"><div class="phase">Q3 2026</div><div class="desc">Платёжные шлюзы, партнёрство с Visa</div></div>
-        <div class="roadmap-item"><div class="phase">Q4 2026</div><div class="desc">Кросс-чейн мосты, DeFi-продукты</div></div>
-    </div>
-</section>
-
-<!-- ===== TOKENOMICS ===== -->
-<section class="roadmap" id="section-tokenomics" style="margin-top:0;">
-    <h2 style="font-size:2.5rem; margin-bottom:2rem;">Токеномика</h2>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:2rem;">
-        <div style="background:rgba(20,30,60,0.3); backdrop-filter:blur(10px); border-radius:20px; padding:2rem; border:1px solid rgba(255,255,255,0.05);">
-            <img src="up-tokenomics.png" alt="Tokenomics" style="width:100%; border-radius:16px;" onerror="this.style.display='none'">
-        </div>
-        <div style="background:rgba(20,30,60,0.3); backdrop-filter:blur(10px); border-radius:20px; padding:2rem; border:1px solid rgba(255,255,255,0.05);">
-            <h3>Распределение</h3>
-            <ul style="list-style:none; margin-top:1rem;">
-                <li style="display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span>🌐 Экосистема</span> <span style="color:#1e8bff;">40%</span></li>
-                <li style="display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span>👥 Команда</span> <span style="color:#1e8bff;">20%</span></li>
-                <li style="display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span>📢 Маркетинг</span> <span style="color:#1e8bff;">15%</span></li>
-                <li style="display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span>💧 Ликвидность</span> <span style="color:#1e8bff;">25%</span></li>
-            </ul>
-            <a href="https://coinmarketcap.com" target="_blank" class="btn-primary" style="margin-top:1.5rem; display:inline-block; padding:0.7rem 2rem; font-size:0.9rem;">
-                <i class="fas fa-coins"></i> Смотреть на CMC
-            </a>
+        <div class="builder-controls">
+            <div>
+                <label><i class="fas fa-dollar-sign"></i> Daily Spending Limit</label>
+                <input type="range" id="cardLimit" min="100" max="10000" step="100" value="1000" oninput="updateCardPreview()">
+                <span id="limitValue" style="color:#1e8bff;font-weight:700;">$1,000</span>
+            </div>
+            <div>
+                <label><i class="fas fa-palette"></i> Card Color</label>
+                <select id="cardColor" onchange="updateCardPreview()">
+                    <option value="blue">Classic Blue</option>
+                    <option value="black">Black Edition</option>
+                    <option value="gold">Gold Premium</option>
+                    <option value="cyan">Crypto Cyan</option>
+                </select>
+            </div>
+            <div>
+                <label><i class="fas fa-lock"></i> Freeze/Unfreeze</label>
+                <button id="freezeBtn" onclick="toggleFreeze()" style="padding:0.8rem 1.5rem; background:rgba(255,50,50,0.2); border:1px solid #ff4444; border-radius:14px; color:#ff6666; font-weight:600; cursor:pointer; width:100%;">🔒 Freeze Card</button>
+            </div>
+            <button class="btn-create" onclick="createCard()"><i class="fas fa-magic"></i> Generate Virtual Card</button>
+            <p style="color:#667799; font-size:0.8rem; text-align:center;">No KYC required for small amounts. 0.001 SOL fee applies.</p>
         </div>
     </div>
 </section>
 
-<!-- ===== FAQ ===== -->
-<section class="faq-section" id="section-faq">
-    <h2 style="font-size:2.5rem; margin-bottom:2rem;">Часто задаваемые вопросы</h2>
-    <div class="faq-item active">
-        <div class="faq-question" onclick="toggleFaq(this)">Что такое UnionPay (UP)? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer">UnionPay — это SPL-токен на блокчейне Solana, созданный для объединения традиционных платёжных систем с децентрализованными финансами.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">Где купить UP? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer">Токен доступен на децентрализованных биржах Raydium и Meteora. Используйте кошелёк Phantom или Solflare.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">Какой адрес контракта? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer"><code style="background:#1a1f33;padding:0.3rem 0.8rem;border-radius:8px;color:#1e8bff;">71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T</code></div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">Какие комиссии? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer">Транзакции на Solana стоят менее $0.01, что делает UP идеальным для микроплатежей.</div>
-    </div>
+<!-- ===== FEATURES ===== -->
+<section class="features" id="section-features">
+    <div class="feature-card"><i class="fas fa-bolt"></i><h4>Instant Issuance</h4><p>Generate your card in seconds, not days.</p></div>
+    <div class="feature-card"><i class="fas fa-globe"></i><h4>Global Acceptance</h4><p>Use at 100M+ merchants worldwide.</p></div>
+    <div class="feature-card"><i class="fas fa-shield-alt"></i><h4>Secure & Private</h4><p>Your keys, your crypto. No personal data required.</p></div>
+    <div class="feature-card"><i class="fas fa-chart-line"></i><h4>Real-time Spend</h4><p>Convert UP to fiat instantly at checkout.</p></div>
 </section>
 
 <!-- ===== FOOTER ===== -->
 <footer>
     <div>
-        <img src="up-logo-white.png" alt="UnionPay" style="height:40px; margin-bottom:1rem;" onerror="this.style.display='none'">
-        <p style="color:#8899bb;">Платёжный токен на Solana. Мост между традиционными финансами и DeFi.</p>
+        <img src="up-logo-white.png" alt="UnionPay" style="height:36px; margin-bottom:1rem;" onerror="this.style.display='none'">
+        <p style="color:#8899bb;">The easiest way to spend your crypto. Powered by Solana.</p>
         <div style="display:flex; gap:1rem; margin-top:1rem;">
             <a href="https://t.me/unionpay_solana" target="_blank"><i class="fab fa-telegram fa-lg"></i></a>
             <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
@@ -565,307 +370,262 @@
         </div>
     </div>
     <div>
-        <h4>Ресурсы</h4>
+        <h4>Resources</h4>
         <a href="https://raydium.io" target="_blank">Raydium</a>
         <a href="https://www.geckoterminal.com/solana/pools/79rc1gaZXYfQTdpqjXWmZcRvmFhMx5GJRCBMtRAD4ngr" target="_blank">GeckoTerminal</a>
         <a href="https://solscan.io/token/71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T" target="_blank">Solscan</a>
     </div>
     <div>
-        <h4>Компания</h4>
+        <h4>Company</h4>
         <a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay Intl</a>
-        <a href="#">О нас</a>
-        <a href="#">Карьера</a>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
     </div>
     <div>
-        <h4>Поддержка</h4>
+        <h4>Support</h4>
         <a href="#">FAQ</a>
-        <a href="#">Контакты</a>
+        <a href="#">Contact</a>
         <a href="mailto:support@unionpay-solana.io">Email</a>
     </div>
     <div class="footer-bottom">
-        © 2026 UnionPay on Solana. Все права защищены.
+        © 2026 UnionPay on Solana. All rights reserved. | Contract: <span style="font-family:monospace;color:#1e8bff;">71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T</span>
     </div>
 </footer>
 
 <!-- ===== JAVASCRIPT ===== -->
 <script>
-    // ===== PARTICLES =====
-    (function() {
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height, particles = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 0.3;
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.radius = Math.random() * 1.5 + 0.5;
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(30, 139, 255, ${this.opacity})`;
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < 150; i++) particles.push(new Particle());
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            // Соединяем близкие частицы
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(30, 139, 255, ${0.08 * (1 - dist/120)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
-    })();
-
-    // ===== NAVIGATION =====
-    function navigate(section) {
-        document.querySelectorAll('[id^="section-"]').forEach(el => el.style.display = 'none');
-        const target = document.getElementById('section-' + section);
-        if (target) {
-            target.style.display = 'block';
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        // Показать все секции, если home
-        if (section === 'home') {
-            document.querySelectorAll('[id^="section-"]').forEach(el => el.style.display = '');
-        }
-    }
-    // По умолчанию все секции видны
-
-    // ===== FAQ =====
-    function toggleFaq(el) {
-        const item = el.closest('.faq-item');
-        const isActive = item.classList.contains('active');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-        if (!isActive) item.classList.add('active');
+    // ===== LANGUAGE SWITCHER =====
+    function setLang(lang) {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        // В реальном проекте здесь подключается i18n
+        alert('Language switched to: ' + lang.toUpperCase() + ' (demo)');
     }
 
     // ===== WALLET CONNECT =====
     function connectWallet() {
-        alert('Подключение к Phantom/Solflare...\n(в продакшене используйте @solana/wallet-adapter)');
+        alert('🔗 Connect to Phantom / Solflare wallet\n(Production: use @solana/wallet-adapter)');
     }
 
-    // ===== TRADINGVIEW WIDGET =====
-    (function() {
-        if (typeof TradingView !== 'undefined') {
-            new TradingView.widget({
-                "container_id": "tradingview-widget",
-                "symbol": "SOLUSD",
-                "interval": "15",
-                "timezone": "Etc/UTC",
-                "theme": "dark",
-                "style": "1",
-                "locale": "ru",
-                "toolbar_bg": "#0a0b1a",
-                "enable_publishing": false,
-                "allow_symbol_change": true,
-                "hide_side_toolbar": false,
-                "details": true,
-                "hotlist": true,
-                "calendar": false,
-                "width": "100%",
-                "height": "100%"
-            });
+    // ===== CARD BUILDER =====
+    function updateCardPreview() {
+        const limit = document.getElementById('cardLimit').value;
+        document.getElementById('limitValue').textContent = '$' + Number(limit).toLocaleString();
+        document.getElementById('cardLimitDisplay').textContent = 'Limit: $' + Number(limit).toLocaleString();
+
+        const color = document.getElementById('cardColor').value;
+        const colorMap = { blue:'#1a3a7a', black:'#1a1a1a', gold:'#c9a03a', cyan:'#0a6a7a' };
+        const preview = document.getElementById('cardPreview');
+        preview.style.borderColor = colorMap[color] || '#1e3a6b';
+        document.getElementById('cardColorDisplay').textContent = 'Color: ' + color.charAt(0).toUpperCase() + color.slice(1);
+    }
+
+    let frozen = false;
+    function toggleFreeze() {
+        frozen = !frozen;
+        const btn = document.getElementById('freezeBtn');
+        if (frozen) {
+            btn.textContent = '🔓 Unfreeze Card';
+            btn.style.background = 'rgba(50,255,50,0.15)';
+            btn.style.borderColor = '#44ff44';
+            btn.style.color = '#66ff66';
+            alert('❄️ Card frozen. No transactions allowed.');
         } else {
-            document.getElementById('tradingview-widget').innerHTML = '<p style="color:#8899bb; padding:2rem; text-align:center;">Загрузка графика...</p>';
+            btn.textContent = '🔒 Freeze Card';
+            btn.style.background = 'rgba(255,50,50,0.2)';
+            btn.style.borderColor = '#ff4444';
+            btn.style.color = '#ff6666';
+            alert('🔥 Card unfrozen. Ready to spend.');
         }
-    })();
-
-    // ===== FAKE STATS UPDATE =====
-    function updateStats() {
-        const price = (Math.random() * 0.5 + 0.1).toFixed(4);
-        const volume = (Math.random() * 500000 + 100000).toFixed(0);
-        const holders = Math.floor(Math.random() * 5000 + 1000);
-        document.getElementById('priceUsd').textContent = '$' + price;
-        document.getElementById('volume24h').textContent = '$' + volume;
-        document.getElementById('holders').textContent = holders;
     }
-    setInterval(updateStats, 5000);
-    updateStats();
 
-    // ===== FAKE TRANSACTIONS =====
-    function addTransaction() {
-        const list = document.getElementById('txList');
-        const hash = '0x' + Array.from({length: 8}, () => Math.floor(Math.random()*16).toString(16)).join('');
-        const amount = (Math.random() * 5000 + 100).toFixed(0);
-        const item = document.createElement('div');
-        item.className = 'tx-item';
-        item.innerHTML = `<span class="hash">${hash}...${Array.from({length: 4}, () => Math.floor(Math.random()*16).toString(16)).join('')}</span><span class="amount">+${amount} UP</span>`;
-        list.prepend(item);
-        if (list.children.length > 10) list.removeChild(list.lastChild);
+    function createCard() {
+        const limit = document.getElementById('cardLimit').value;
+        const color = document.getElementById('cardColor').value;
+        const cardNumber = 'UP-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        alert('✅ Virtual Card Created!\n\nCard: ' + cardNumber + '\nLimit: $' + Number(limit).toLocaleString() + '\nColor: ' + color + '\nNetwork: Solana\n\nSpend your UP tokens anywhere!');
     }
-    setInterval(addTransaction, 8000);
+
+    // ===== TICKER UPDATE =====
+    function updateTicker() {
+        const price = (0.15 + Math.random() * 0.08).toFixed(4);
+        const vol = (1.2 + Math.random() * 2.5).toFixed(1);
+        const holders = Math.floor(4000 + Math.random() * 1000);
+        document.getElementById('tickerPrice').textContent = '$' + price;
+        document.getElementById('tickerVol').textContent = '$' + vol + 'M';
+        document.getElementById('tickerHolders').textContent = holders;
+    }
+    setInterval(updateTicker, 4000);
+    updateTicker();
+
+    // ===== NAVIGATION =====
+    function navigate(section) {
+        document.querySelectorAll('[id^="section-"]').forEach(el => el.style.display = '');
+        if (section === 'home') {
+            document.querySelectorAll('[id^="section-"]').forEach(el => el.style.display = '');
+        } else {
+            document.querySelectorAll('[id^="section-"]').forEach(el => {
+                if (el.id !== 'section-' + section) el.style.display = 'none';
+            });
+        }
+        document.getElementById('section-' + section).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 </script>
 
-<!-- ===== THREE.JS 3D TOKEN ===== -->
+<!-- ===== THREE.JS 3D CARD ===== -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
     (function() {
-        const container = document.getElementById('token-3d-container');
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0b1a);
+        const container = document.getElementById('card-3d-container');
+        if (!container) return;
 
-        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(4, 2, 8);
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0e1a);
+
+        const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+        camera.position.set(3, 1.5, 6);
         camera.lookAt(0, 0, 0);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // Свет
-        const ambientLight = new THREE.AmbientLight(0x404060);
-        scene.add(ambientLight);
+        // Lights
+        const ambient = new THREE.AmbientLight(0x334466, 0.6);
+        scene.add(ambient);
         const dirLight = new THREE.DirectionalLight(0x1e8bff, 2);
-        dirLight.position.set(5, 10, 7);
+        dirLight.position.set(5, 8, 7);
+        dirLight.castShadow = true;
         scene.add(dirLight);
-        const backLight = new THREE.PointLight(0x00d4ff, 1);
-        backLight.position.set(-3, 1, -4);
-        scene.add(backLight);
+        const fillLight = new THREE.DirectionalLight(0x00d4ff, 0.8);
+        fillLight.position.set(-3, 2, -4);
+        scene.add(fillLight);
+        const rimLight = new THREE.PointLight(0x1e8bff, 1.5);
+        rimLight.position.set(-2, 1, 5);
+        scene.add(rimLight);
 
-        // Круглая платформа (карта)
-        const cardGeometry = new THREE.CylinderGeometry(1.8, 1.8, 0.3, 64);
-        const cardMaterial = new THREE.MeshPhysicalMaterial({
+        // Card body
+        const cardGeo = new THREE.BoxGeometry(2.8, 0.08, 1.8);
+        const cardMat = new THREE.MeshPhysicalMaterial({
             color: 0x1a3a7a,
-            metalness: 0.7,
-            roughness: 0.2,
+            metalness: 0.3,
+            roughness: 0.3,
             clearcoat: 0.9,
             clearcoatRoughness: 0.1,
             emissive: 0x0a1a4a,
-            emissiveIntensity: 0.3,
+            emissiveIntensity: 0.2,
         });
-        const card = new THREE.Mesh(cardGeometry, cardMaterial);
+        const card = new THREE.Mesh(cardGeo, cardMat);
         card.castShadow = true;
         card.receiveShadow = true;
         scene.add(card);
 
-        // Ободок (золотистый)
-        const rimGeometry = new THREE.TorusGeometry(1.8, 0.05, 32, 64);
-        const rimMaterial = new THREE.MeshPhysicalMaterial({
+        // Card rim (gold)
+        const rimGeo = new THREE.BoxGeometry(2.85, 0.02, 1.85);
+        const rimMat = new THREE.MeshPhysicalMaterial({
             color: 0x1e8bff,
-            metalness: 0.9,
-            roughness: 0.3,
+            metalness: 0.8,
+            roughness: 0.2,
             emissive: 0x1e8bff,
-            emissiveIntensity: 0.5,
+            emissiveIntensity: 0.3,
         });
-        const rim = new THREE.Mesh(rimGeometry, rimMaterial);
-        rim.rotation.x = Math.PI / 2;
-        rim.position.y = 0.15;
+        const rim = new THREE.Mesh(rimGeo, rimMat);
+        rim.position.z = 0.91;
         scene.add(rim);
 
-        // Голографический чип (в центре)
-        const chipGeometry = new THREE.BoxGeometry(0.5, 0.05, 0.5);
-        const chipMaterial = new THREE.MeshPhysicalMaterial({
+        // Chip
+        const chipGeo = new THREE.BoxGeometry(0.4, 0.02, 0.4);
+        const chipMat = new THREE.MeshPhysicalMaterial({
             color: 0x00d4ff,
-            metalness: 0.3,
+            metalness: 0.2,
             roughness: 0.1,
             emissive: 0x00d4ff,
-            emissiveIntensity: 1.0,
+            emissiveIntensity: 0.8,
             transparent: true,
-            opacity: 0.9,
+            opacity: 0.85,
         });
-        const chip = new THREE.Mesh(chipGeometry, chipMaterial);
-        chip.position.y = 0.2;
+        const chip = new THREE.Mesh(chipGeo, chipMat);
+        chip.position.set(-0.8, 0.06, 0.6);
         scene.add(chip);
 
-        // Сетка вокруг чипа
-        const gridHelper = new THREE.GridHelper(2, 12, 0x1e8bff, 0x00d4ff);
-        gridHelper.position.y = 0.01;
+        // Chip grid lines
+        const gridHelper = new THREE.GridHelper(0.5, 6, 0x00d4ff, 0x1e8bff);
+        gridHelper.position.set(-0.8, 0.08, 0.6);
         scene.add(gridHelper);
 
-        // Вращающиеся кольца
-        const ring1 = new THREE.Mesh(
-            new THREE.TorusGeometry(1.2, 0.015, 16, 64),
-            new THREE.MeshPhysicalMaterial({ color: 0x1e8bff, emissive: 0x1e8bff, emissiveIntensity: 0.3, transparent: true, opacity: 0.6 })
-        );
-        ring1.rotation.x = Math.PI / 2;
-        ring1.position.y = 0.2;
-        scene.add(ring1);
+        // Text label (UnionPay)
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'rgba(255,255,255,0)';
+        ctx.fillRect(0, 0, 512, 128);
+        ctx.font = 'Bold 56px Inter, Arial, sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('UnionPay', 20, 64);
+        ctx.font = '24px monospace';
+        ctx.fillStyle = '#88aadd';
+        ctx.fillText('••••  ••••  ••••  1234', 20, 110);
 
-        const ring2 = new THREE.Mesh(
-            new THREE.TorusGeometry(1.4, 0.01, 16, 64),
-            new THREE.MeshPhysicalMaterial({ color: 0x00d4ff, emissive: 0x00d4ff, emissiveIntensity: 0.2, transparent: true, opacity: 0.4 })
-        );
-        ring2.rotation.x = Math.PI / 2;
-        ring2.position.y = 0.1;
-        scene.add(ring2);
-
-        // Парящие частицы
-        const particlesGeo = new THREE.BufferGeometry();
-        const count = 200;
-        const pos = new Float32Array(count * 3);
-        for (let i = 0; i < count * 3; i++) {
-            pos[i] = (Math.random() - 0.5) * 8;
-        }
-        particlesGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-        const particlesMat = new THREE.PointsMaterial({
-            color: 0x1e8bff,
-            size: 0.03,
+        const texture = new THREE.CanvasTexture(canvas);
+        const labelMat = new THREE.MeshPhysicalMaterial({
+            map: texture,
             transparent: true,
-            opacity: 0.6,
+            side: THREE.DoubleSide,
+            roughness: 0.3,
+            metalness: 0.1,
+        });
+        const labelGeo = new THREE.PlaneGeometry(1.8, 0.4);
+        const label = new THREE.Mesh(labelGeo, labelMat);
+        label.position.set(0.1, 0.06, 0.92);
+        scene.add(label);
+
+        // Floating particles around card
+        const particleCount = 120;
+        const pos = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount * 3; i++) {
+            pos[i] = (Math.random() - 0.5) * 6;
+        }
+        const pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        const pMat = new THREE.PointsMaterial({
+            color: 0x1e8bff,
+            size: 0.025,
+            transparent: true,
+            opacity: 0.5,
             blending: THREE.AdditiveBlending,
         });
-        const particleSystem = new THREE.Points(particlesGeo, particlesMat);
-        scene.add(particleSystem);
+        const particles = new THREE.Points(pGeo, pMat);
+        particles.position.y = 0.5;
+        scene.add(particles);
 
-        // Анимация
-        function animate3D() {
-            requestAnimationFrame(animate3D);
-            card.rotation.y += 0.005;
-            rim.rotation.y += 0.005;
-            chip.rotation.y += 0.01;
-            ring1.rotation.z += 0.01;
-            ring2.rotation.z -= 0.008;
-            particleSystem.rotation.y += 0.001;
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            card.rotation.y += 0.006;
+            rim.rotation.y += 0.006;
+            chip.rotation.y += 0.008;
+            label.rotation.y += 0.006;
+            particles.rotation.y += 0.002;
             renderer.render(scene, camera);
         }
-        animate3D();
+        animate();
 
         // Resize
-        window.addEventListener('resize', () => {
+        function resize() {
             const w = container.clientWidth;
             const h = container.clientHeight;
             camera.aspect = w / h;
             camera.updateProjectionMatrix();
             renderer.setSize(w, h);
-        });
+        }
+        window.addEventListener('resize', resize);
+        setTimeout(resize, 100);
     })();
 </script>
 
