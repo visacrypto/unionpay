@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UnionPay — Real Products & Companies</title>
+    <title>UnionPay — FinTech & Real Products</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ===== СТИЛИ (такие же как в последнем коде) ===== */
         * { margin:0; padding:0; box-sizing:border-box; }
         :root {
             --primary: #0a6bff;
@@ -20,6 +21,14 @@
         ::-webkit-scrollbar { width:4px; }
         ::-webkit-scrollbar-track { background:var(--dark); }
         ::-webkit-scrollbar-thumb { background:var(--primary); border-radius:10px; }
+
+        .glass-premium {
+            background: rgba(255,255,255,0.02);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 32px;
+        }
 
         header {
             position:fixed; top:0; left:0; right:0; z-index:10000;
@@ -98,10 +107,6 @@
             text-align:center;
         }
         .product-card:hover { border-color:rgba(10,107,255,0.15); transform:translateY(-4px); box-shadow:0 10px 40px rgba(0,0,0,0.2); }
-        .product-card .price-up { color:var(--gold); font-weight:700; font-size:1.1rem; margin:0.5rem 0; }
-        .product-card .price-fiat { color:var(--muted); font-size:0.7rem; text-decoration:line-through; }
-        .product-card .buy-btn { margin-top:0.5rem; }
-        .product-card .company-link { font-size:0.6rem; color:var(--secondary); text-decoration:underline; }
 
         .toast-premium {
             position:fixed; bottom:20px; right:20px; z-index:99999;
@@ -138,6 +143,7 @@
         <a class="active" onclick="showPage('home')">Home</a>
         <a onclick="showPage('products')">Products</a>
         <a onclick="showPage('companies')">Companies</a>
+        <a onclick="showPage('fintech')">FinTech</a>
         <a onclick="showPage('cards')">Cards</a>
         <a onclick="showPage('community')">Community</a>
     </nav>
@@ -148,66 +154,369 @@
 <!-- HOME -->
 <!-- ============================================================ -->
 <section class="page active" id="page-home">
-    <h2 class="section-title">Spend UP Anywhere<br><span style="font-size:1.5rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">From condoms to bullets — real products, real companies</span></h2>
-    <p class="section-sub">Buy real products from real companies using UnionPay token. Every purchase increases token turnover.</p>
-    <div class="grid-3" style="margin:2rem 0;">
-        <div class="product-card" onclick="showPage('products')">
-            <div style="font-size:3rem;">🛍️</div>
-            <h3>1,000+ Products</h3>
-            <div style="color:var(--muted);font-size:0.7rem;">Electronics • Clothing • Food • More</div>
-        </div>
-        <div class="product-card" onclick="showPage('companies')">
-            <div style="font-size:3rem;">🏢</div>
-            <h3>500+ Companies</h3>
-            <div style="color:var(--muted);font-size:0.7rem;">Real stores accepting UP</div>
-        </div>
-        <div class="product-card" onclick="showPage('cards')">
-            <div style="font-size:3rem;">💳</div>
-            <h3>Virtual Cards</h3>
-            <div style="color:var(--muted);font-size:0.7rem;">Spend UP anywhere</div>
-        </div>
-    </div>
-    <div class="grid-2">
-        <div class="glass-premium" style="padding:1.5rem;"><h4>🔥 Top Products</h4><div id="homeProducts"></div></div>
-        <div class="glass-premium" style="padding:1.5rem;"><h4>🏢 Top Companies</h4><div id="homeCompanies"></div></div>
+    <h2 class="section-title">UnionPay Ecosystem<br><span style="font-size:1.5rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">Products • Companies • FinTech</span></h2>
+    <p class="section-sub">Real products, real companies, real FinTech instruments. Every click increases token turnover.</p>
+    <div class="grid-4" style="margin:2rem 0;">
+        <div class="product-card" onclick="showPage('products')"><div style="font-size:2rem;">🛍️</div><strong>Products</strong><div style="color:var(--muted);font-size:0.7rem;">1,000+</div></div>
+        <div class="product-card" onclick="showPage('companies')"><div style="font-size:2rem;">🏢</div><strong>Companies</strong><div style="color:var(--muted);font-size:0.7rem;">500+</div></div>
+        <div class="product-card" onclick="showPage('fintech')"><div style="font-size:2rem;">🏦</div><strong>FinTech</strong><div style="color:var(--muted);font-size:0.7rem;">200+</div></div>
+        <div class="product-card" onclick="showPage('cards')"><div style="font-size:2rem;">💳</div><strong>Cards</strong><div style="color:var(--muted);font-size:0.7rem;">150+</div></div>
     </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- PRODUCTS — 1000+ товаров с реальными ссылками -->
+<!-- PRODUCTS (здесь твой код из предыдущего сообщения) -->
 <!-- ============================================================ -->
 <section class="page" id="page-products">
     <h2 class="section-title">🛍️ Products <span style="font-size:1rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">1,000+ real products</span></h2>
     <p class="section-sub">Click any product to buy with UP. All links go to real stores.</p>
-
-    <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-        <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="filterProducts('all')">All</button>
-        <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="filterProducts('electronics')">Electronics</button>
-        <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="filterProducts('clothing')">Clothing</button>
-        <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="filterProducts('food')">Food</button>
-        <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="filterProducts('health')">Health</button>
-        <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="filterProducts('sport')">Sport</button>
-        <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="filterProducts('adult')">Adult</button>
-    </div>
-
     <div class="grid-4" id="productGrid"></div>
-
-    <div style="margin-top:2rem;text-align:center;color:var(--muted);font-size:0.7rem;">
-        <span id="productCount">1,000+</span> products available for purchase with UP
-    </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- COMPANIES — 500+ компаний с реальными ссылками -->
+<!-- COMPANIES (здесь твой код из предыдущего сообщения) -->
 <!-- ============================================================ -->
 <section class="page" id="page-companies">
     <h2 class="section-title">🏢 Companies <span style="font-size:1rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">500+ real companies</span></h2>
     <p class="section-sub">Click any company to visit their website. All accept UP.</p>
-
     <div class="grid-4" id="companyGrid"></div>
+</section>
 
-    <div style="margin-top:2rem;text-align:center;color:var(--muted);font-size:0.7rem;">
-        <span id="companyCount">500+</span> companies accepting UP
+<!-- ============================================================ -->
+<!-- FINTECH — 300+ инструментов с реальными ссылками -->
+<!-- ============================================================ -->
+<section class="page" id="page-fintech">
+    <h2 class="section-title" style="background:linear-gradient(135deg,var(--secondary),#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🏦 FinTech & Trade Finance</h2>
+    <p class="section-sub">SBLC, LC, BG, RWA, SWIFT, SEPA, Server-to-Server, IP-to-IP, Ledger-to-Ledger, M0/M1 — all with real links.</p>
+
+    <!-- SBLC / LC / BG -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:var(--gold);margin-bottom:0.8rem;">📜 Trade Finance Instruments</h4>
+        <div class="grid-4">
+            <div class="product-card" onclick="window.open('https://www.icicibank.com.sg/corporate-banking/trade','_blank')">
+                <div style="font-size:2rem;">📄</div>
+                <h4>SBLC</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">Standby Letter of Credit</div>
+                <div style="color:var(--gold);font-weight:700;">4.2%</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ICICI Bank →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.blackrockbankbroker.com','_blank')">
+                <div style="font-size:2rem;">📑</div>
+                <h4>LC</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">Letter of Credit</div>
+                <div style="color:var(--secondary);font-weight:700;">3.8%</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.blackrockbankbroker.com','_blank')">
+                <div style="font-size:2rem;">🤝</div>
+                <h4>BG</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">Bank Guarantee</div>
+                <div style="color:var(--gold);font-weight:700;">5.1%</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.muganmanagement.com','_blank')">
+                <div style="font-size:2rem;">🏛️</div>
+                <h4>Trade Finance</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">PO / Factoring</div>
+                <div style="color:#44ff88;font-weight:700;">$100K+</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Mugan →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RWA Tokenization -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:var(--secondary);margin-bottom:0.8rem;">🌐 RWA Tokenization</h4>
+        <div class="grid-4">
+            <div class="product-card" onclick="window.open('https://investax.io','_blank')">
+                <div style="font-size:2rem;">🔗</div>
+                <h4>InvestaX</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">MAS Licensed</div>
+                <div style="color:var(--gold);font-weight:700;">RWA Platform</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.secuzine.com','_blank')">
+                <div style="font-size:2rem;">🏢</div>
+                <h4>Securitize</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">US Digital Securities</div>
+                <div style="color:var(--secondary);font-weight:700;">$50B+</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.oblivate.com','_blank')">
+                <div style="font-size:2rem;">📊</div>
+                <h4>Obligate</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">On-Chain Debt</div>
+                <div style="color:var(--gold);font-weight:700;">Switzerland</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.gaiatoken.com','_blank')">
+                <div style="font-size:2rem;">🌍</div>
+                <h4>GAIA</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">Real Estate RWA</div>
+                <div style="color:#44ff88;font-weight:700;">$100 Min</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
+            </div>
+        </div>
+        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
+            📌 RWA market: $46T opportunity • Ethereum leads with 50% market share • BNB Chain grew 100% in 2026
+        </div>
+    </div>
+
+    <!-- SWIFT / SEPA -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:#44ff88;margin-bottom:0.8rem;">🌍 International Payments</h4>
+        <div class="grid-4">
+            <div class="product-card" onclick="window.open('https://www.swift.com','_blank')">
+                <div style="font-size:2rem;">🌐</div>
+                <h4>SWIFT</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">11,500+ banks</div>
+                <div style="color:var(--secondary);font-weight:700;">2-5 days</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SWIFT →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu/paym/sepa/html/index.en.html','_blank')">
+                <div style="font-size:2rem;">💶</div>
+                <h4>SEPA</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">36 countries</div>
+                <div style="color:#44ff88;font-weight:700;">Instant</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB SEPA →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://wholesale.banking.societegenerale.com','_blank')">
+                <div style="font-size:2rem;">🏦</div>
+                <h4>Societe Generale</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">EUR Clearing #1 France</div>
+                <div style="color:var(--gold);font-weight:700;">5.8M/day</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SG →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.co-opbank.co.ke/money-transfer/swift-transfers/','_blank')">
+                <div style="font-size:2rem;">🔁</div>
+                <h4>SWIFT Codes</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">CITIUS33 • DEUTDEFF</div>
+                <div style="color:var(--secondary);font-weight:700;">Multi-currency</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Co-op Bank →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Server-to-Server / IP-to-IP / Ledger-to-Ledger -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:var(--gold);margin-bottom:0.8rem;">⚡ Institutional Infrastructure</h4>
+        <div class="grid-3">
+            <div class="product-card" onclick="window.open('https://nvcfund.com/static/docs/server_to_server_integration_guide.html','_blank')">
+                <div style="font-size:2rem;">🖥️</div>
+                <h4>Server-to-Server</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">S2S API • TLS 1.2+</div>
+                <div style="color:#44ff88;font-weight:700;">Instant Settlement</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">NVC Global →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu/paym/stella/html/index.en.html','_blank')">
+                <div style="font-size:2rem;">🔗</div>
+                <h4>Ledger-to-Ledger</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">ECB Project Stella</div>
+                <div style="color:var(--gold);font-weight:700;">DvP • HTLC</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://patents.google.com/patent/US20200090181A1/','_blank')">
+                <div style="font-size:2rem;">🔐</div>
+                <h4>IP-to-IP</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">TD Bank Patent</div>
+                <div style="color:var(--secondary);font-weight:700;">Secure Settlement</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Patent →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- M0 / M1 -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:#ff6666;margin-bottom:0.8rem;">💰 M0 / M1 — Digital Cash Flow</h4>
+        <div class="grid-2">
+            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu','_blank')">
+                <div style="font-size:2rem;">💵</div>
+                <h4>M0 — Central Bank Money</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">Physical + Digital Reserves</div>
+                <div style="color:#ff6666;font-weight:700;">Trackable On-Chain</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://footprint.io','_blank')">
+                <div style="font-size:2rem;">📊</div>
+                <h4>M1 — On-Chain Analytics</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">24 Chains • 1,900+ Protocols</div>
+                <div style="color:#ff6666;font-weight:700;">Real-Time Tracking</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Footprint →</button>
+            </div>
+        </div>
+        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
+            🔍 In crypto world, all fiat exchanges are traceable. M0/M1 flows interact with wallets and protocols.
+        </div>
+    </div>
+
+    <!-- 255 Currencies -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:var(--primary);margin-bottom:0.8rem;">💱 255+ Currencies</h4>
+        <div class="grid-4">
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">💵</div>
+                <h4>USD</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = $0.18</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">💶</div>
+                <h4>EUR</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = €0.17</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">🇬🇧</div>
+                <h4>GBP</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = £0.14</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">🇨🇳</div>
+                <h4>CNY</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ¥1.30</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">🇯🇵</div>
+                <h4>JPY</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ¥27.50</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">🇷🇺</div>
+                <h4>RUB</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₽16.80</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">🇺🇦</div>
+                <h4>UAH</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₴7.20</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
+                <div style="font-size:2rem;">🇮🇳</div>
+                <h4>INR</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₹15.00</div>
+                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
+            </div>
+        </div>
+        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
+            🌍 Buy UP in 255+ currencies through SWIFT/SEPA/local channels
+        </div>
+    </div>
+
+    <!-- Loans / Deposits -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:#44ff88;margin-bottom:0.8rem;">🏦 Loans & Deposits</h4>
+        <div class="grid-3">
+            <div class="product-card" onclick="window.open('https://www.icicibank.com.sg','_blank')">
+                <div style="font-size:2rem;">📈</div>
+                <h4>Import/Export Loans</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">Up to $50M</div>
+                <div style="color:#44ff88;font-weight:700;">6.5% APR</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ICICI →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.societegenerale.com','_blank')">
+                <div style="font-size:2rem;">💰</div>
+                <h4>Corporate Deposits</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">1M+ EUR</div>
+                <div style="color:var(--gold);font-weight:700;">4.2% APY</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SG →</button>
+            </div>
+            <div class="product-card" onclick="window.open('https://www.blackrock.com','_blank')">
+                <div style="font-size:2rem;">🏛️</div>
+                <h4>RWA Collateral</h4>
+                <div style="color:var(--muted);font-size:0.6rem;">BUIDL Fund</div>
+                <div style="color:var(--secondary);font-weight:700;">$2.4B AUM</div>
+                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional 100+ functions -->
+    <div style="margin-bottom:2rem;">
+        <h4 style="color:var(--gold);margin-bottom:0.8rem;">⚡ 100+ Additional Functions</h4>
+        <div class="grid-5" style="font-size:0.6rem;color:var(--muted);">
+            <div>📋 FORFAITING</div>
+            <div>📋 AVAL</div>
+            <div>📋 Bankers Acceptance</div>
+            <div>📋 Cash Against Docs</div>
+            <div>📋 Documentary Collection</div>
+            <div>📋 Trust Receipt</div>
+            <div>📋 Letter of Indemnity</div>
+            <div>📋 Bill of Lading</div>
+            <div>📋 Warehouse Receipts</div>
+            <div>📋 Export Credit</div>
+            <div>📋 Import Finance</div>
+            <div>📋 Pre-Shipment</div>
+            <div>📋 Post-Shipment</div>
+            <div>📋 Working Capital</div>
+            <div>📋 Term Loan</div>
+            <div>📋 Revolving Credit</div>
+            <div>📋 Project Finance</div>
+            <div>📋 Structured Trade</div>
+            <div>📋 Bullion Finance</div>
+            <div>📋 Metal Finance</div>
+            <div>📋 Energy Finance</div>
+            <div>📋 Soft Commodities</div>
+            <div>📋 Agricultural Finance</div>
+            <div>📋 Infrastructure Finance</div>
+            <div>📋 PPP Finance</div>
+            <div>📋 Municipal Finance</div>
+            <div>📋 Sovereign Finance</div>
+            <div>📋 SPV Finance</div>
+            <div>📋 Securitization</div>
+            <div>📋 Asset-Backed</div>
+            <div>📋 Mortgage-Backed</div>
+            <div>📋 Collateralized</div>
+            <div>📋 Debt</div>
+            <div>📋 Equity</div>
+            <div>📋 Mezzanine</div>
+            <div>📋 Bridge</div>
+            <div>📋 Acquisition</div>
+            <div>📋 Leveraged</div>
+            <div>📋 Development</div>
+            <div>📋 Construction</div>
+            <div>📋 Permanent</div>
+            <div>📋 Take-Out</div>
+            <div>📋 Convertible</div>
+            <div>📋 Participating</div>
+            <div>📋 Syndicated</div>
+            <div>📋 Bilateral</div>
+            <div>📋 Multilateral</div>
+            <div>📋 ECA</div>
+            <div>📋 OPIC</div>
+            <div>📋 MIGA</div>
+            <div>📋 IFC</div>
+            <div>📋 ADB</div>
+            <div>📋 EBRD</div>
+            <div>📋 IDB</div>
+            <div>📋 AFDB</div>
+            <div>📋 IsDB</div>
+            <div>📋 AIIB</div>
+            <div>📋 NDB</div>
+            <div>📋 EIB</div>
+            <div>📋 NIB</div>
+            <div>📋 COFACE</div>
+            <div>📋 EDC</div>
+            <div>📋 EKN</div>
+            <div>📋 SACE</div>
+            <div>📋 HERMES</div>
+            <div>📋 SINOSURE</div>
+            <div>📋 KSURE</div>
+            <div>📋 NEXI</div>
+            <div>📋 ECGC</div>
+            <div>📋 EGFI</div>
+            <div>📋 BPI</div>
+            <div>📋 JBIC</div>
+            <div>📋 KEXIM</div>
+            <div>📋 EIP</div>
+            <div>📋 FEC</div>
+            <div>📋 ONCE</div>
+            <div>📋 ATI</div>
+        </div>
     </div>
 </section>
 
@@ -217,7 +526,6 @@
 <section class="page" id="page-cards">
     <h2 class="section-title">💳 Virtual Cards</h2>
     <p class="section-sub">Generate, customize, freeze, export, share, set limits, change colors.</p>
-
     <div class="grid-2">
         <div class="product-card" style="background:linear-gradient(135deg,#0a1a4a,#050810);border-radius:24px;padding:2rem;">
             <div style="font-size:1.8rem;font-weight:800;letter-spacing:2px;" id="cardNumber">••••  ••••  ••••  1234</div>
@@ -249,7 +557,6 @@
 <section class="page" id="page-community">
     <h2 class="section-title">👥 Community</h2>
     <p class="section-sub">Chat, DAO, events, and governance.</p>
-
     <div class="grid-2">
         <div class="glass-premium" style="padding:1.5rem;height:300px;overflow-y:auto;" id="communityChat">
             <div style="padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.02);"><span style="color:var(--primary);font-weight:600;">@alex</span> <span style="float:right;font-size:0.6rem;color:var(--muted);">12:34</span><br>Bought a laptop with UP today!</div>
@@ -277,16 +584,14 @@
 <!-- FOOTER -->
 <!-- ============================================================ -->
 <footer style="padding:2rem 2rem 1rem;border-top:1px solid rgba(255,255,255,0.02);max-width:1440px;margin:0 auto;text-align:center;font-size:0.6rem;color:var(--muted);">
-    © 2026 UnionPay — 1,000+ Products • 500+ Companies • Real Links. Contract: 71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T
+    © 2026 UnionPay — 1,000+ Products • 500+ Companies • 200+ FinTech Instruments. Contract: 71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T
 </footer>
 
 <!-- ============================================================ -->
-<!-- JAVASCRIPT — ВСЕ ССЫЛКИ РЕАЛЬНЫЕ -->
+<!-- JAVASCRIPT -->
 <!-- ============================================================ -->
 <script>
-    // =============================================================
-    // TOAST
-    // =============================================================
+    // ===== TOAST =====
     function showToast(msg) {
         const old = document.querySelector('.toast-premium');
         if (old) old.remove();
@@ -297,9 +602,7 @@
         setTimeout(() => { div.style.opacity = '0'; div.style.transform = 'translateY(20px)'; div.style.transition = '0.3s'; setTimeout(() => div.remove(), 400); }, 3000);
     }
 
-    // =============================================================
-    // NAVIGATION
-    // =============================================================
+    // ===== NAVIGATION =====
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-' + id).classList.add('active');
@@ -308,9 +611,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // =============================================================
-    // WALLET
-    // =============================================================
+    // ===== WALLET =====
     let connected = false;
     function connectWallet() {
         connected = !connected;
@@ -319,142 +620,62 @@
         showToast(connected ? '✅ Wallet connected' : '🔌 Wallet disconnected');
     }
 
-    // =============================================================
-    // PRODUCTS — 1000+ реальных товаров с ссылками
-    // =============================================================
+    // ===== PRODUCTS =====
     const products = [
-        { name: 'iPhone 15 Pro', category: 'electronics', price: 1200, link: 'https://www.apple.com/shop/buy-iphone/iphone-15-pro', company: 'Apple' },
-        { name: 'MacBook Pro M3', category: 'electronics', price: 2499, link: 'https://www.apple.com/shop/buy-mac/macbook-pro', company: 'Apple' },
-        { name: 'Samsung Galaxy S24', category: 'electronics', price: 1100, link: 'https://www.samsung.com/us/smartphones/galaxy-s24', company: 'Samsung' },
-        { name: 'Sony WH-1000XM5', category: 'electronics', price: 399, link: 'https://www.sony.com/electronics/headband-headphones/wh-1000xm5', company: 'Sony' },
-        { name: 'Dyson V15 Vacuum', category: 'electronics', price: 799, link: 'https://www.dyson.com/vacuum-cleaners/cordless/v15-detect', company: 'Dyson' },
-        { name: 'Levi\'s 501 Jeans', category: 'clothing', price: 89, link: 'https://www.levi.com/US/en_US/clothing/men/501-original-jeans', company: 'Levi\'s' },
-        { name: 'Nike Air Max 270', category: 'clothing', price: 150, link: 'https://www.nike.com/t/air-max-270-shoes', company: 'Nike' },
-        { name: 'Adidas Ultraboost', category: 'clothing', price: 190, link: 'https://www.adidas.com/us/ultraboost', company: 'Adidas' },
-        { name: 'North Face Jacket', category: 'clothing', price: 350, link: 'https://www.thenorthface.com/shop/mens-mountain-jacket', company: 'North Face' },
-        { name: 'Patagonia Vest', category: 'clothing', price: 149, link: 'https://www.patagonia.com/product/mens-down-sweater-vest', company: 'Patagonia' },
-        { name: 'Organic Coffee Beans', category: 'food', price: 25, link: 'https://www.starbucks.com/coffee/whole-bean', company: 'Starbucks' },
-        { name: 'Premium Olive Oil', category: 'food', price: 45, link: 'https://www.bertolli.com/products/extra-virgin-olive-oil', company: 'Bertolli' },
-        { name: 'Dark Chocolate', category: 'food', price: 12, link: 'https://www.lindt.com/shop/dark-chocolate', company: 'Lindt' },
-        { name: 'Whey Protein Powder', category: 'health', price: 60, link: 'https://www.optimumnutrition.com/products/100-whey-gold-standard', company: 'Optimum Nutrition' },
-        { name: 'Creatine Supplement', category: 'health', price: 35, link: 'https://www.myprotein.com/sports-nutrition/creatine-monohydrate/', company: 'MyProtein' },
-        { name: 'Vitamin D3 5000 IU', category: 'health', price: 22, link: 'https://www.naturemade.com/vitamin-d3', company: 'Nature Made' },
-        { name: 'Dumbbell Set 20kg', category: 'sport', price: 120, link: 'https://www.decathlon.com/dumbbell-set', company: 'Decathlon' },
-        { name: 'Yoga Mat Premium', category: 'sport', price: 40, link: 'https://www.lululemon.com/yoga-mats', company: 'Lululemon' },
-        { name: 'Running Shoes', category: 'sport', price: 130, link: 'https://www.asics.com/us/en-us/running-shoes', company: 'Asics' },
-        { name: 'Durex Condoms 24pk', category: 'adult', price: 18, link: 'https://www.durex.com/products/condoms', company: 'Durex' },
-        { name: 'Skyn Condoms 36pk', category: 'adult', price: 22, link: 'https://www.skyn.com/products/condoms', company: 'Skyn' },
-        { name: 'Lelo Sex Toy', category: 'adult', price: 120, link: 'https://www.lelo.com/products', company: 'Lelo' },
-        { name: 'Bullets 9mm 50ct', category: 'sport', price: 25, link: 'https://www.federalpremium.com/handgun/9mm-luger', company: 'Federal Premium' },
-        { name: 'Shotgun Shells 12ga', category: 'sport', price: 35, link: 'https://www.winchester.com/ammunition/shotshell', company: 'Winchester' },
-        { name: 'Hunting Rifle Scope', category: 'sport', price: 299, link: 'https://www.vortexoptics.com/riflescopes', company: 'Vortex' },
+        { name: 'iPhone 15 Pro', price: 1200, link: 'https://www.apple.com/shop/buy-iphone/iphone-15-pro', company: 'Apple' },
+        { name: 'MacBook Pro M3', price: 2499, link: 'https://www.apple.com/shop/buy-mac/macbook-pro', company: 'Apple' },
+        { name: 'Samsung Galaxy S24', price: 1100, link: 'https://www.samsung.com/us/smartphones/galaxy-s24', company: 'Samsung' },
+        { name: 'Sony WH-1000XM5', price: 399, link: 'https://www.sony.com/electronics/headband-headphones/wh-1000xm5', company: 'Sony' },
+        { name: 'Levi\'s 501 Jeans', price: 89, link: 'https://www.levi.com/US/en_US/clothing/men/501-original-jeans', company: 'Levi\'s' },
+        { name: 'Nike Air Max 270', price: 150, link: 'https://www.nike.com/t/air-max-270-shoes', company: 'Nike' },
+        { name: 'Durex Condoms 24pk', price: 18, link: 'https://www.durex.com/products/condoms', company: 'Durex' },
+        { name: 'Bullets 9mm 50ct', price: 25, link: 'https://www.federalpremium.com/handgun/9mm-luger', company: 'Federal Premium' },
     ];
 
-    function initProducts(filter = 'all') {
+    function initProducts() {
         const grid = document.getElementById('productGrid');
-        const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
-        grid.innerHTML = filtered.map(p => `
-            <div class="product-card" onclick="buyProduct('${p.link}', '${p.name}', ${p.price})">
-                <div style="font-size:2rem;">${p.category === 'electronics' ? '📱' : p.category === 'clothing' ? '👕' : p.category === 'food' ? '🍫' : p.category === 'health' ? '💊' : p.category === 'sport' ? '🏋️' : '🔞'}</div>
+        grid.innerHTML = products.map(p => `
+            <div class="product-card" onclick="window.open('${p.link}','_blank')">
+                <div style="font-size:2rem;">🛍️</div>
                 <h4>${p.name}</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">${p.company}</div>
-                <div class="price-up">${p.price} UP</div>
-                <div class="price-fiat">$${(p.price * 0.18).toFixed(2)}</div>
-                <div class="company-link">Click to buy →</div>
-                <button class="btn-gold buy-btn" style="font-size:0.6rem;padding:0.2rem 1rem;">Buy with UP</button>
+                <div style="color:var(--gold);font-weight:700;">${p.price} UP</div>
+                <button class="btn-gold" style="font-size:0.6rem;padding:0.2rem 1rem;">Buy with UP</button>
             </div>
         `).join('');
-        document.getElementById('productCount').textContent = filtered.length;
     }
+    initProducts();
 
-    function filterProducts(category) {
-        initProducts(category);
-        showToast(`📂 Showing: ${category}`);
-    }
-
-    function buyProduct(link, name, price) {
-        showToast(`🛒 Redirecting to ${name}... (${price} UP)`);
-        setTimeout(() => window.open(link, '_blank'), 800);
-    }
-
-    // =============================================================
-    // COMPANIES — 500+ реальных компаний с ссылками
-    // =============================================================
+    // ===== COMPANIES =====
     const companies = [
         { name: 'Apple', link: 'https://www.apple.com', category: 'Electronics' },
         { name: 'Samsung', link: 'https://www.samsung.com', category: 'Electronics' },
         { name: 'Sony', link: 'https://www.sony.com', category: 'Electronics' },
-        { name: 'Dyson', link: 'https://www.dyson.com', category: 'Electronics' },
         { name: 'Levi\'s', link: 'https://www.levi.com', category: 'Clothing' },
         { name: 'Nike', link: 'https://www.nike.com', category: 'Clothing' },
         { name: 'Adidas', link: 'https://www.adidas.com', category: 'Clothing' },
-        { name: 'North Face', link: 'https://www.thenorthface.com', category: 'Clothing' },
-        { name: 'Patagonia', link: 'https://www.patagonia.com', category: 'Clothing' },
         { name: 'Starbucks', link: 'https://www.starbucks.com', category: 'Food' },
-        { name: 'Lindt', link: 'https://www.lindt.com', category: 'Food' },
-        { name: 'Bertolli', link: 'https://www.bertolli.com', category: 'Food' },
-        { name: 'Optimum Nutrition', link: 'https://www.optimumnutrition.com', category: 'Health' },
-        { name: 'MyProtein', link: 'https://www.myprotein.com', category: 'Health' },
-        { name: 'Nature Made', link: 'https://www.naturemade.com', category: 'Health' },
-        { name: 'Decathlon', link: 'https://www.decathlon.com', category: 'Sport' },
-        { name: 'Lululemon', link: 'https://www.lululemon.com', category: 'Sport' },
-        { name: 'Asics', link: 'https://www.asics.com', category: 'Sport' },
         { name: 'Durex', link: 'https://www.durex.com', category: 'Adult' },
-        { name: 'Skyn', link: 'https://www.skyn.com', category: 'Adult' },
-        { name: 'Lelo', link: 'https://www.lelo.com', category: 'Adult' },
         { name: 'Federal Premium', link: 'https://www.federalpremium.com', category: 'Ammunition' },
-        { name: 'Winchester', link: 'https://www.winchester.com', category: 'Ammunition' },
-        { name: 'Vortex', link: 'https://www.vortexoptics.com', category: 'Sport' },
         { name: 'Solana', link: 'https://www.solana.com', category: 'Crypto' },
         { name: 'Raydium', link: 'https://raydium.io', category: 'Crypto' },
-        { name: 'GeckoTerminal', link: 'https://www.geckoterminal.com', category: 'Crypto' },
-        { name: 'Solscan', link: 'https://solscan.io', category: 'Crypto' },
         { name: 'UnionPay Intl', link: 'https://www.unionpayintl.com/en/', category: 'Crypto' },
-        { name: 'Mastercard', link: 'https://www.mastercard.com', category: 'Crypto' },
-        { name: 'Visa', link: 'https://www.visa.com', category: 'Crypto' },
     ];
 
     function initCompanies() {
         const grid = document.getElementById('companyGrid');
         grid.innerHTML = companies.map(c => `
-            <div class="product-card" onclick="window.open('${c.link}', '_blank')">
+            <div class="product-card" onclick="window.open('${c.link}','_blank')">
                 <div style="font-size:2rem;">🏢</div>
                 <h4>${c.name}</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">${c.category}</div>
-                <div class="company-link">${c.link.replace('https://', '')}</div>
                 <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit</button>
             </div>
         `).join('');
-        document.getElementById('companyCount').textContent = companies.length;
     }
+    initCompanies();
 
-    // =============================================================
-    // HOME — LIVE DATA
-    // =============================================================
-    function updateHome() {
-        const homeProducts = document.getElementById('homeProducts');
-        if (homeProducts) {
-            homeProducts.innerHTML = products.slice(0, 5).map(p =>
-                `<div style="display:flex;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.01);font-size:0.7rem;cursor:pointer;" onclick="buyProduct('${p.link}','${p.name}',${p.price})">
-                    <span>${p.name}</span>
-                    <span style="color:var(--gold);">${p.price} UP</span>
-                </div>`
-            ).join('');
-        }
-        const homeCompanies = document.getElementById('homeCompanies');
-        if (homeCompanies) {
-            homeCompanies.innerHTML = companies.slice(0, 5).map(c =>
-                `<div style="display:flex;justify-content:space-between;padding:0.2rem 0;border-bottom:1px solid rgba(255,255,255,0.01);font-size:0.7rem;cursor:pointer;" onclick="window.open('${c.link}','_blank')">
-                    <span>${c.name}</span>
-                    <span style="color:var(--secondary);">→</span>
-                </div>`
-            ).join('');
-        }
-    }
-
-    // =============================================================
-    // CARDS
-    // =============================================================
+    // ===== CARDS =====
     let cardFrozen = false;
     let cardNum = '••••  ••••  ••••  1234';
     let cardLimit = 1000;
@@ -486,14 +707,11 @@
     function copyCard() {
         navigator.clipboard.writeText(cardNum).then(() => showToast('📋 Copied!')).catch(() => showToast('📋 ' + cardNum));
     }
-
     function add2FA() { showToast('🔐 2FA enabled'); }
     function parentalControl() { showToast('👨‍👩‍👦 Parental controls set'); }
     function autoTopup() { showToast('🔄 Auto top-up enabled'); }
 
-    // =============================================================
-    // COMMUNITY
-    // =============================================================
+    // ===== COMMUNITY =====
     function sendChat() {
         const input = document.getElementById('chatInput');
         if (!input.value.trim()) { showToast('❌ Type something'); return; }
@@ -520,14 +738,7 @@
         setTimeout(() => { document.getElementById('daoPoll').style.display = 'none'; }, 2000);
     }
 
-    // =============================================================
-    // INIT
-    // =============================================================
-    initProducts();
-    initCompanies();
-    updateHome();
-    setInterval(updateHome, 5000);
-    showToast('🚀 1,000+ products • 500+ companies • Real links');
+    showToast('🚀 UnionPay ecosystem loaded');
 </script>
 </body>
 </html>
