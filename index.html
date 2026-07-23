@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UnionPay — Ultimate Crypto Experience</title>
+    <title>UnionPay — Global Trading & FinTech Ecosystem</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -11,6 +11,7 @@
         :root {
             --primary: #1e8bff;
             --secondary: #00d4ff;
+            --gold: #f0b90b;
             --bg: #0a0e1a;
             --glass: rgba(20,30,60,0.35);
             --border: rgba(255,255,255,0.06);
@@ -27,7 +28,6 @@
         ::-webkit-scrollbar-track { background:var(--bg); }
         ::-webkit-scrollbar-thumb { background:var(--primary); border-radius:10px; }
 
-        /* ===== GLASS ===== */
         .glass {
             background: var(--glass);
             backdrop-filter: blur(16px);
@@ -41,410 +41,246 @@
             position:sticky;
             top:0;
             z-index:1000;
-            padding:0.8rem 2rem;
-            background:rgba(10,14,26,0.92);
+            padding:0.6rem 1.5rem;
+            background:rgba(10,14,26,0.94);
             backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(30,139,255,0.12);
+            border-bottom:1px solid rgba(30,139,255,0.1);
             display:flex;
             justify-content:space-between;
             align-items:center;
             flex-wrap:wrap;
-            gap:0.8rem;
+            gap:0.5rem;
         }
-        .logo { display:flex; align-items:center; gap:10px; font-weight:900; font-size:1.3rem; color:#fff; text-decoration:none; }
-        .logo img { height:32px; }
+        .logo { display:flex; align-items:center; gap:8px; font-weight:900; font-size:1.2rem; color:#fff; text-decoration:none; }
+        .logo img { height:28px; }
         .logo span { background:linear-gradient(90deg,var(--primary),var(--secondary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        nav { display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap; }
+        nav { display:flex; gap:0.3rem; align-items:center; flex-wrap:wrap; }
         nav a {
             color:var(--muted);
             text-decoration:none;
-            font-size:0.8rem;
+            font-size:0.7rem;
             font-weight:500;
             transition:0.3s;
-            padding:0.3rem 0.7rem;
-            border-radius:8px;
+            padding:0.3rem 0.6rem;
+            border-radius:6px;
             cursor:pointer;
+            white-space:nowrap;
         }
         nav a:hover, nav a.active { color:#fff; background:rgba(30,139,255,0.15); }
         .lang-btn {
             background:transparent;
             border:none;
             color:var(--muted);
-            font-size:0.55rem;
+            font-size:0.5rem;
             font-weight:600;
             cursor:pointer;
-            padding:2px 5px;
-            border-radius:4px;
+            padding:2px 4px;
+            border-radius:3px;
             transition:0.3s;
         }
         .lang-btn:hover, .lang-btn.active { background:var(--primary); color:#fff; }
         .btn-wallet {
             background:linear-gradient(135deg,var(--primary),#0066cc);
-            padding:0.4rem 1rem;
+            padding:0.35rem 0.9rem;
             border-radius:40px;
             color:#fff;
             border:none;
             font-weight:600;
-            font-size:0.8rem;
+            font-size:0.75rem;
             cursor:pointer;
             transition:0.3s;
-            box-shadow:0 0 20px rgba(30,139,255,0.2);
+            box-shadow:0 0 20px rgba(30,139,255,0.15);
         }
-        .btn-wallet:hover { transform:scale(1.05); box-shadow:0 0 35px rgba(30,139,255,0.4); }
+        .btn-wallet:hover { transform:scale(1.05); box-shadow:0 0 35px rgba(30,139,255,0.35); }
 
         /* ===== PAGES ===== */
         .page { display:none; padding:1rem 2rem 4rem; max-width:1440px; margin:0 auto; }
-        .page.active { display:block; animation:pageFade 0.6s ease; }
-        @keyframes pageFade { 0%{opacity:0;transform:translateY(30px) scale(0.98)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+        .page.active { display:block; animation:pageFade 0.5s ease; }
+        @keyframes pageFade { 0%{opacity:0;transform:translateY(25px)} 100%{opacity:1;transform:translateY(0)} }
 
-        /* ===== BUTTONS ===== */
         .btn-primary {
             background:linear-gradient(135deg,var(--primary),#0077e6);
-            padding:0.7rem 2rem;
+            padding:0.6rem 1.8rem;
             border-radius:50px;
             color:#fff;
             font-weight:700;
             border:none;
             cursor:pointer;
             transition:0.3s;
-            text-decoration:none;
             display:inline-flex;
             align-items:center;
-            gap:8px;
-            box-shadow:0 0 30px rgba(30,139,255,0.25);
-            font-size:0.9rem;
+            gap:6px;
+            box-shadow:0 0 25px rgba(30,139,255,0.2);
+            font-size:0.85rem;
         }
-        .btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 0 50px rgba(30,139,255,0.5); }
+        .btn-primary:hover { transform:translateY(-2px) scale(1.02); box-shadow:0 0 40px rgba(30,139,255,0.4); }
         .btn-secondary {
             background:rgba(255,255,255,0.04);
             border:1px solid rgba(255,255,255,0.08);
-            padding:0.7rem 2rem;
+            padding:0.6rem 1.8rem;
             border-radius:50px;
             color:#fff;
             font-weight:600;
             cursor:pointer;
             transition:0.3s;
-            text-decoration:none;
             display:inline-flex;
             align-items:center;
-            gap:8px;
-            font-size:0.9rem;
+            gap:6px;
+            font-size:0.85rem;
         }
         .btn-secondary:hover { background:rgba(255,255,255,0.08); border-color:var(--primary); }
-
-        /* ============================================================ */
-        /* ===== АНИМАЦИИ ===== */
-        /* ============================================================ */
-
-        /* 1. FLOATING CARDS (главная) */
-        .floating-cards {
-            position:relative;
-            width:100%;
-            height:420px;
-            perspective:1200px;
+        .btn-gold {
+            background:linear-gradient(135deg,var(--gold),#d4a000);
+            padding:0.6rem 1.8rem;
+            border-radius:50px;
+            color:#0a0e1a;
+            font-weight:700;
+            border:none;
+            cursor:pointer;
+            transition:0.3s;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            box-shadow:0 0 25px rgba(240,185,11,0.25);
+            font-size:0.85rem;
         }
+        .btn-gold:hover { transform:translateY(-2px); box-shadow:0 0 40px rgba(240,185,11,0.4); }
+
+        /* ===== FLOATING CARDS ===== */
+        .floating-cards { position:relative; width:100%; height:350px; perspective:1200px; }
         .float-card {
             position:absolute;
-            width:180px;
-            height:120px;
-            border-radius:16px;
+            width:150px; height:100px;
+            border-radius:14px;
             background:linear-gradient(135deg,#1a3a7a,#0a1a4a);
-            border:1px solid rgba(30,139,255,0.2);
-            box-shadow:0 20px 60px rgba(0,0,0,0.5);
+            border:1px solid rgba(30,139,255,0.15);
+            box-shadow:0 15px 40px rgba(0,0,0,0.4);
             display:flex;
             align-items:center;
             justify-content:center;
-            font-weight:700;
-            font-size:0.9rem;
+            flex-direction:column;
+            font-size:0.7rem;
             color:rgba(255,255,255,0.6);
-            transition:0.3s;
-            animation:floatCard 6s ease-in-out infinite;
+            animation:floatCard 7s ease-in-out infinite;
         }
-        .float-card:nth-child(1) { top:10%; left:5%; animation-delay:0s; background:linear-gradient(135deg,#1a3a7a,#0d2040); }
-        .float-card:nth-child(2) { top:40%; left:25%; animation-delay:1.2s; background:linear-gradient(135deg,#0a6a7a,#0a3a4a); }
-        .float-card:nth-child(3) { top:10%; right:5%; animation-delay:2.4s; background:linear-gradient(135deg,#4a1a7a,#2a0a4a); }
-        .float-card:nth-child(4) { bottom:10%; right:20%; animation-delay:0.8s; background:linear-gradient(135deg,#1a6a3a,#0a3a1a); }
-        .float-card:nth-child(5) { bottom:5%; left:15%; animation-delay:1.8s; background:linear-gradient(135deg,#7a1a1a,#4a0a0a); }
-        .float-card:nth-child(6) { top:55%; right:45%; animation-delay:3s; background:linear-gradient(135deg,#1a3a7a,#0a1a4a); }
-        .float-card i { font-size:2rem; opacity:0.4; }
+        .float-card:nth-child(1) { top:5%; left:5%; animation-delay:0s; }
+        .float-card:nth-child(2) { top:35%; left:20%; animation-delay:1.5s; background:linear-gradient(135deg,#0a6a7a,#0a3a4a); }
+        .float-card:nth-child(3) { top:5%; right:5%; animation-delay:2.8s; background:linear-gradient(135deg,#4a1a7a,#2a0a4a); }
+        .float-card:nth-child(4) { bottom:10%; right:15%; animation-delay:1s; background:linear-gradient(135deg,#1a6a3a,#0a3a1a); }
+        .float-card:nth-child(5) { bottom:5%; left:10%; animation-delay:2s; background:linear-gradient(135deg,#7a1a1a,#4a0a0a); }
+        .float-card i { font-size:1.8rem; opacity:0.5; margin-bottom:4px; }
         @keyframes floatCard {
             0%,100% { transform:translateY(0) rotate(0deg) scale(1); }
-            25% { transform:translateY(-20px) rotate(2deg) scale(1.02); }
-            75% { transform:translateY(15px) rotate(-2deg) scale(0.98); }
+            25% { transform:translateY(-18px) rotate(2deg) scale(1.02); }
+            75% { transform:translateY(12px) rotate(-2deg) scale(0.98); }
         }
-        .float-card:hover { animation-play-state:paused; transform:scale(1.1) rotate(0deg) !important; z-index:10; border-color:var(--primary); }
 
-        /* 2. 3D CAROUSEL (главная) */
-        .carousel-3d {
-            width:100%;
-            height:350px;
-            position:relative;
-            perspective:1000px;
+        /* ===== TICKER ===== */
+        .ticker {
+            background:rgba(20,30,60,0.4);
+            backdrop-filter:blur(8px);
+            border-top:1px solid rgba(30,139,255,0.06);
+            border-bottom:1px solid rgba(30,139,255,0.06);
+            padding:0.3rem 0;
             overflow:hidden;
+            white-space:nowrap;
+            position:sticky;
+            top:58px;
+            z-index:99;
         }
-        .carousel-track {
-            width:100%;
-            height:100%;
-            position:relative;
-            transform-style:preserve-3d;
-            animation:carouselSpin 20s linear infinite;
-        }
-        .carousel-item {
-            position:absolute;
-            width:180px;
-            height:250px;
-            left:50%;
-            top:50%;
-            margin-left:-90px;
-            margin-top:-125px;
-            border-radius:20px;
-            background:linear-gradient(135deg,#1a3a7a,#0a1a4a);
-            border:1px solid rgba(30,139,255,0.15);
-            box-shadow:0 20px 60px rgba(0,0,0,0.4);
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            font-weight:700;
-            color:rgba(255,255,255,0.7);
-            transition:0.3s;
-            backface-visibility:hidden;
-        }
-        .carousel-item i { font-size:3rem; color:var(--primary); margin-bottom:0.5rem; }
-        .carousel-item:nth-child(1) { transform:rotateY(0deg) translateZ(300px); }
-        .carousel-item:nth-child(2) { transform:rotateY(45deg) translateZ(300px); }
-        .carousel-item:nth-child(3) { transform:rotateY(90deg) translateZ(300px); }
-        .carousel-item:nth-child(4) { transform:rotateY(135deg) translateZ(300px); }
-        .carousel-item:nth-child(5) { transform:rotateY(180deg) translateZ(300px); }
-        .carousel-item:nth-child(6) { transform:rotateY(225deg) translateZ(300px); }
-        .carousel-item:nth-child(7) { transform:rotateY(270deg) translateZ(300px); }
-        .carousel-item:nth-child(8) { transform:rotateY(315deg) translateZ(300px); }
-        @keyframes carouselSpin { 0%{transform:rotateY(0deg)} 100%{transform:rotateY(360deg)} }
+        .ticker-track { display:inline-block; animation:scrollTicker 40s linear infinite; }
+        .ticker-track span { margin:0 1.2rem; color:var(--muted); font-size:0.75rem; }
+        .ticker-track .price { color:var(--secondary); font-weight:600; }
+        .ticker-track .up { color:#44ff88; }
+        .ticker-track .down { color:#ff6666; }
+        @keyframes scrollTicker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-        /* 3. CARD FLIP (страница карт) */
-        .card-flip-container {
-            perspective:1000px;
-            width:100%;
-            max-width:340px;
-            margin:0 auto;
-        }
-        .card-flip {
-            position:relative;
-            width:100%;
-            height:200px;
-            transition:transform 0.8s cubic-bezier(0.4,0,0.2,1);
-            transform-style:preserve-3d;
-            cursor:pointer;
-        }
-        .card-flip:hover { transform:rotateY(180deg); }
-        .card-flip-front, .card-flip-back {
-            position:absolute;
-            width:100%;
-            height:100%;
-            backface-visibility:hidden;
-            border-radius:20px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            flex-direction:column;
+        /* ============================================================ */
+        /* ===== СТРАНИЦА 9: СЫРЬЕВАЯ БИРЖА ===== */
+        /* ============================================================ */
+        .commodity-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:2rem; }
+        .commodity-card {
             padding:1.5rem;
-            border:1px solid rgba(30,139,255,0.12);
-        }
-        .card-flip-front { background:linear-gradient(135deg,#1a3a7a,#0a1a4a); }
-        .card-flip-back { background:linear-gradient(135deg,#0a1a4a,#1a3a7a); transform:rotateY(180deg); }
-        .card-flip-back .code { font-family:monospace; font-size:1.2rem; color:var(--secondary); letter-spacing:4px; }
-
-        /* 4. SHIMMER EFFECT (блеск) */
-        .shimmer {
-            position:relative;
-            overflow:hidden;
-        }
-        .shimmer::after {
-            content:'';
-            position:absolute;
-            top:-50%;
-            left:-50%;
-            width:200%;
-            height:200%;
-            background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.05) 50%,transparent 70%);
-            animation:shimmerMove 4s linear infinite;
-        }
-        @keyframes shimmerMove { 0%{transform:translateX(-100%) rotate(25deg)} 100%{transform:translateX(100%) rotate(25deg)} }
-
-        /* 5. FLOATING PARTICLES (везде) */
-        .particles-bg {
-            position:fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            pointer-events:none;
-            z-index:0;
-        }
-
-        /* 6. PULSE (DeFi) */
-        .pulse-ring {
-            display:inline-block;
-            animation:pulseRing 2s ease-in-out infinite;
-        }
-        @keyframes pulseRing {
-            0%,100% { box-shadow:0 0 0 0 rgba(30,139,255,0.4); }
-            50% { box-shadow:0 0 0 20px rgba(30,139,255,0); }
-        }
-
-        /* 7. FLOATING LABELS (эко-система) */
-        .orbit-container {
-            position:relative;
-            width:100%;
-            height:300px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-        }
-        .orbit-item {
-            position:absolute;
-            width:60px;
-            height:60px;
-            border-radius:50%;
             background:var(--glass);
             backdrop-filter:blur(8px);
-            border:1px solid rgba(30,139,255,0.15);
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            font-size:1.5rem;
-            animation:orbitFloat 8s ease-in-out infinite;
+            border-radius:20px;
+            border:1px solid var(--border);
+            transition:0.3s;
         }
-        .orbit-item:nth-child(1) { animation-delay:0s; }
-        .orbit-item:nth-child(2) { animation-delay:1.6s; }
-        .orbit-item:nth-child(3) { animation-delay:3.2s; }
-        .orbit-item:nth-child(4) { animation-delay:4.8s; }
-        .orbit-item:nth-child(5) { animation-delay:6.4s; }
-        .orbit-item:nth-child(6) { animation-delay:8s; }
-        @keyframes orbitFloat {
-            0%,100% { transform:rotate(0deg) translateX(120px) rotate(0deg); }
-            25% { transform:rotate(90deg) translateX(130px) rotate(-90deg); }
-            50% { transform:rotate(180deg) translateX(120px) rotate(-180deg); }
-            75% { transform:rotate(270deg) translateX(110px) rotate(-270deg); }
-        }
+        .commodity-card:hover { border-color:var(--gold); transform:translateY(-4px); }
+        .commodity-card .symbol { font-size:1.8rem; font-weight:800; color:var(--gold); }
+        .commodity-card .price-big { font-size:2.2rem; font-weight:800; }
+        .commodity-card .change { font-size:1rem; font-weight:600; }
+        .commodity-card .change.up { color:#44ff88; }
+        .commodity-card .change.down { color:#ff6666; }
 
-        /* 8. SLIDE NFTs (маркетплейс) */
-        .nft-slide {
-            animation:nftSlide 0.6s cubic-bezier(0.4,0,0.2,1);
+        .trade-form { display:grid; gap:1rem; margin-top:1rem; }
+        .trade-form input, .trade-form select {
+            padding:0.7rem 1rem;
+            background:rgba(20,30,60,0.5);
+            border:1px solid var(--border);
+            border-radius:12px;
+            color:#fff;
+            font-size:0.9rem;
         }
-        @keyframes nftSlide {
-            0% { opacity:0; transform:translateX(-50px) scale(0.9); }
-            100% { opacity:1; transform:translateX(0) scale(1); }
-        }
+        .trade-form input:focus { border-color:var(--gold); outline:none; }
 
-        /* 9. CHAT WAVES (сообщество) */
-        .wave-text {
+        .order-book { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-top:1rem; }
+        .order-book .bid { color:#44ff88; }
+        .order-book .ask { color:#ff6666; }
+        .order-book .level { display:flex; justify-content:space-between; padding:0.2rem 0; border-bottom:1px solid rgba(255,255,255,0.03); font-size:0.8rem; }
+
+        /* ============================================================ */
+        /* ===== СТРАНИЦА 10: ФИНТЕХ ===== */
+        /* ============================================================ */
+        .fintech-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; margin-top:2rem; }
+        .fintech-card {
+            padding:1.5rem;
+            background:var(--glass);
+            backdrop-filter:blur(8px);
+            border-radius:20px;
+            border:1px solid var(--border);
+            transition:0.3s;
+            text-align:center;
+        }
+        .fintech-card:hover { border-color:var(--secondary); transform:translateY(-4px); }
+        .fintech-card i { font-size:2.5rem; color:var(--primary); margin-bottom:0.8rem; }
+        .fintech-card .badge {
             display:inline-block;
-            animation:waveText 2s ease-in-out infinite;
+            padding:0.2rem 0.8rem;
+            border-radius:20px;
+            background:rgba(30,139,255,0.15);
+            color:var(--primary);
+            font-size:0.7rem;
+            font-weight:600;
+            margin-top:0.5rem;
         }
-        @keyframes waveText {
-            0%,100% { transform:translateY(0); }
-            50% { transform:translateY(-8px); }
+
+        .instrument-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:2rem; }
+        .instrument-card {
+            padding:1.5rem;
+            background:var(--glass);
+            backdrop-filter:blur(8px);
+            border-radius:20px;
+            border:1px solid var(--border);
+            transition:0.3s;
         }
-
-        /* 10. PROGRESS BAR (токеномика) */
-        .progress-fill {
-            animation:progressGrow 1.5s cubic-bezier(0.4,0,0.2,1);
-        }
-        @keyframes progressGrow { 0%{width:0%} 100%{width:var(--target)} }
-
-        /* ============================================================ */
-        /* ===== LAYOUT ===== */
-        /* ============================================================ */
-
-        .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; padding:2rem 0; position:relative; z-index:1; }
-        .hero-grid h1 { font-size:3.6rem; font-weight:900; line-height:1.05; background:linear-gradient(135deg,#fff,var(--primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:2rem 0; }
-        .stat-card { padding:1.2rem; background:var(--glass); backdrop-filter:blur(8px); border-radius:16px; border:1px solid var(--border); text-align:center; }
-        .stat-card .num { font-size:1.6rem; font-weight:800; color:var(--primary); }
-        .stat-card .label { font-size:0.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
-
-        .features-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin:2rem 0; position:relative; z-index:1; }
-        .feat { padding:1.5rem; background:var(--glass); backdrop-filter:blur(8px); border-radius:20px; border:1px solid var(--border); text-align:center; transition:0.3s; }
-        .feat:hover { border-color:var(--primary); transform:translateY(-4px) scale(1.02); }
-        .feat i { font-size:2rem; color:var(--primary); margin-bottom:0.8rem; }
-
-        .card-builder-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; position:relative; z-index:1; }
-        .card-preview { padding:2rem; background:linear-gradient(135deg,#0a1a4a,#0d2040); border-radius:28px; border:1px solid rgba(30,139,255,0.12); text-align:center; }
-        .card-controls { display:grid; gap:1.2rem; }
-        .card-controls input, .card-controls select { width:100%; padding:0.7rem 1rem; background:rgba(20,30,60,0.5); border:1px solid var(--border); border-radius:12px; color:#fff; }
-
-        .tokenomics-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; position:relative; z-index:1; }
-        .tokenomics-grid .chart { padding:2rem; background:var(--glass); backdrop-filter:blur(8px); border-radius:24px; border:1px solid var(--border); }
-        .tokenomics-grid .chart .bar { display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid var(--border); }
-        .tokenomics-grid .chart .bar .fill { height:8px; background:linear-gradient(90deg,var(--primary),var(--secondary)); border-radius:10px; }
-
-        .roadmap-timeline { display:flex; gap:1.5rem; overflow-x:auto; padding:2rem 0; position:relative; z-index:1; }
-        .roadmap-item { min-width:200px; padding:1.5rem; background:var(--glass); backdrop-filter:blur(8px); border-radius:20px; border:1px solid var(--border); text-align:center; transition:0.3s; flex-shrink:0; }
-        .roadmap-item:hover { border-color:var(--primary); transform:translateY(-8px) scale(1.02); }
-        .roadmap-item .phase { font-weight:800; color:var(--primary); font-size:1.1rem; }
-
-        .eco-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; position:relative; z-index:1; }
-        .eco-card { padding:1.5rem; background:var(--glass); backdrop-filter:blur(8px); border-radius:20px; border:1px solid var(--border); text-align:center; transition:0.3s; }
-        .eco-card:hover { border-color:var(--primary); transform:translateY(-4px) scale(1.02); }
-        .eco-card i { font-size:2.5rem; color:var(--primary); }
-
-        .defi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; position:relative; z-index:1; }
-        .defi-card { padding:1.5rem; background:var(--glass); backdrop-filter:blur(8px); border-radius:20px; border:1px solid var(--border); transition:0.3s; }
-        .defi-card:hover { border-color:var(--secondary); transform:translateY(-4px); }
-        .defi-card .apy { color:var(--secondary); font-size:1.8rem; font-weight:800; }
-
-        .market-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; position:relative; z-index:1; }
-        .nft-card { padding:1.2rem; background:var(--glass); backdrop-filter:blur(8px); border-radius:20px; border:1px solid var(--border); text-align:center; transition:0.3s; animation:nftSlide 0.6s ease; }
-        .nft-card:hover { border-color:var(--primary); transform:translateY(-6px) scale(1.03); }
-        .nft-card .nft-img { width:100%; height:140px; background:linear-gradient(135deg,#1a3a7a,#0a1a4a); border-radius:12px; margin-bottom:0.8rem; }
-
-        .community-grid { display:grid; grid-template-columns:2fr 1fr; gap:2rem; position:relative; z-index:1; }
-        .chat-box { background:var(--glass); backdrop-filter:blur(8px); border-radius:20px; border:1px solid var(--border); padding:1.5rem; height:400px; overflow-y:auto; }
-        .chat-msg { padding:0.6rem; border-bottom:1px solid var(--border); animation:slideIn 0.4s ease; }
-        @keyframes slideIn { 0%{opacity:0;transform:translateX(-20px)} 100%{opacity:1;transform:translateX(0)} }
-        .chat-msg .user { color:var(--primary); font-weight:600; }
-
-        footer {
-            padding:3rem 2rem 1.5rem;
-            border-top:1px solid var(--border);
-            max-width:1440px;
-            margin:0 auto;
-            display:grid;
-            grid-template-columns:2fr 1fr 1fr 1fr;
-            gap:2rem;
-            position:relative;
-            z-index:1;
-        }
-        footer a { color:var(--muted); text-decoration:none; display:block; padding:0.25rem 0; transition:0.3s; font-size:0.85rem; }
-        footer a:hover { color:var(--primary); }
-        .footer-bottom { grid-column:1/-1; border-top:1px solid var(--border); padding-top:1.5rem; text-align:center; font-size:0.8rem; color:var(--muted); }
+        .instrument-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+        .instrument-card .code { font-family:monospace; font-size:1.4rem; color:var(--gold); font-weight:700; }
+        .instrument-card .desc { color:var(--muted); font-size:0.85rem; margin:0.5rem 0; }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width:1024px) {
-            .hero-grid { grid-template-columns:1fr; text-align:center; }
-            .stats-grid { grid-template-columns:repeat(2,1fr); }
-            .features-grid { grid-template-columns:1fr 1fr; }
-            .card-builder-grid { grid-template-columns:1fr; }
-            .tokenomics-grid { grid-template-columns:1fr; }
-            .eco-grid { grid-template-columns:1fr 1fr; }
-            .defi-grid { grid-template-columns:1fr 1fr; }
-            .market-grid { grid-template-columns:1fr 1fr; }
-            .community-grid { grid-template-columns:1fr; }
-            footer { grid-template-columns:1fr 1fr; }
+            .commodity-grid { grid-template-columns:1fr; }
+            .fintech-grid { grid-template-columns:1fr 1fr; }
+            .instrument-grid { grid-template-columns:1fr; }
         }
         @media (max-width:600px) {
-            .hero-grid h1 { font-size:2.2rem; }
-            .stats-grid { grid-template-columns:1fr; }
-            .features-grid { grid-template-columns:1fr; }
-            .eco-grid { grid-template-columns:1fr; }
-            .defi-grid { grid-template-columns:1fr; }
-            .market-grid { grid-template-columns:1fr; }
-            footer { grid-template-columns:1fr; }
+            .fintech-grid { grid-template-columns:1fr; }
             .page { padding:0.8rem; }
-            .float-card { width:120px; height:80px; font-size:0.6rem; }
-            .carousel-item { width:120px; height:180px; margin-left:-60px; margin-top:-90px; font-size:0.7rem; }
-            .carousel-item i { font-size:1.8rem; }
+            nav a { font-size:0.6rem; padding:0.2rem 0.4rem; }
+            .float-card { width:100px; height:70px; font-size:0.5rem; }
+            .float-card i { font-size:1.2rem; }
         }
     </style>
 </head>
@@ -453,19 +289,21 @@
 <!-- ===== HEADER ===== -->
 <header>
     <a href="#" class="logo" onclick="showPage('home')">
-        <img src="up-logo-primary.png" alt="UnionPay" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%231e8bff%22/%3E%3Ctext x=%228%22 y=%2228%22 fill=%22white%22 font-size=%2220%22 font-family=%22Arial%22%3EUP%3C/text%3E%3C/svg%3E'">
+        <img src="up-logo-primary.png" alt="UP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2232%22 height=%2232%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%231e8bff%22/%3E%3Ctext x=%226%22 y=%2222%22 fill=%22white%22 font-size=%2218%22 font-family=%22Arial%22%3EUP%3C/text%3E%3C/svg%3E'">
         <span>UnionPay</span>
     </a>
-    <div style="display:flex; align-items:center; gap:0.8rem; flex-wrap:wrap;">
+    <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
         <nav id="mainNav">
-            <a class="active" onclick="showPage('home')"><i class="fas fa-home"></i></a>
-            <a onclick="showPage('cards')"><i class="fas fa-credit-card"></i></a>
-            <a onclick="showPage('tokenomics')"><i class="fas fa-coins"></i></a>
-            <a onclick="showPage('roadmap')"><i class="fas fa-route"></i></a>
-            <a onclick="showPage('ecosystem')"><i class="fas fa-globe"></i></a>
-            <a onclick="showPage('defi')"><i class="fas fa-chart-pie"></i></a>
-            <a onclick="showPage('marketplace')"><i class="fas fa-store"></i></a>
-            <a onclick="showPage('community')"><i class="fas fa-users"></i></a>
+            <a class="active" onclick="showPage('home')">🏠</a>
+            <a onclick="showPage('cards')">💳</a>
+            <a onclick="showPage('tokenomics')">📊</a>
+            <a onclick="showPage('roadmap')">🗺️</a>
+            <a onclick="showPage('ecosystem')">🌐</a>
+            <a onclick="showPage('defi')">📈</a>
+            <a onclick="showPage('marketplace')">🛒</a>
+            <a onclick="showPage('community')">👥</a>
+            <a onclick="showPage('commodities')" style="color:var(--gold);">🛢️</a>
+            <a onclick="showPage('fintech')" style="color:var(--secondary);">🏦</a>
         </nav>
         <div class="lang-select">
             <button class="lang-btn active" onclick="setLang('en')">EN</button>
@@ -481,50 +319,43 @@
     </div>
 </header>
 
+<!-- ===== TICKER ===== -->
+<div class="ticker">
+    <div class="ticker-track" id="tickerTrack">
+        <span>🛢️ WTI Crude <span class="price" id="tWti">$78.42</span> <span class="up">+1.2%</span></span>
+        <span>🧪 Chemicals <span class="price" id="tChem">$1,245</span> <span class="down">-0.8%</span></span>
+        <span>🥇 Gold <span class="price" id="tGold">$2,345</span> <span class="up">+0.5%</span></span>
+        <span>🌾 Wheat <span class="price" id="tWheat">$612</span> <span class="up">+2.1%</span></span>
+        <span>✦</span>
+        <span>SBLC <span class="price">4.2%</span> <span class="up">+0.3%</span></span>
+        <span>LC <span class="price">3.8%</span> <span class="down">-0.1%</span></span>
+        <span>BG <span class="price">5.1%</span> <span class="up">+0.4%</span></span>
+        <span>✦</span>
+        <span>UP/USD <span class="price" id="tUp">$0.1842</span> <span class="up">+2.3%</span></span>
+        <span>✦</span>
+    </div>
+</div>
+
 <!-- ============================================================ -->
 <!-- ===== PAGE 1: HOME ===== -->
 <!-- ============================================================ -->
 <section class="page active" id="page-home">
-    <div class="hero-grid">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;padding:1rem 0;">
         <div>
-            <h1>Cards That<br>Fly & Shine</h1>
-            <p style="color:var(--muted);font-size:1.1rem;margin:1rem 0;">Experience the next generation of crypto cards — animated, interactive and built for the future.</p>
+            <h1 style="font-size:3.2rem;font-weight:900;line-height:1.05;background:linear-gradient(135deg,#fff,var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Trade, Spend &<br>Grow with UP</h1>
+            <p style="color:var(--muted);font-size:1.05rem;margin:1rem 0;">Crypto cards • Commodities • FinTech • All in one ecosystem.</p>
             <div style="display:flex;gap:0.8rem;flex-wrap:wrap;">
                 <button class="btn-primary" onclick="showPage('cards')"><i class="fas fa-credit-card"></i> Get Card</button>
-                <button class="btn-secondary" onclick="showPage('defi')"><i class="fas fa-chart-line"></i> Earn</button>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card shimmer"><div class="num" id="statPrice">$0.1842</div><div class="label">Price</div></div>
-                <div class="stat-card shimmer"><div class="num" id="statVol">$2.4M</div><div class="label">Volume</div></div>
-                <div class="stat-card shimmer"><div class="num" id="statHolders">4,281</div><div class="label">Holders</div></div>
-                <div class="stat-card shimmer"><div class="num" id="statMc">$18.4M</div><div class="label">Market Cap</div></div>
+                <button class="btn-gold" onclick="showPage('commodities')"><i class="fas fa-oil-can"></i> Trade Commodities</button>
+                <button class="btn-secondary" onclick="showPage('fintech')"><i class="fas fa-building"></i> FinTech</button>
             </div>
         </div>
         <div class="floating-cards">
-            <div class="float-card"><i class="fas fa-credit-card"></i><span style="font-size:0.6rem;margin-top:4px;">UP Gold</span></div>
-            <div class="float-card"><i class="fas fa-credit-card"></i><span style="font-size:0.6rem;margin-top:4px;">UP Cyber</span></div>
-            <div class="float-card"><i class="fas fa-credit-card"></i><span style="font-size:0.6rem;margin-top:4px;">UP Black</span></div>
-            <div class="float-card"><i class="fas fa-credit-card"></i><span style="font-size:0.6rem;margin-top:4px;">UP Crypto</span></div>
-            <div class="float-card"><i class="fas fa-credit-card"></i><span style="font-size:0.6rem;margin-top:4px;">UP Diamond</span></div>
-            <div class="float-card"><i class="fas fa-credit-card"></i><span style="font-size:0.6rem;margin-top:4px;">UP Platinum</span></div>
-        </div>
-    </div>
-    <div class="features-grid">
-        <div class="feat"><i class="fas fa-bolt"></i><h4>Instant Cards</h4><p>Generate in seconds</p></div>
-        <div class="feat"><i class="fas fa-percent"></i><h4>Up to 8% APY</h4><p>Staking rewards</p></div>
-        <div class="feat"><i class="fas fa-shield-alt"></i><h4>Secure</h4><p>Your keys, your crypto</p></div>
-        <div class="feat"><i class="fas fa-globe"></i><h4>183 Countries</h4><p>Spend anywhere</p></div>
-    </div>
-    <div class="carousel-3d">
-        <div class="carousel-track">
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>Visa Style</span></div>
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>Mastercard Style</span></div>
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>UnionPay Style</span></div>
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>Gold Edition</span></div>
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>Black Edition</span></div>
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>Cyber Edition</span></div>
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>Diamond</span></div>
-            <div class="carousel-item"><i class="fas fa-credit-card"></i><span>Platinum</span></div>
+            <div class="float-card"><i class="fas fa-credit-card"></i><span>UP Gold</span></div>
+            <div class="float-card"><i class="fas fa-oil-can"></i><span>WTI Crude</span></div>
+            <div class="float-card"><i class="fas fa-coins"></i><span>Gold</span></div>
+            <div class="float-card"><i class="fas fa-building"></i><span>SBLC</span></div>
+            <div class="float-card"><i class="fas fa-seedling"></i><span>Wheat</span></div>
         </div>
     </div>
 </section>
@@ -533,43 +364,20 @@
 <!-- ===== PAGE 2: CARDS ===== -->
 <!-- ============================================================ -->
 <section class="page" id="page-cards">
-    <h2 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">💳 Virtual Cards</h2>
-    <p style="color:var(--muted);margin-bottom:2rem;">Flip, customize and manage your cards with style.</p>
-    <div class="card-builder-grid">
-        <div>
-            <div class="card-flip-container">
-                <div class="card-flip">
-                    <div class="card-flip-front shimmer">
-                        <i class="fas fa-credit-card" style="font-size:3rem;color:var(--primary);"></i>
-                        <span style="margin-top:0.5rem;font-size:1.2rem;font-weight:700;">UnionPay</span>
-                        <span style="font-size:0.8rem;color:var(--muted);">••••  ••••  ••••  1234</span>
-                    </div>
-                    <div class="card-flip-back">
-                        <span style="color:var(--muted);font-size:0.7rem;">CVV</span>
-                        <span class="code">***</span>
-                        <span style="font-size:0.7rem;color:var(--muted);margin-top:0.5rem;">Hover to flip</span>
-                    </div>
-                </div>
-            </div>
-            <div style="display:flex;justify-content:center;gap:0.5rem;margin-top:1rem;">
-                <span class="pulse-ring" style="padding:0.3rem 0.8rem;border-radius:20px;background:rgba(30,139,255,0.15);border:1px solid var(--primary);font-size:0.7rem;">Active</span>
-                <span style="padding:0.3rem 0.8rem;border-radius:20px;background:rgba(255,255,255,0.05);font-size:0.7rem;">Limit: $1,000</span>
-            </div>
+    <h2 style="font-size:2.2rem;font-weight:800;">💳 Virtual Cards</h2>
+    <p style="color:var(--muted);margin-bottom:1.5rem;">Create & manage your crypto cards with style.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+        <div class="glass" style="padding:2rem;text-align:center;">
+            <i class="fas fa-credit-card" style="font-size:4rem;color:var(--primary);"></i>
+            <h3 style="margin:1rem 0;">UnionPay Card</h3>
+            <p style="color:var(--muted);">••••  ••••  ••••  1234</p>
+            <button class="btn-primary" style="margin-top:1rem;" onclick="createCard()"><i class="fas fa-magic"></i> Generate</button>
         </div>
-        <div class="card-controls">
-            <div><label>💵 Limit</label><input type="range" id="cardLimit" min="100" max="100000" step="100" value="1000" oninput="updateCardPreview()"><span id="limitValue" style="color:var(--primary);font-weight:700;">$1,000</span></div>
-            <div><label>🎨 Color</label><select id="cardColor" onchange="updateCardPreview()"><option value="blue">Classic Blue</option><option value="black">Black</option><option value="gold">Gold</option><option value="cyan">Cyan</option><option value="purple">Purple</option><option value="red">Red</option><option value="green">Green</option><option value="pink">Pink</option></select></div>
-            <div><button class="btn-primary" style="width:100%;" onclick="createCard()"><i class="fas fa-magic"></i> Generate Card</button></div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
-                <button class="btn-secondary" style="font-size:0.7rem;padding:0.4rem;" onclick="alert('📊 Card exported')"><i class="fas fa-file-pdf"></i> PDF</button>
-                <button class="btn-secondary" style="font-size:0.7rem;padding:0.4rem;" onclick="alert('📋 Card copied')"><i class="fas fa-copy"></i> Copy</button>
-            </div>
+        <div class="card-controls" style="display:grid;gap:1rem;">
+            <div><label>💵 Limit</label><input type="range" min="100" max="100000" step="100" value="1000" oninput="document.getElementById('limitVal').textContent='$'+this.value"><span id="limitVal" style="color:var(--primary);font-weight:700;">$1,000</span></div>
+            <div><label>🎨 Color</label><select style="width:100%;padding:0.7rem;background:rgba(20,30,60,0.5);border:1px solid var(--border);border-radius:12px;color:#fff;"><option>Blue</option><option>Black</option><option>Gold</option><option>Cyan</option></select></div>
+            <button class="btn-primary" onclick="alert('✅ Card created!')"><i class="fas fa-check"></i> Create</button>
         </div>
-    </div>
-    <div style="margin-top:2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
-        <div class="glass" style="padding:1rem;animation:slideIn 0.4s ease;"><strong>UP-7F3A</strong><br><span style="color:var(--muted);font-size:0.8rem;">Limit: $5,000</span></div>
-        <div class="glass" style="padding:1rem;animation:slideIn 0.6s ease;"><strong>UP-9D4E</strong><br><span style="color:var(--muted);font-size:0.8rem;">Limit: $2,000</span></div>
-        <div class="glass" style="padding:1rem;animation:slideIn 0.8s ease;"><strong>UP-2B8C</strong><br><span style="color:var(--muted);font-size:0.8rem;">Limit: $10,000</span></div>
     </div>
 </section>
 
@@ -577,27 +385,23 @@
 <!-- ===== PAGE 3: TOKENOMICS ===== -->
 <!-- ============================================================ -->
 <section class="page" id="page-tokenomics">
-    <h2 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">📊 Tokenomics</h2>
-    <p style="color:var(--muted);margin-bottom:2rem;">Distribution, staking and burn mechanics with live animations.</p>
-    <div class="tokenomics-grid">
-        <div class="chart">
-            <h4 style="margin-bottom:1rem;">Distribution</h4>
-            <div class="bar"><span>🌐 Ecosystem</span><span style="color:var(--primary);font-weight:700;">40%</span></div>
-            <div style="height:8px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:1rem;overflow:hidden;"><div class="progress-fill" style="height:100%;width:40%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:10px;"></div></div>
-            <div class="bar"><span>👥 Team</span><span style="color:var(--primary);font-weight:700;">20%</span></div>
-            <div style="height:8px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:1rem;overflow:hidden;"><div class="progress-fill" style="height:100%;width:20%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:10px;"></div></div>
-            <div class="bar"><span>📢 Marketing</span><span style="color:var(--primary);font-weight:700;">15%</span></div>
-            <div style="height:8px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:1rem;overflow:hidden;"><div class="progress-fill" style="height:100%;width:15%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:10px;"></div></div>
-            <div class="bar"><span>💧 Liquidity</span><span style="color:var(--primary);font-weight:700;">25%</span></div>
-            <div style="height:8px;background:rgba(255,255,255,0.05);border-radius:10px;margin-bottom:1rem;overflow:hidden;"><div class="progress-fill" style="height:100%;width:25%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:10px;"></div></div>
+    <h2 style="font-size:2.2rem;font-weight:800;">📊 Tokenomics</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1.5rem;">
+        <div class="glass" style="padding:1.5rem;">
+            <h4>Distribution</h4>
+            <div style="margin:0.8rem 0;"><span>Ecosystem</span> <span style="float:right;color:var(--primary);">40%</span></div>
+            <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:10px;"><div style="width:40%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:10px;"></div></div>
+            <div style="margin:0.8rem 0;"><span>Team</span> <span style="float:right;color:var(--primary);">20%</span></div>
+            <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:10px;"><div style="width:20%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:10px;"></div></div>
+            <div style="margin:0.8rem 0;"><span>Liquidity</span> <span style="float:right;color:var(--primary);">25%</span></div>
+            <div style="height:6px;background:rgba(255,255,255,0.05);border-radius:10px;"><div style="width:25%;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:10px;"></div></div>
         </div>
-        <div class="chart">
-            <h4 style="margin-bottom:1rem;">💰 Staking Rewards</h4>
-            <div class="bar"><span>💎 3-month</span><span style="color:var(--secondary);font-weight:700;">6% APY</span></div>
-            <div class="bar"><span>💎 6-month</span><span style="color:var(--secondary);font-weight:700;">8% APY</span></div>
-            <div class="bar"><span>💎 12-month</span><span style="color:var(--secondary);font-weight:700;">12% APY</span></div>
-            <div class="bar"><span>🔥 Burn rate</span><span style="color:#ff6666;font-weight:700;">2% per tx</span></div>
-            <button class="btn-primary" style="width:100%;margin-top:1rem;padding:0.7rem;" onclick="alert('Staking dashboard opened')"><i class="fas fa-lock"></i> Start Staking</button>
+        <div class="glass" style="padding:1.5rem;">
+            <h4>Staking Rewards</h4>
+            <div style="margin:0.8rem 0;"><span>3-month</span> <span style="float:right;color:var(--secondary);">6% APY</span></div>
+            <div style="margin:0.8rem 0;"><span>6-month</span> <span style="float:right;color:var(--secondary);">8% APY</span></div>
+            <div style="margin:0.8rem 0;"><span>12-month</span> <span style="float:right;color:var(--secondary);">12% APY</span></div>
+            <button class="btn-primary" style="width:100%;margin-top:1rem;" onclick="alert('Staking opened')">Stake Now</button>
         </div>
     </div>
 </section>
@@ -606,14 +410,12 @@
 <!-- ===== PAGE 4: ROADMAP ===== -->
 <!-- ============================================================ -->
 <section class="page" id="page-roadmap">
-    <h2 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">🗺️ Roadmap</h2>
-    <p style="color:var(--muted);margin-bottom:2rem;">Our journey with parallax-style timeline.</p>
-    <div class="roadmap-timeline">
-        <div class="roadmap-item"><div class="phase">🚀 Q1 2026</div><div class="desc">Token launch • Community building</div></div>
-        <div class="roadmap-item"><div class="phase">📱 Q2 2026</div><div class="desc">Virtual cards • Mobile app</div></div>
-        <div class="roadmap-item"><div class="phase">🌍 Q3 2026</div><div class="desc">Payment gateways • Partnerships</div></div>
-        <div class="roadmap-item"><div class="phase">🏦 Q4 2026</div><div class="desc">DeFi lending • DAO launch</div></div>
-        <div class="roadmap-item"><div class="phase">🔥 2027</div><div class="desc">Physical cards • Global expansion</div></div>
+    <h2 style="font-size:2.2rem;font-weight:800;">🗺️ Roadmap</h2>
+    <div style="display:flex;gap:1.5rem;overflow-x:auto;padding:1.5rem 0;">
+        <div class="glass" style="min-width:180px;padding:1.2rem;text-align:center;"><div style="font-weight:800;color:var(--primary);">Q1 2026</div><div style="font-size:0.85rem;color:var(--muted);">Launch</div></div>
+        <div class="glass" style="min-width:180px;padding:1.2rem;text-align:center;"><div style="font-weight:800;color:var(--primary);">Q2 2026</div><div style="font-size:0.85rem;color:var(--muted);">Cards</div></div>
+        <div class="glass" style="min-width:180px;padding:1.2rem;text-align:center;"><div style="font-weight:800;color:var(--gold);">Q3 2026</div><div style="font-size:0.85rem;color:var(--muted);">Commodities</div></div>
+        <div class="glass" style="min-width:180px;padding:1.2rem;text-align:center;"><div style="font-weight:800;color:var(--secondary);">Q4 2026</div><div style="font-size:0.85rem;color:var(--muted);">FinTech</div></div>
     </div>
 </section>
 
@@ -621,21 +423,11 @@
 <!-- ===== PAGE 5: ECOSYSTEM ===== -->
 <!-- ============================================================ -->
 <section class="page" id="page-ecosystem">
-    <h2 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">🌐 Ecosystem</h2>
-    <p style="color:var(--muted);margin-bottom:2rem;">Partners orbiting around UnionPay.</p>
-    <div class="orbit-container">
-        <div class="orbit-item"><i class="fab fa-solana" style="color:var(--primary);"></i></div>
-        <div class="orbit-item"><i class="fas fa-university" style="color:var(--secondary);"></i></div>
-        <div class="orbit-item"><i class="fas fa-exchange-alt" style="color:#ffcc00;"></i></div>
-        <div class="orbit-item"><i class="fas fa-bridge" style="color:#44ff88;"></i></div>
-        <div class="orbit-item"><i class="fas fa-wallet" style="color:#ff66aa;"></i></div>
-        <div class="orbit-item"><i class="fas fa-credit-card" style="color:#66aaff;"></i></div>
-        <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.9rem;color:#fff;box-shadow:0 0 60px rgba(30,139,255,0.3);">UP</div>
-    </div>
-    <div class="eco-grid" style="margin-top:2rem;">
-        <div class="eco-card"><i class="fab fa-solana"></i><h4>Solana</h4><p style="color:var(--muted);font-size:0.85rem;">Layer 1</p></div>
-        <div class="eco-card"><i class="fas fa-university"></i><h4>Meteora</h4><p style="color:var(--muted);font-size:0.85rem;">DEX</p></div>
-        <div class="eco-card"><i class="fas fa-exchange-alt"></i><h4>Raydium</h4><p style="color:var(--muted);font-size:0.85rem;">AMM</p></div>
+    <h2 style="font-size:2.2rem;font-weight:800;">🌐 Ecosystem</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;">
+        <div class="glass" style="padding:1.2rem;text-align:center;"><i class="fab fa-solana" style="font-size:2.5rem;color:var(--primary);"></i><h4>Solana</h4></div>
+        <div class="glass" style="padding:1.2rem;text-align:center;"><i class="fas fa-oil-can" style="font-size:2.5rem;color:var(--gold);"></i><h4>Commodities</h4></div>
+        <div class="glass" style="padding:1.2rem;text-align:center;"><i class="fas fa-building" style="font-size:2.5rem;color:var(--secondary);"></i><h4>FinTech</h4></div>
     </div>
 </section>
 
@@ -643,12 +435,11 @@
 <!-- ===== PAGE 6: DEFI ===== -->
 <!-- ============================================================ -->
 <section class="page" id="page-defi">
-    <h2 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">📈 DeFi Products</h2>
-    <p style="color:var(--muted);margin-bottom:2rem;">Farm, lend and earn with pulsing yields.</p>
-    <div class="defi-grid">
-        <div class="defi-card"><h4>🌾 Farming</h4><div class="apy pulse-ring">12.4% APY</div><button class="btn-primary" style="width:100%;padding:0.6rem;font-size:0.9rem;margin-top:0.8rem;" onclick="alert('Farming opened')">Farm</button></div>
-        <div class="defi-card"><h4>🏦 Lending</h4><div class="apy pulse-ring" style="animation-delay:0.5s;">8.5% APY</div><button class="btn-primary" style="width:100%;padding:0.6rem;font-size:0.9rem;margin-top:0.8rem;" onclick="alert('Lending opened')">Lend</button></div>
-        <div class="defi-card"><h4>🔄 Auto-Compound</h4><div class="apy pulse-ring" style="animation-delay:1s;">18.7% APY</div><button class="btn-primary" style="width:100%;padding:0.6rem;font-size:0.9rem;margin-top:0.8rem;" onclick="alert('Auto-compound activated')">Activate</button></div>
+    <h2 style="font-size:2.2rem;font-weight:800;">📈 DeFi</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;">
+        <div class="glass" style="padding:1.2rem;text-align:center;"><div style="font-size:2rem;font-weight:800;color:var(--secondary);">12.4%</div><div>APY Farming</div><button class="btn-secondary" style="margin-top:0.5rem;font-size:0.7rem;padding:0.3rem 1rem;" onclick="alert('Farming')">Farm</button></div>
+        <div class="glass" style="padding:1.2rem;text-align:center;"><div style="font-size:2rem;font-weight:800;color:var(--secondary);">8.5%</div><div>APY Lending</div><button class="btn-secondary" style="margin-top:0.5rem;font-size:0.7rem;padding:0.3rem 1rem;" onclick="alert('Lending')">Lend</button></div>
+        <div class="glass" style="padding:1.2rem;text-align:center;"><div style="font-size:2rem;font-weight:800;color:var(--secondary);">18.7%</div><div>Auto-Compound</div><button class="btn-secondary" style="margin-top:0.5rem;font-size:0.7rem;padding:0.3rem 1rem;" onclick="alert('Auto-compound')">Activate</button></div>
     </div>
 </section>
 
@@ -656,13 +447,12 @@
 <!-- ===== PAGE 7: MARKETPLACE ===== -->
 <!-- ============================================================ -->
 <section class="page" id="page-marketplace">
-    <h2 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">🛒 NFT Marketplace</h2>
-    <p style="color:var(--muted);margin-bottom:2rem;">Slide & collect digital assets.</p>
-    <div class="market-grid">
-        <div class="nft-card"><div class="nft-img"></div><h4>Cyber #001</h4><div style="color:var(--secondary);font-weight:700;">1.2 SOL</div><button class="btn-secondary" style="font-size:0.7rem;padding:0.3rem 1rem;margin-top:0.5rem;" onclick="alert('NFT purchased')">Buy</button></div>
-        <div class="nft-card"><div class="nft-img" style="background:linear-gradient(135deg,#1a3a7a,#0a1a4a);"></div><h4>Dragon #007</h4><div style="color:var(--secondary);font-weight:700;">0.8 SOL</div><button class="btn-secondary" style="font-size:0.7rem;padding:0.3rem 1rem;margin-top:0.5rem;" onclick="alert('NFT purchased')">Buy</button></div>
-        <div class="nft-card"><div class="nft-img" style="background:linear-gradient(135deg,#3a1a7a,#1a0a4a);"></div><h4>Genesis #001</h4><div style="color:var(--secondary);font-weight:700;">2.4 SOL</div><button class="btn-secondary" style="font-size:0.7rem;padding:0.3rem 1rem;margin-top:0.5rem;" onclick="alert('NFT purchased')">Buy</button></div>
-        <div class="nft-card"><div class="nft-img" style="background:linear-gradient(135deg,#1a7a3a,#0a4a1a);"></div><h4>Green #042</h4><div style="color:var(--secondary);font-weight:700;">0.5 SOL</div><button class="btn-secondary" style="font-size:0.7rem;padding:0.3rem 1rem;margin-top:0.5rem;" onclick="alert('NFT purchased')">Buy</button></div>
+    <h2 style="font-size:2.2rem;font-weight:800;">🛒 NFT Marketplace</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:1.5rem;">
+        <div class="glass" style="padding:1rem;text-align:center;"><div style="height:120px;background:linear-gradient(135deg,#1a3a7a,#0a1a4a);border-radius:12px;margin-bottom:0.5rem;"></div><h4>Cyber #001</h4><div style="color:var(--secondary);">1.2 SOL</div><button class="btn-secondary" style="font-size:0.6rem;padding:0.2rem 0.8rem;margin-top:0.3rem;" onclick="alert('Bought')">Buy</button></div>
+        <div class="glass" style="padding:1rem;text-align:center;"><div style="height:120px;background:linear-gradient(135deg,#0a6a7a,#0a3a4a);border-radius:12px;margin-bottom:0.5rem;"></div><h4>Dragon #007</h4><div style="color:var(--secondary);">0.8 SOL</div><button class="btn-secondary" style="font-size:0.6rem;padding:0.2rem 0.8rem;margin-top:0.3rem;" onclick="alert('Bought')">Buy</button></div>
+        <div class="glass" style="padding:1rem;text-align:center;"><div style="height:120px;background:linear-gradient(135deg,#4a1a7a,#2a0a4a);border-radius:12px;margin-bottom:0.5rem;"></div><h4>Genesis #001</h4><div style="color:var(--secondary);">2.4 SOL</div><button class="btn-secondary" style="font-size:0.6rem;padding:0.2rem 0.8rem;margin-top:0.3rem;" onclick="alert('Bought')">Buy</button></div>
+        <div class="glass" style="padding:1rem;text-align:center;"><div style="height:120px;background:linear-gradient(135deg,#1a7a3a,#0a4a1a);border-radius:12px;margin-bottom:0.5rem;"></div><h4>Green #042</h4><div style="color:var(--secondary);">0.5 SOL</div><button class="btn-secondary" style="font-size:0.6rem;padding:0.2rem 0.8rem;margin-top:0.3rem;" onclick="alert('Bought')">Buy</button></div>
     </div>
 </section>
 
@@ -670,45 +460,199 @@
 <!-- ===== PAGE 8: COMMUNITY ===== -->
 <!-- ============================================================ -->
 <section class="page" id="page-community">
-    <h2 style="font-size:2.5rem;font-weight:800;margin-bottom:0.5rem;">👥 Community</h2>
-    <p style="color:var(--muted);margin-bottom:2rem;">Chat with the wave.</p>
-    <div class="community-grid">
-        <div>
-            <div class="chat-box" id="chatBox">
-                <div class="chat-msg"><span class="user">@crypto_alex</span> <span class="time">12:34</span><br>Just got my virtual card! <span class="wave-text">🚀</span></div>
-                <div class="chat-msg"><span class="user">@solana_whale</span> <span class="time">12:38</span><br>APY is insane <span class="wave-text">🔥</span></div>
-                <div class="chat-msg"><span class="user">@unionpay_dev</span> <span class="time">12:42</span><br>New pool goes live tomorrow <span class="wave-text">⚡</span></div>
-                <div class="chat-msg"><span class="user">@nft_collector</span> <span class="time">12:45</span><br>Genesis collection minting now <span class="wave-text">🎨</span></div>
-            </div>
-            <div style="display:flex;gap:0.5rem;margin-top:0.8rem;">
-                <input type="text" placeholder="Type a message..." style="flex:1;padding:0.7rem;background:rgba(20,30,60,0.5);border:1px solid var(--border);border-radius:12px;color:#fff;">
-                <button class="btn-primary" style="padding:0.7rem 1.2rem;" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-            </div>
+    <h2 style="font-size:2.2rem;font-weight:800;">👥 Community</h2>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:2rem;margin-top:1.5rem;">
+        <div class="glass" style="padding:1.5rem;height:350px;overflow-y:auto;" id="chatBox">
+            <div style="padding:0.5rem;border-bottom:1px solid var(--border);"><span style="color:var(--primary);font-weight:600;">@alex</span> <span style="float:right;color:var(--muted);font-size:0.7rem;">12:34</span><br>Just got my card!</div>
+            <div style="padding:0.5rem;border-bottom:1px solid var(--border);"><span style="color:var(--primary);font-weight:600;">@whale</span> <span style="float:right;color:var(--muted);font-size:0.7rem;">12:38</span><br>Oil prices are crazy today 🛢️</div>
+            <div style="padding:0.5rem;border-bottom:1px solid var(--border);"><span style="color:var(--primary);font-weight:600;">@trader</span> <span style="float:right;color:var(--muted);font-size:0.7rem;">12:42</span><br>SBLC rates are dropping 📉</div>
         </div>
         <div class="glass" style="padding:1.5rem;">
-            <h4>📊 Community Stats</h4>
-            <div style="margin:1rem 0;"><span style="color:var(--muted);">Members</span> <span style="float:right;font-weight:700;">12,847</span></div>
-            <div style="margin:1rem 0;"><span style="color:var(--muted);">Online</span> <span style="float:right;font-weight:700;color:#44ff88;">842</span></div>
-            <button class="btn-primary" style="width:100%;padding:0.6rem;font-size:0.9rem;" onclick="alert('DAO opened')"><i class="fas fa-vote-yea"></i> Vote in DAO</button>
+            <h4>Stats</h4>
+            <div style="margin:0.8rem 0;"><span style="color:var(--muted);">Members</span> <span style="float:right;font-weight:700;">12,847</span></div>
+            <div style="margin:0.8rem 0;"><span style="color:var(--muted);">Online</span> <span style="float:right;font-weight:700;color:#44ff88;">842</span></div>
+            <button class="btn-primary" style="width:100%;" onclick="alert('DAO opened')">Vote in DAO</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ===== PAGE 9: COMMODITIES (Сырьевая биржа) ===== -->
+<!-- ============================================================ -->
+<section class="page" id="page-commodities">
+    <h2 style="font-size:2.2rem;font-weight:800;color:var(--gold);">🛢️ Commodities Exchange</h2>
+    <p style="color:var(--muted);margin-bottom:1rem;">Trade Oil, Chemicals, Metals & Agricultural products.</p>
+
+    <div class="commodity-grid">
+        <!-- Нефть -->
+        <div class="commodity-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="symbol">🛢️ WTI Crude</span>
+                <span class="change up">+1.2%</span>
+            </div>
+            <div class="price-big" id="wtiPrice">$78.42</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Brent: $82.15 <span class="up">+0.9%</span></div>
+            <div class="trade-form">
+                <select><option>Buy</option><option>Sell</option></select>
+                <input type="number" placeholder="Quantity (barrels)" value="100">
+                <button class="btn-gold" onclick="alert('✅ Order placed for WTI Crude')"><i class="fas fa-exchange-alt"></i> Trade</button>
+            </div>
+        </div>
+
+        <!-- Химия -->
+        <div class="commodity-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="symbol">🧪 Chemicals</span>
+                <span class="change down">-0.8%</span>
+            </div>
+            <div class="price-big" id="chemPrice">$1,245.00</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Ethylene: $1,180 <span class="down">-0.5%</span></div>
+            <div class="trade-form">
+                <select><option>Buy</option><option>Sell</option></select>
+                <input type="number" placeholder="Quantity (tons)" value="10">
+                <button class="btn-gold" onclick="alert('✅ Order placed for Chemicals')"><i class="fas fa-exchange-alt"></i> Trade</button>
+            </div>
+        </div>
+
+        <!-- Металлы -->
+        <div class="commodity-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="symbol">🥇 Gold</span>
+                <span class="change up">+0.5%</span>
+            </div>
+            <div class="price-big" id="goldPrice">$2,345.60</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Silver: $28.40 <span class="up">+0.3%</span></div>
+            <div class="trade-form">
+                <select><option>Buy</option><option>Sell</option></select>
+                <input type="number" placeholder="Quantity (oz)" value="10">
+                <button class="btn-gold" onclick="alert('✅ Order placed for Gold')"><i class="fas fa-exchange-alt"></i> Trade</button>
+            </div>
+        </div>
+
+        <!-- Сельхоз -->
+        <div class="commodity-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="symbol">🌾 Wheat</span>
+                <span class="change up">+2.1%</span>
+            </div>
+            <div class="price-big" id="wheatPrice">$612.30</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Corn: $456.20 <span class="up">+1.8%</span></div>
+            <div class="trade-form">
+                <select><option>Buy</option><option>Sell</option></select>
+                <input type="number" placeholder="Quantity (bushels)" value="100">
+                <button class="btn-gold" onclick="alert('✅ Order placed for Wheat')"><i class="fas fa-exchange-alt"></i> Trade</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Book -->
+    <div style="margin-top:2rem;">
+        <h4 style="color:var(--gold);">📊 Live Order Book</h4>
+        <div class="order-book">
+            <div>
+                <div style="color:#44ff88;font-weight:600;">Bids</div>
+                <div class="level"><span>$78.50</span><span>1,200</span></div>
+                <div class="level"><span>$78.40</span><span>850</span></div>
+                <div class="level"><span>$78.30</span><span>2,100</span></div>
+            </div>
+            <div>
+                <div style="color:#ff6666;font-weight:600;">Asks</div>
+                <div class="level"><span>$78.60</span><span>950</span></div>
+                <div class="level"><span>$78.70</span><span>1,800</span></div>
+                <div class="level"><span>$78.80</span><span>2,200</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- ===== PAGE 10: FINTECH (Финансовые инструменты) ===== -->
+<!-- ============================================================ -->
+<section class="page" id="page-fintech">
+    <h2 style="font-size:2.2rem;font-weight:800;color:var(--secondary);">🏦 FinTech Instruments</h2>
+    <p style="color:var(--muted);margin-bottom:1rem;">SBLC, LC, BG, Trade Finance & more.</p>
+
+    <div class="fintech-grid">
+        <div class="fintech-card">
+            <i class="fas fa-file-invoice"></i>
+            <h4>SBLC</h4>
+            <p style="color:var(--muted);font-size:0.85rem;">Standby Letter of Credit</p>
+            <div style="font-size:1.8rem;font-weight:800;color:var(--gold);">4.2%</div>
+            <span class="badge">Available</span>
+            <button class="btn-secondary" style="margin-top:0.8rem;font-size:0.7rem;padding:0.3rem 1rem;" onclick="alert('SBLC application opened')">Apply</button>
+        </div>
+        <div class="fintech-card">
+            <i class="fas fa-file-signature"></i>
+            <h4>LC</h4>
+            <p style="color:var(--muted);font-size:0.85rem;">Letter of Credit</p>
+            <div style="font-size:1.8rem;font-weight:800;color:var(--secondary);">3.8%</div>
+            <span class="badge">Active</span>
+            <button class="btn-secondary" style="margin-top:0.8rem;font-size:0.7rem;padding:0.3rem 1rem;" onclick="alert('LC application opened')">Apply</button>
+        </div>
+        <div class="fintech-card">
+            <i class="fas fa-handshake"></i>
+            <h4>BG</h4>
+            <p style="color:var(--muted);font-size:0.85rem;">Bank Guarantee</p>
+            <div style="font-size:1.8rem;font-weight:800;color:var(--gold);">5.1%</div>
+            <span class="badge">Available</span>
+            <button class="btn-secondary" style="margin-top:0.8rem;font-size:0.7rem;padding:0.3rem 1rem;" onclick="alert('BG application opened')">Apply</button>
+        </div>
+    </div>
+
+    <h4 style="margin-top:2rem;color:var(--secondary);">📋 Trade Finance Products</h4>
+    <div class="instrument-grid">
+        <div class="instrument-card">
+            <div class="code">PO Financing</div>
+            <div class="desc">Purchase Order financing up to $50M</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Rate: 6.5% • Term: 30-180 days</div>
+            <button class="btn-secondary" style="margin-top:0.5rem;font-size:0.7rem;padding:0.2rem 1rem;" onclick="alert('PO Financing opened')">Apply</button>
+        </div>
+        <div class="instrument-card">
+            <div class="code">Invoice Factoring</div>
+            <div class="desc">Up to 90% advance on invoices</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Rate: 4.8% • Term: 30-120 days</div>
+            <button class="btn-secondary" style="margin-top:0.5rem;font-size:0.7rem;padding:0.2rem 1rem;" onclick="alert('Invoice Factoring opened')">Apply</button>
+        </div>
+        <div class="instrument-card">
+            <div class="code">Supply Chain Finance</div>
+            <div class="desc">Optimize working capital for suppliers</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Rate: 5.2% • Term: 30-150 days</div>
+            <button class="btn-secondary" style="margin-top:0.5rem;font-size:0.7rem;padding:0.2rem 1rem;" onclick="alert('Supply Chain Finance opened')">Apply</button>
+        </div>
+        <div class="instrument-card">
+            <div class="code">Trade Credit Insurance</div>
+            <div class="desc">Protect against buyer default</div>
+            <div style="color:var(--muted);font-size:0.8rem;">Premium: 2.5% • Coverage up to 90%</div>
+            <button class="btn-secondary" style="margin-top:0.5rem;font-size:0.7rem;padding:0.2rem 1rem;" onclick="alert('Trade Credit Insurance opened')">Apply</button>
+        </div>
+    </div>
+
+    <div class="glass" style="padding:1.5rem;margin-top:2rem;">
+        <h4 style="color:var(--gold);">🏛️ Institutional Services</h4>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:0.8rem;">
+            <div><span style="color:var(--muted);">Corporate Accounts</span><br><span style="font-weight:700;">$50M+</span></div>
+            <div><span style="color:var(--muted);">Trading Limits</span><br><span style="font-weight:700;">$100M/day</span></div>
+            <div><span style="color:var(--muted);">Settlement</span><br><span style="font-weight:700;">T+0 / T+1</span></div>
+            <div><span style="color:var(--muted);">Compliance</span><br><span style="font-weight:700;">KYC/AML/CTF</span></div>
         </div>
     </div>
 </section>
 
 <!-- ===== FOOTER ===== -->
-<footer>
+<footer style="padding:2rem 2rem 1rem;border-top:1px solid var(--border);max-width:1440px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;">
     <div>
-        <img src="up-logo-white.png" alt="UnionPay" style="height:30px;margin-bottom:0.5rem;" onerror="this.style.display='none'">
-        <p style="color:var(--muted);font-size:0.8rem;">The ultimate crypto card ecosystem.</p>
-        <div style="display:flex;gap:1rem;margin-top:0.5rem;">
-            <a href="https://t.me/unionpay_solana" target="_blank"><i class="fab fa-telegram"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+        <img src="up-logo-white.png" alt="UP" style="height:28px;margin-bottom:0.5rem;" onerror="this.style.display='none'">
+        <p style="color:var(--muted);font-size:0.8rem;">Global Trading & FinTech Ecosystem</p>
+        <div style="display:flex;gap:0.8rem;margin-top:0.5rem;">
+            <a href="#"><i class="fab fa-telegram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
         </div>
     </div>
-    <div><h4>Resources</h4><a href="https://raydium.io" target="_blank">Raydium</a><a href="https://solscan.io/token/71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T" target="_blank">Solscan</a></div>
-    <div><h4>Company</h4><a href="https://www.unionpayintl.com/en/" target="_blank">UnionPay Intl</a><a href="#">About</a></div>
-    <div><h4>Support</h4><a href="#">FAQ</a><a href="mailto:support@unionpay-solana.io">Email</a></div>
-    <div class="footer-bottom">© 2026 UnionPay on Solana. All rights reserved.</div>
+    <div><h4 style="color:#fff;">Markets</h4><a href="#" onclick="showPage('commodities')">Commodities</a><a href="#" onclick="showPage('fintech')">FinTech</a></div>
+    <div><h4 style="color:#fff;">Products</h4><a href="#" onclick="showPage('cards')">Cards</a><a href="#" onclick="showPage('defi')">DeFi</a></div>
+    <div><h4 style="color:#fff;">Support</h4><a href="#">FAQ</a><a href="#">Contact</a></div>
+    <div style="grid-column:1/-1;border-top:1px solid var(--border);padding-top:1rem;text-align:center;font-size:0.7rem;color:var(--muted);">© 2026 UnionPay — All rights reserved. Contract: 71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T</div>
 </footer>
 
 <!-- ============================================================ -->
@@ -728,49 +672,54 @@
     function setLang(lang) {
         document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
         event.target.classList.add('active');
-        alert('🌐 Language switched to: ' + lang.toUpperCase());
+        alert('🌐 Language: ' + lang.toUpperCase());
     }
 
     // ===== WALLET =====
     function connectWallet() { alert('🔗 Connecting wallet...'); }
 
     // ===== CARD =====
-    function updateCardPreview() {
-        const limit = document.getElementById('cardLimit').value;
-        document.getElementById('limitValue').textContent = '$' + Number(limit).toLocaleString();
+    function createCard() { alert('✅ Virtual card generated!'); }
+
+    // ===== COMMODITIES PRICE SIMULATION =====
+    function updateCommodities() {
+        const wti = (75 + Math.random() * 8).toFixed(2);
+        const chem = (1200 + Math.random() * 100).toFixed(0);
+        const gold = (2300 + Math.random() * 60).toFixed(2);
+        const wheat = (600 + Math.random() * 30).toFixed(2);
+        document.getElementById('wtiPrice').textContent = '$' + wti;
+        document.getElementById('chemPrice').textContent = '$' + Number(chem).toLocaleString();
+        document.getElementById('goldPrice').textContent = '$' + gold;
+        document.getElementById('wheatPrice').textContent = '$' + wheat;
+        document.getElementById('tWti').textContent = '$' + wti;
+        document.getElementById('tChem').textContent = '$' + Number(chem).toLocaleString();
+        document.getElementById('tGold').textContent = '$' + gold;
+        document.getElementById('tWheat').textContent = '$' + wheat;
     }
-    function createCard() {
-        const limit = document.getElementById('cardLimit').value;
-        const color = document.getElementById('cardColor').value;
-        alert('✅ Card Created!\nLimit: $' + Number(limit).toLocaleString() + '\nColor: ' + color);
+    setInterval(updateCommodities, 5000);
+    updateCommodities();
+
+    // ===== UP PRICE =====
+    function updateUpPrice() {
+        const price = (0.15 + Math.random() * 0.10).toFixed(4);
+        document.getElementById('tUp').textContent = '$' + price;
     }
+    setInterval(updateUpPrice, 4000);
+    updateUpPrice();
 
     // ===== CHAT =====
-    function sendMessage() {
-        const input = document.querySelector('#page-community input');
-        if (!input.value.trim()) return;
-        const chat = document.getElementById('chatBox');
-        const msg = document.createElement('div');
-        msg.className = 'chat-msg';
-        msg.innerHTML = '<span class="user">@you</span> <span class="time">' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + '</span><br>' + input.value;
-        chat.appendChild(msg);
-        chat.scrollTop = chat.scrollHeight;
-        input.value = '';
-    }
-
-    // ===== STATS =====
-    function updateStats() {
-        const price = (0.15 + Math.random() * 0.10).toFixed(4);
-        const vol = (1.5 + Math.random() * 3.0).toFixed(1);
-        const holders = Math.floor(4000 + Math.random() * 1500);
-        const mc = (12 + Math.random() * 12).toFixed(1);
-        document.getElementById('statPrice').textContent = '$' + price;
-        document.getElementById('statVol').textContent = '$' + vol + 'M';
-        document.getElementById('statHolders').textContent = holders;
-        document.getElementById('statMc').textContent = '$' + mc + 'M';
-    }
-    setInterval(updateStats, 4000);
-    updateStats();
+    document.querySelector('#page-community input')?.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const chat = document.getElementById('chatBox');
+            const msg = document.createElement('div');
+            msg.style.padding = '0.5rem';
+            msg.style.borderBottom = '1px solid var(--border)';
+            msg.innerHTML = '<span style="color:var(--primary);font-weight:600;">@you</span> <span style="float:right;color:var(--muted);font-size:0.7rem;">' + new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}) + '</span><br>' + this.value;
+            chat.appendChild(msg);
+            chat.scrollTop = chat.scrollHeight;
+            this.value = '';
+        }
+    });
 </script>
 </body>
 </html>
