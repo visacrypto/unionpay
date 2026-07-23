@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UnionPay — FinTech & Real Products</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
-        /* ===== СТИЛИ (такие же как в последнем коде) ===== */
         * { margin:0; padding:0; box-sizing:border-box; }
         :root {
             --primary: #0a6bff;
@@ -17,10 +17,60 @@
             --text: #e8edf5;
             --muted: #6a7a9a;
         }
-        body { font-family:'Inter',sans-serif; background:var(--dark); color:var(--text); overflow-x:hidden; line-height:1.6; }
+        body { 
+            font-family:'Inter',sans-serif; 
+            background:var(--dark); 
+            color:var(--text); 
+            overflow-x:hidden; 
+            line-height:1.6; 
+        }
         ::-webkit-scrollbar { width:4px; }
         ::-webkit-scrollbar-track { background:var(--dark); }
         ::-webkit-scrollbar-thumb { background:var(--primary); border-radius:10px; }
+
+        /* ===== АНИМАЦИИ ===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+        .animate-shimmer {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        .animate-gradient {
+            background: linear-gradient(-45deg, var(--primary), var(--secondary), #0044cc, var(--gold));
+            background-size: 400% 400%;
+            animation: gradientFlow 6s ease infinite;
+        }
+
+        /* ===== ВИДЕО-ФОН ===== */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+            opacity: 0.05;
+            pointer-events: none;
+        }
 
         .glass-premium {
             background: rgba(255,255,255,0.02);
@@ -42,6 +92,7 @@
         .logo { display:flex; align-items:center; gap:10px; font-weight:900; font-size:1.2rem; color:#fff; text-decoration:none; }
         .logo img { height:28px; }
         .logo span { background:linear-gradient(135deg,#fff,var(--primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        
         nav { display:flex; gap:0.2rem; flex-wrap:wrap; }
         nav a {
             color:var(--muted); text-decoration:none; font-size:0.6rem; font-weight:500;
@@ -49,6 +100,35 @@
             text-transform:uppercase; letter-spacing:0.3px;
         }
         nav a:hover, nav a.active { color:#fff; background:rgba(10,107,255,0.1); }
+
+        /* ===== ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ ===== */
+        .lang-selector {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            padding: 4px 8px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .lang-selector button {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .lang-selector button:hover,
+        .lang-selector button.active {
+            color: #fff;
+            background: rgba(10,107,255,0.2);
+        }
+
         .btn-wallet {
             background:linear-gradient(135deg,var(--primary),#0044cc);
             padding:0.3rem 1rem; border-radius:40px; color:#fff; border:none;
@@ -105,8 +185,24 @@
             transition:0.3s;
             cursor:pointer;
             text-align:center;
+            position:relative;
+            overflow:hidden;
         }
         .product-card:hover { border-color:rgba(10,107,255,0.15); transform:translateY(-4px); box-shadow:0 10px 40px rgba(0,0,0,0.2); }
+        .product-card img {
+            width: 100%;
+            max-height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+        .product-card video {
+            width: 100%;
+            max-height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
 
         .toast-premium {
             position:fixed; bottom:20px; right:20px; z-index:99999;
@@ -119,20 +215,60 @@
         }
         @keyframes toastIn { 0%{opacity:0;transform:translateY(20px) scale(0.95)} 100%{opacity:1;transform:translateY(0) scale(1)} }
 
+        /* ===== ГЕРОЙ-БАННЕР ===== */
+        .hero-banner {
+            background: url('up-hero-banner.jpg') center/cover no-repeat;
+            border-radius: 32px;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(6,11,24,0.6);
+            backdrop-filter: blur(4px);
+        }
+        .hero-banner * { position: relative; z-index: 1; }
+        .hero-banner h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         @media (max-width:1024px) {
             .grid-3, .grid-4, .grid-5 { grid-template-columns:1fr 1fr; }
             .grid-2 { grid-template-columns:1fr; }
             .page { padding:4rem 1rem 2rem; }
             .section-title { font-size:2rem; }
+            .hero-banner h1 { font-size: 2rem; }
         }
         @media (max-width:600px) {
             .grid-3, .grid-4, .grid-5 { grid-template-columns:1fr; }
-            header { padding:0.4rem 0.8rem; }
-            nav a { font-size:0.5rem; padding:0.2rem 0.4rem; }
+            header { padding:0.4rem 0.8rem; flex-wrap:wrap; }
+            nav a { font-size:0.45rem; padding:0.15rem 0.3rem; }
+            .lang-selector button { font-size:0.45rem; padding:1px 4px; }
+            .hero-banner { padding:2rem 1rem; min-height:200px; }
+            .hero-banner h1 { font-size:1.5rem; }
         }
     </style>
 </head>
 <body>
+
+<!-- ===== ВИДЕО-ФОН ===== -->
+<video class="video-bg" autoplay muted loop playsinline>
+    <source src="up-overview.mp4" type="video/mp4">
+    <source src="up-teaser.mp4" type="video/mp4">
+</video>
 
 <header>
     <a href="#" class="logo" onclick="showPage('home')">
@@ -140,382 +276,173 @@
         <span>UnionPay</span>
     </a>
     <nav id="mainNav">
-        <a class="active" onclick="showPage('home')">Home</a>
-        <a onclick="showPage('products')">Products</a>
-        <a onclick="showPage('companies')">Companies</a>
-        <a onclick="showPage('fintech')">FinTech</a>
-        <a onclick="showPage('cards')">Cards</a>
-        <a onclick="showPage('community')">Community</a>
+        <a class="active" onclick="showPage('home')" data-lang-key="nav_home">Home</a>
+        <a onclick="showPage('products')" data-lang-key="nav_products">Products</a>
+        <a onclick="showPage('companies')" data-lang-key="nav_companies">Companies</a>
+        <a onclick="showPage('fintech')" data-lang-key="nav_fintech">FinTech</a>
+        <a onclick="showPage('cards')" data-lang-key="nav_cards">Cards</a>
+        <a onclick="showPage('community')" data-lang-key="nav_community">Community</a>
     </nav>
-    <button class="btn-wallet" id="walletBtn" onclick="connectWallet()"><i class="fas fa-wallet"></i> <span id="walletText">Connect</span></button>
+    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <div class="lang-selector" id="langSelector">
+            <button class="active" data-lang="en">EN</button>
+            <button data-lang="ru">RU</button>
+            <button data-lang="zh">中文</button>
+            <button data-lang="es">ES</button>
+            <button data-lang="fr">FR</button>
+            <button data-lang="de">DE</button>
+            <button data-lang="ja">日本語</button>
+            <button data-lang="ar">عربي</button>
+        </div>
+        <button class="btn-wallet" id="walletBtn" onclick="connectWallet()"><i class="fas fa-wallet"></i> <span id="walletText">Connect</span></button>
+    </div>
 </header>
 
 <!-- ============================================================ -->
 <!-- HOME -->
 <!-- ============================================================ -->
 <section class="page active" id="page-home">
-    <h2 class="section-title">UnionPay Ecosystem<br><span style="font-size:1.5rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">Products • Companies • FinTech</span></h2>
-    <p class="section-sub">Real products, real companies, real FinTech instruments. Every click increases token turnover.</p>
-    <div class="grid-4" style="margin:2rem 0;">
-        <div class="product-card" onclick="showPage('products')"><div style="font-size:2rem;">🛍️</div><strong>Products</strong><div style="color:var(--muted);font-size:0.7rem;">1,000+</div></div>
-        <div class="product-card" onclick="showPage('companies')"><div style="font-size:2rem;">🏢</div><strong>Companies</strong><div style="color:var(--muted);font-size:0.7rem;">500+</div></div>
-        <div class="product-card" onclick="showPage('fintech')"><div style="font-size:2rem;">🏦</div><strong>FinTech</strong><div style="color:var(--muted);font-size:0.7rem;">200+</div></div>
-        <div class="product-card" onclick="showPage('cards')"><div style="font-size:2rem;">💳</div><strong>Cards</strong><div style="color:var(--muted);font-size:0.7rem;">150+</div></div>
+    <!-- ГЕРОЙ-БАННЕР -->
+    <div class="hero-banner animate-gradient" data-aos="fade-up">
+        <div>
+            <h1 data-lang-key="hero_title">UnionPay Ecosystem</h1>
+            <p style="color:var(--muted);font-size:1.2rem;max-width:600px;margin:0 auto;" data-lang-key="hero_sub">Real products, real companies, real FinTech instruments</p>
+            <div style="margin-top:1.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+                <button class="btn-primary" onclick="showPage('products')"><i class="fas fa-shopping-bag"></i> <span data-lang-key="hero_shop">Shop Now</span></button>
+                <button class="btn-outline" onclick="showPage('fintech')"><i class="fas fa-university"></i> <span data-lang-key="hero_fintech">FinTech</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТАТИСТИКА -->
+    <div class="grid-4" style="margin:2rem 0;" data-aos="fade-up" data-aos-delay="100">
+        <div class="product-card animate-float" onclick="showPage('products')">
+            <div style="font-size:2rem;">🛍️</div>
+            <strong data-lang-key="stat_products">Products</strong>
+            <div style="color:var(--muted);font-size:0.7rem;">1,000+</div>
+        </div>
+        <div class="product-card animate-float" onclick="showPage('companies')" style="animation-delay:0.3s;">
+            <div style="font-size:2rem;">🏢</div>
+            <strong data-lang-key="stat_companies">Companies</strong>
+            <div style="color:var(--muted);font-size:0.7rem;">500+</div>
+        </div>
+        <div class="product-card animate-float" onclick="showPage('fintech')" style="animation-delay:0.6s;">
+            <div style="font-size:2rem;">🏦</div>
+            <strong data-lang-key="stat_fintech">FinTech</strong>
+            <div style="color:var(--muted);font-size:0.7rem;">200+</div>
+        </div>
+        <div class="product-card animate-float" onclick="showPage('cards')" style="animation-delay:0.9s;">
+            <div style="font-size:2rem;">💳</div>
+            <strong data-lang-key="stat_cards">Cards</strong>
+            <div style="color:var(--muted);font-size:0.7rem;">150+</div>
+        </div>
+    </div>
+
+    <!-- ЭКОСИСТЕМА -->
+    <div data-aos="fade-up">
+        <img src="up-ecosystem.png" alt="Ecosystem" style="width:100%;max-width:800px;display:block;margin:0 auto;border-radius:24px;border:1px solid rgba(255,255,255,0.04);">
+    </div>
+
+    <!-- ДОРОЖНАЯ КАРТА -->
+    <div style="margin-top:2rem;" data-aos="fade-up">
+        <img src="up-roadmap.png" alt="Roadmap" style="width:100%;max-width:800px;display:block;margin:0 auto;border-radius:24px;border:1px solid rgba(255,255,255,0.04);">
+    </div>
+
+    <!-- ТОКЕНОМИКА -->
+    <div style="margin-top:2rem;" data-aos="fade-up">
+        <img src="up-tokenomics.png" alt="Tokenomics" style="width:100%;max-width:800px;display:block;margin:0 auto;border-radius:24px;border:1px solid rgba(255,255,255,0.04);">
+    </div>
+
+    <!-- QR-МОК -->
+    <div style="margin-top:2rem;text-align:center;" data-aos="fade-up">
+        <img src="up-qr-mockup.png" alt="QR Mockup" style="width:200px;border-radius:24px;border:1px solid rgba(255,255,255,0.04);">
+        <p style="color:var(--muted);font-size:0.8rem;margin-top:8px;" data-lang-key="qr_scan">Scan to pay with UnionPay</p>
     </div>
 </section>
 
 <!-- ============================================================ -->
-<!-- PRODUCTS (здесь твой код из предыдущего сообщения) -->
+<!-- PRODUCTS -->
 <!-- ============================================================ -->
 <section class="page" id="page-products">
-    <h2 class="section-title">🛍️ Products <span style="font-size:1rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">1,000+ real products</span></h2>
-    <p class="section-sub">Click any product to buy with UP. All links go to real stores.</p>
+    <h2 class="section-title" data-lang-key="products_title">🛍️ Products</h2>
+    <p class="section-sub" data-lang-key="products_sub">Click any product to buy with UP. All links go to real stores.</p>
     <div class="grid-4" id="productGrid"></div>
 </section>
 
 <!-- ============================================================ -->
-<!-- COMPANIES (здесь твой код из предыдущего сообщения) -->
+<!-- COMPANIES -->
 <!-- ============================================================ -->
 <section class="page" id="page-companies">
-    <h2 class="section-title">🏢 Companies <span style="font-size:1rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">500+ real companies</span></h2>
-    <p class="section-sub">Click any company to visit their website. All accept UP.</p>
+    <h2 class="section-title" data-lang-key="companies_title">🏢 Companies</h2>
+    <p class="section-sub" data-lang-key="companies_sub">Click any company to visit their website. All accept UP.</p>
     <div class="grid-4" id="companyGrid"></div>
 </section>
 
 <!-- ============================================================ -->
-<!-- FINTECH — 300+ инструментов с реальными ссылками -->
+<!-- FINTECH -->
 <!-- ============================================================ -->
 <section class="page" id="page-fintech">
-    <h2 class="section-title" style="background:linear-gradient(135deg,var(--secondary),#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🏦 FinTech & Trade Finance</h2>
-    <p class="section-sub">SBLC, LC, BG, RWA, SWIFT, SEPA, Server-to-Server, IP-to-IP, Ledger-to-Ledger, M0/M1 — all with real links.</p>
+    <h2 class="section-title" style="background:linear-gradient(135deg,var(--secondary),#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-lang-key="fintech_title">🏦 FinTech & Trade Finance</h2>
+    <p class="section-sub" data-lang-key="fintech_sub">SBLC, LC, BG, RWA, SWIFT, SEPA, Server-to-Server, IP-to-IP, Ledger-to-Ledger, M0/M1 — all with real links.</p>
 
-    <!-- SBLC / LC / BG -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--gold);margin-bottom:0.8rem;">📜 Trade Finance Instruments</h4>
+    <div style="margin-bottom:2rem;" data-aos="fade-up">
+        <h4 style="color:var(--gold);margin-bottom:0.8rem;" data-lang-key="fintech_trade">📜 Trade Finance Instruments</h4>
         <div class="grid-4">
             <div class="product-card" onclick="window.open('https://www.icicibank.com.sg/corporate-banking/trade','_blank')">
                 <div style="font-size:2rem;">📄</div>
                 <h4>SBLC</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Standby Letter of Credit</div>
+                <div style="color:var(--muted);font-size:0.6rem;" data-lang-key="fintech_sblc">Standby Letter of Credit</div>
                 <div style="color:var(--gold);font-weight:700;">4.2%</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ICICI Bank →</button>
             </div>
             <div class="product-card" onclick="window.open('https://www.blackrockbankbroker.com','_blank')">
                 <div style="font-size:2rem;">📑</div>
                 <h4>LC</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Letter of Credit</div>
+                <div style="color:var(--muted);font-size:0.6rem;" data-lang-key="fintech_lc">Letter of Credit</div>
                 <div style="color:var(--secondary);font-weight:700;">3.8%</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
             </div>
             <div class="product-card" onclick="window.open('https://www.blackrockbankbroker.com','_blank')">
                 <div style="font-size:2rem;">🤝</div>
                 <h4>BG</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Bank Guarantee</div>
+                <div style="color:var(--muted);font-size:0.6rem;" data-lang-key="fintech_bg">Bank Guarantee</div>
                 <div style="color:var(--gold);font-weight:700;">5.1%</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
             </div>
             <div class="product-card" onclick="window.open('https://www.muganmanagement.com','_blank')">
                 <div style="font-size:2rem;">🏛️</div>
-                <h4>Trade Finance</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">PO / Factoring</div>
+                <h4 data-lang-key="fintech_trade">Trade Finance</h4>
+                <div style="color:var(--muted);font-size:0.6rem;" data-lang-key="fintech_po">PO / Factoring</div>
                 <div style="color:#44ff88;font-weight:700;">$100K+</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Mugan →</button>
             </div>
         </div>
     </div>
 
     <!-- RWA Tokenization -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--secondary);margin-bottom:0.8rem;">🌐 RWA Tokenization</h4>
+    <div style="margin-bottom:2rem;" data-aos="fade-up" data-aos-delay="100">
+        <h4 style="color:var(--secondary);margin-bottom:0.8rem;" data-lang-key="fintech_rwa">🌐 RWA Tokenization</h4>
         <div class="grid-4">
             <div class="product-card" onclick="window.open('https://investax.io','_blank')">
-                <div style="font-size:2rem;">🔗</div>
+                <img src="up-logo-white.png" alt="InvestaX" onerror="this.style.display='none'">
                 <h4>InvestaX</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">MAS Licensed</div>
                 <div style="color:var(--gold);font-weight:700;">RWA Platform</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
             </div>
             <div class="product-card" onclick="window.open('https://www.secuzine.com','_blank')">
                 <div style="font-size:2rem;">🏢</div>
                 <h4>Securitize</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">US Digital Securities</div>
                 <div style="color:var(--secondary);font-weight:700;">$50B+</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
             </div>
             <div class="product-card" onclick="window.open('https://www.oblivate.com','_blank')">
                 <div style="font-size:2rem;">📊</div>
                 <h4>Obligate</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">On-Chain Debt</div>
                 <div style="color:var(--gold);font-weight:700;">Switzerland</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
             </div>
             <div class="product-card" onclick="window.open('https://www.gaiatoken.com','_blank')">
                 <div style="font-size:2rem;">🌍</div>
                 <h4>GAIA</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">Real Estate RWA</div>
                 <div style="color:#44ff88;font-weight:700;">$100 Min</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
             </div>
-        </div>
-        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
-            📌 RWA market: $46T opportunity • Ethereum leads with 50% market share • BNB Chain grew 100% in 2026
-        </div>
-    </div>
-
-    <!-- SWIFT / SEPA -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:#44ff88;margin-bottom:0.8rem;">🌍 International Payments</h4>
-        <div class="grid-4">
-            <div class="product-card" onclick="window.open('https://www.swift.com','_blank')">
-                <div style="font-size:2rem;">🌐</div>
-                <h4>SWIFT</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">11,500+ banks</div>
-                <div style="color:var(--secondary);font-weight:700;">2-5 days</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SWIFT →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu/paym/sepa/html/index.en.html','_blank')">
-                <div style="font-size:2rem;">💶</div>
-                <h4>SEPA</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">36 countries</div>
-                <div style="color:#44ff88;font-weight:700;">Instant</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB SEPA →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://wholesale.banking.societegenerale.com','_blank')">
-                <div style="font-size:2rem;">🏦</div>
-                <h4>Societe Generale</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">EUR Clearing #1 France</div>
-                <div style="color:var(--gold);font-weight:700;">5.8M/day</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SG →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.co-opbank.co.ke/money-transfer/swift-transfers/','_blank')">
-                <div style="font-size:2rem;">🔁</div>
-                <h4>SWIFT Codes</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">CITIUS33 • DEUTDEFF</div>
-                <div style="color:var(--secondary);font-weight:700;">Multi-currency</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Co-op Bank →</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Server-to-Server / IP-to-IP / Ledger-to-Ledger -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--gold);margin-bottom:0.8rem;">⚡ Institutional Infrastructure</h4>
-        <div class="grid-3">
-            <div class="product-card" onclick="window.open('https://nvcfund.com/static/docs/server_to_server_integration_guide.html','_blank')">
-                <div style="font-size:2rem;">🖥️</div>
-                <h4>Server-to-Server</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">S2S API • TLS 1.2+</div>
-                <div style="color:#44ff88;font-weight:700;">Instant Settlement</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">NVC Global →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu/paym/stella/html/index.en.html','_blank')">
-                <div style="font-size:2rem;">🔗</div>
-                <h4>Ledger-to-Ledger</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">ECB Project Stella</div>
-                <div style="color:var(--gold);font-weight:700;">DvP • HTLC</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://patents.google.com/patent/US20200090181A1/','_blank')">
-                <div style="font-size:2rem;">🔐</div>
-                <h4>IP-to-IP</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">TD Bank Patent</div>
-                <div style="color:var(--secondary);font-weight:700;">Secure Settlement</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Patent →</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- M0 / M1 -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:#ff6666;margin-bottom:0.8rem;">💰 M0 / M1 — Digital Cash Flow</h4>
-        <div class="grid-2">
-            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu','_blank')">
-                <div style="font-size:2rem;">💵</div>
-                <h4>M0 — Central Bank Money</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Physical + Digital Reserves</div>
-                <div style="color:#ff6666;font-weight:700;">Trackable On-Chain</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://footprint.io','_blank')">
-                <div style="font-size:2rem;">📊</div>
-                <h4>M1 — On-Chain Analytics</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">24 Chains • 1,900+ Protocols</div>
-                <div style="color:#ff6666;font-weight:700;">Real-Time Tracking</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Footprint →</button>
-            </div>
-        </div>
-        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
-            🔍 In crypto world, all fiat exchanges are traceable. M0/M1 flows interact with wallets and protocols.
-        </div>
-    </div>
-
-    <!-- 255 Currencies -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--primary);margin-bottom:0.8rem;">💱 255+ Currencies</h4>
-        <div class="grid-4">
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">💵</div>
-                <h4>USD</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = $0.18</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">💶</div>
-                <h4>EUR</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = €0.17</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇬🇧</div>
-                <h4>GBP</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = £0.14</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇨🇳</div>
-                <h4>CNY</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ¥1.30</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇯🇵</div>
-                <h4>JPY</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ¥27.50</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇷🇺</div>
-                <h4>RUB</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₽16.80</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇺🇦</div>
-                <h4>UAH</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₴7.20</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇮🇳</div>
-                <h4>INR</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₹15.00</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-        </div>
-        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
-            🌍 Buy UP in 255+ currencies through SWIFT/SEPA/local channels
-        </div>
-    </div>
-
-    <!-- Loans / Deposits -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:#44ff88;margin-bottom:0.8rem;">🏦 Loans & Deposits</h4>
-        <div class="grid-3">
-            <div class="product-card" onclick="window.open('https://www.icicibank.com.sg','_blank')">
-                <div style="font-size:2rem;">📈</div>
-                <h4>Import/Export Loans</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Up to $50M</div>
-                <div style="color:#44ff88;font-weight:700;">6.5% APR</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ICICI →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.societegenerale.com','_blank')">
-                <div style="font-size:2rem;">💰</div>
-                <h4>Corporate Deposits</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1M+ EUR</div>
-                <div style="color:var(--gold);font-weight:700;">4.2% APY</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SG →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.blackrock.com','_blank')">
-                <div style="font-size:2rem;">🏛️</div>
-                <h4>RWA Collateral</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">BUIDL Fund</div>
-                <div style="color:var(--secondary);font-weight:700;">$2.4B AUM</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Additional 100+ functions -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--gold);margin-bottom:0.8rem;">⚡ 100+ Additional Functions</h4>
-        <div class="grid-5" style="font-size:0.6rem;color:var(--muted);">
-            <div>📋 FORFAITING</div>
-            <div>📋 AVAL</div>
-            <div>📋 Bankers Acceptance</div>
-            <div>📋 Cash Against Docs</div>
-            <div>📋 Documentary Collection</div>
-            <div>📋 Trust Receipt</div>
-            <div>📋 Letter of Indemnity</div>
-            <div>📋 Bill of Lading</div>
-            <div>📋 Warehouse Receipts</div>
-            <div>📋 Export Credit</div>
-            <div>📋 Import Finance</div>
-            <div>📋 Pre-Shipment</div>
-            <div>📋 Post-Shipment</div>
-            <div>📋 Working Capital</div>
-            <div>📋 Term Loan</div>
-            <div>📋 Revolving Credit</div>
-            <div>📋 Project Finance</div>
-            <div>📋 Structured Trade</div>
-            <div>📋 Bullion Finance</div>
-            <div>📋 Metal Finance</div>
-            <div>📋 Energy Finance</div>
-            <div>📋 Soft Commodities</div>
-            <div>📋 Agricultural Finance</div>
-            <div>📋 Infrastructure Finance</div>
-            <div>📋 PPP Finance</div>
-            <div>📋 Municipal Finance</div>
-            <div>📋 Sovereign Finance</div>
-            <div>📋 SPV Finance</div>
-            <div>📋 Securitization</div>
-            <div>📋 Asset-Backed</div>
-            <div>📋 Mortgage-Backed</div>
-            <div>📋 Collateralized</div>
-            <div>📋 Debt</div>
-            <div>📋 Equity</div>
-            <div>📋 Mezzanine</div>
-            <div>📋 Bridge</div>
-            <div>📋 Acquisition</div>
-            <div>📋 Leveraged</div>
-            <div>📋 Development</div>
-            <div>📋 Construction</div>
-            <div>📋 Permanent</div>
-            <div>📋 Take-Out</div>
-            <div>📋 Convertible</div>
-            <div>📋 Participating</div>
-            <div>📋 Syndicated</div>
-            <div>📋 Bilateral</div>
-            <div>📋 Multilateral</div>
-            <div>📋 ECA</div>
-            <div>📋 OPIC</div>
-            <div>📋 MIGA</div>
-            <div>📋 IFC</div>
-            <div>📋 ADB</div>
-            <div>📋 EBRD</div>
-            <div>📋 IDB</div>
-            <div>📋 AFDB</div>
-            <div>📋 IsDB</div>
-            <div>📋 AIIB</div>
-            <div>📋 NDB</div>
-            <div>📋 EIB</div>
-            <div>📋 NIB</div>
-            <div>📋 COFACE</div>
-            <div>📋 EDC</div>
-            <div>📋 EKN</div>
-            <div>📋 SACE</div>
-            <div>📋 HERMES</div>
-            <div>📋 SINOSURE</div>
-            <div>📋 KSURE</div>
-            <div>📋 NEXI</div>
-            <div>📋 ECGC</div>
-            <div>📋 EGFI</div>
-            <div>📋 BPI</div>
-            <div>📋 JBIC</div>
-            <div>📋 KEXIM</div>
-            <div>📋 EIP</div>
-            <div>📋 FEC</div>
-            <div>📋 ONCE</div>
-            <div>📋 ATI</div>
         </div>
     </div>
 </section>
@@ -524,8 +451,8 @@
 <!-- CARDS -->
 <!-- ============================================================ -->
 <section class="page" id="page-cards">
-    <h2 class="section-title">💳 Virtual Cards</h2>
-    <p class="section-sub">Generate, customize, freeze, export, share, set limits, change colors.</p>
+    <h2 class="section-title" data-lang-key="cards_title">💳 Virtual Cards</h2>
+    <p class="section-sub" data-lang-key="cards_sub">Generate, customize, freeze, export, share, set limits, change colors.</p>
     <div class="grid-2">
         <div class="product-card" style="background:linear-gradient(135deg,#0a1a4a,#050810);border-radius:24px;padding:2rem;">
             <div style="font-size:1.8rem;font-weight:800;letter-spacing:2px;" id="cardNumber">••••  ••••  ••••  1234</div>
@@ -534,18 +461,18 @@
                 <span style="background:rgba(255,255,255,0.04);padding:0.2rem 0.6rem;border-radius:8px;font-size:0.6rem;" id="cardLimit">$1,000</span>
             </div>
             <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-                <button class="btn-primary" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="genCard()">Generate</button>
-                <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="toggleFreeze()">Freeze</button>
-                <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="copyCard()">Copy</button>
+                <button class="btn-primary" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="genCard()" data-lang-key="card_generate">Generate</button>
+                <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="toggleFreeze()" data-lang-key="card_freeze">Freeze</button>
+                <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="copyCard()" data-lang-key="card_copy">Copy</button>
             </div>
         </div>
         <div style="display:grid;gap:0.8rem;">
-            <div><label style="font-size:0.7rem;color:var(--muted);">Limit</label><input type="range" min="100" max="100000" step="100" value="1000" style="width:100%;background:rgba(255,255,255,0.04);height:3px;appearance:none;" oninput="setLimit(this.value)"><span style="float:right;color:var(--primary);" id="limitDisplay">$1,000</span></div>
-            <div><label style="font-size:0.7rem;color:var(--muted);">Color</label><select style="width:100%;padding:0.5rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;color:#fff;font-size:0.7rem;" onchange="setColor(this.value)"><option value="#0a1a4a">Blue</option><option value="#1a1a1a">Black</option><option value="#c99a00">Gold</option></select></div>
+            <div><label style="font-size:0.7rem;color:var(--muted);" data-lang-key="card_limit">Limit</label><input type="range" min="100" max="100000" step="100" value="1000" style="width:100%;background:rgba(255,255,255,0.04);height:3px;appearance:none;" oninput="setLimit(this.value)"><span style="float:right;color:var(--primary);" id="limitDisplay">$1,000</span></div>
+            <div><label style="font-size:0.7rem;color:var(--muted);" data-lang-key="card_color">Color</label><select style="width:100%;padding:0.5rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;color:#fff;font-size:0.7rem;" onchange="setColor(this.value)"><option value="#0a1a4a">Blue</option><option value="#1a1a1a">Black</option><option value="#c99a00">Gold</option></select></div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.3rem;">
-                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="add2FA()">2FA</button>
-                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="parentalControl()">Parents</button>
-                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="autoTopup()">Auto</button>
+                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="add2FA()" data-lang-key="card_2fa">2FA</button>
+                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="parentalControl()" data-lang-key="card_parents">Parents</button>
+                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="autoTopup()" data-lang-key="card_auto">Auto</button>
             </div>
         </div>
     </div>
@@ -555,8 +482,8 @@
 <!-- COMMUNITY -->
 <!-- ============================================================ -->
 <section class="page" id="page-community">
-    <h2 class="section-title">👥 Community</h2>
-    <p class="section-sub">Chat, DAO, events, and governance.</p>
+    <h2 class="section-title" data-lang-key="community_title">👥 Community</h2>
+    <p class="section-sub" data-lang-key="community_sub">Chat, DAO, events, and governance.</p>
     <div class="grid-2">
         <div class="glass-premium" style="padding:1.5rem;height:300px;overflow-y:auto;" id="communityChat">
             <div style="padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.02);"><span style="color:var(--primary);font-weight:600;">@alex</span> <span style="float:right;font-size:0.6rem;color:var(--muted);">12:34</span><br>Bought a laptop with UP today!</div>
@@ -565,12 +492,12 @@
         <div>
             <div style="display:flex;gap:0.5rem;">
                 <input type="text" id="chatInput" placeholder="Message..." style="flex:1;padding:0.5rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;color:#fff;font-size:0.7rem;">
-                <button class="btn-primary" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="sendChat()">Send</button>
+                <button class="btn-primary" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="sendChat()" data-lang-key="community_send">Send</button>
             </div>
             <div style="margin-top:1rem;">
-                <button class="btn-gold" style="font-size:0.7rem;padding:0.4rem 1.2rem;width:100%;" onclick="openDAOPoll()"><i class="fas fa-vote-yea"></i> DAO Vote</button>
+                <button class="btn-gold" style="font-size:0.7rem;padding:0.4rem 1.2rem;width:100%;" onclick="openDAOPoll()"><i class="fas fa-vote-yea"></i> <span data-lang-key="community_dao">DAO Vote</span></button>
                 <div id="daoPoll" style="display:none;margin-top:0.5rem;padding:0.8rem;background:rgba(255,255,255,0.02);border-radius:12px;font-size:0.7rem;">
-                    <p>Proposal: Add 100 more companies?</p>
+                    <p data-lang-key="dao_proposal">Proposal: Add 100 more companies?</p>
                     <button class="btn-success" style="font-size:0.6rem;padding:0.2rem 0.8rem;" onclick="voteDAO('yes')">✅ Yes</button>
                     <button class="btn-outline" style="font-size:0.6rem;padding:0.2rem 0.8rem;" onclick="voteDAO('no')">❌ No</button>
                     <span id="voteResult" style="margin-left:0.5rem;color:var(--muted);font-size:0.6rem;"></span>
@@ -584,13 +511,218 @@
 <!-- FOOTER -->
 <!-- ============================================================ -->
 <footer style="padding:2rem 2rem 1rem;border-top:1px solid rgba(255,255,255,0.02);max-width:1440px;margin:0 auto;text-align:center;font-size:0.6rem;color:var(--muted);">
-    © 2026 UnionPay — 1,000+ Products • 500+ Companies • 200+ FinTech Instruments. Contract: 71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T
+    <p>© 2026 UnionPay — 1,000+ Products • 500+ Companies • 200+ FinTech Instruments</p>
+    <p style="margin-top:4px;font-size:0.5rem;word-break:break-all;">Contract: 71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T</p>
+    <div style="margin-top:8px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <img src="up-logo-white.png" alt="UP" style="height:20px;opacity:0.3;">
+        <img src="up-logo-primary.png" alt="UP" style="height:20px;opacity:0.3;">
+        <img src="solana-lance-solana-pay-pr...png" alt="Solana Pay" style="height:20px;opacity:0.3;" onerror="this.style.display='none'">
+    </div>
 </footer>
 
 <!-- ============================================================ -->
 <!-- JAVASCRIPT -->
 <!-- ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script>
+    // ===== AOS =====
+    AOS.init({
+        duration: 800,
+        once: true,
+        easing: 'ease-out-cubic'
+    });
+
+    // ===== ПЕРЕВОДЫ (8 языков) =====
+    const translations = {
+        en: {
+            nav_home: 'Home', nav_products: 'Products', nav_companies: 'Companies',
+            nav_fintech: 'FinTech', nav_cards: 'Cards', nav_community: 'Community',
+            hero_title: 'UnionPay Ecosystem', hero_sub: 'Real products, real companies, real FinTech instruments',
+            hero_shop: 'Shop Now', hero_fintech: 'FinTech',
+            stat_products: 'Products', stat_companies: 'Companies', stat_fintech: 'FinTech', stat_cards: 'Cards',
+            qr_scan: 'Scan to pay with UnionPay',
+            products_title: '🛍️ Products', products_sub: 'Click any product to buy with UP. All links go to real stores.',
+            companies_title: '🏢 Companies', companies_sub: 'Click any company to visit their website. All accept UP.',
+            fintech_title: '🏦 FinTech & Trade Finance', fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 Trade Finance Instruments',
+            fintech_sblc: 'Standby Letter of Credit', fintech_lc: 'Letter of Credit', fintech_bg: 'Bank Guarantee',
+            fintech_po: 'PO / Factoring', fintech_rwa: '🌐 RWA Tokenization',
+            cards_title: '💳 Virtual Cards', cards_sub: 'Generate, customize, freeze, export, share, set limits, change colors.',
+            card_generate: 'Generate', card_freeze: 'Freeze', card_copy: 'Copy',
+            card_limit: 'Limit', card_color: 'Color', card_2fa: '2FA', card_parents: 'Parents', card_auto: 'Auto',
+            community_title: '👥 Community', community_sub: 'Chat, DAO, events, and governance.',
+            community_send: 'Send', community_dao: 'DAO Vote',
+            dao_proposal: 'Proposal: Add 100 more companies?'
+        },
+        ru: {
+            nav_home: 'Главная', nav_products: 'Товары', nav_companies: 'Компании',
+            nav_fintech: 'ФинТех', nav_cards: 'Карты', nav_community: 'Сообщество',
+            hero_title: 'Экосистема UnionPay', hero_sub: 'Реальные товары, компании и финансовые инструменты',
+            hero_shop: 'Магазин', hero_fintech: 'Финансы',
+            stat_products: 'Товаров', stat_companies: 'Компаний', stat_fintech: 'ФинТех', stat_cards: 'Карт',
+            qr_scan: 'Сканируйте для оплаты UnionPay',
+            products_title: '🛍️ Товары', products_sub: 'Нажмите на любой товар, чтобы купить за UP. Все ссылки ведут в реальные магазины.',
+            companies_title: '🏢 Компании', companies_sub: 'Нажмите на компанию, чтобы перейти на сайт. Все принимают UP.',
+            fintech_title: '🏦 ФинТех и Торговое Финансирование',
+            fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 Инструменты торгового финансирования',
+            fintech_sblc: 'Резервный аккредитив', fintech_lc: 'Аккредитив', fintech_bg: 'Банковская гарантия',
+            fintech_po: 'PO / Факторинг', fintech_rwa: '🌐 Токенизация реальных активов',
+            cards_title: '💳 Виртуальные карты', cards_sub: 'Создавайте, настраивайте, замораживайте, меняйте лимиты и цвета.',
+            card_generate: 'Создать', card_freeze: 'Заморозить', card_copy: 'Копировать',
+            card_limit: 'Лимит', card_color: 'Цвет', card_2fa: '2FA', card_parents: 'Родители', card_auto: 'Авто',
+            community_title: '👥 Сообщество', community_sub: 'Чат, DAO, мероприятия и управление.',
+            community_send: 'Отправить', community_dao: 'Голосование DAO',
+            dao_proposal: 'Предложение: Добавить ещё 100 компаний?'
+        },
+        zh: {
+            nav_home: '首页', nav_products: '产品', nav_companies: '公司',
+            nav_fintech: '金融科技', nav_cards: '卡', nav_community: '社区',
+            hero_title: 'UnionPay 生态系统', hero_sub: '真实产品、真实公司、真实金融科技工具',
+            hero_shop: '立即购买', hero_fintech: '金融科技',
+            stat_products: '产品', stat_companies: '公司', stat_fintech: '金融科技', stat_cards: '卡',
+            qr_scan: '扫码使用 UnionPay 支付',
+            products_title: '🛍️ 产品', products_sub: '点击任何产品使用 UP 购买。所有链接均指向真实商店。',
+            companies_title: '🏢 公司', companies_sub: '点击公司访问网站。所有公司均接受 UP。',
+            fintech_title: '🏦 金融科技与贸易金融', fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 贸易金融工具',
+            fintech_sblc: '备用信用证', fintech_lc: '信用证', fintech_bg: '银行保函',
+            fintech_po: 'PO / 保理', fintech_rwa: '🌐 现实资产代币化',
+            cards_title: '💳 虚拟卡', cards_sub: '生成、定制、冻结、更改限额和颜色。',
+            card_generate: '生成', card_freeze: '冻结', card_copy: '复制',
+            card_limit: '限额', card_color: '颜色', card_2fa: '2FA', card_parents: '家长', card_auto: '自动',
+            community_title: '👥 社区', community_sub: '聊天、DAO、活动和治理。',
+            community_send: '发送', community_dao: 'DAO 投票',
+            dao_proposal: '提案：再添加 100 家公司？'
+        },
+        es: {
+            nav_home: 'Inicio', nav_products: 'Productos', nav_companies: 'Empresas',
+            nav_fintech: 'FinTech', nav_cards: 'Tarjetas', nav_community: 'Comunidad',
+            hero_title: 'Ecosistema UnionPay', hero_sub: 'Productos reales, empresas reales, instrumentos FinTech reales',
+            hero_shop: 'Comprar', hero_fintech: 'Finanzas',
+            stat_products: 'Productos', stat_companies: 'Empresas', stat_fintech: 'FinTech', stat_cards: 'Tarjetas',
+            qr_scan: 'Escanea para pagar con UnionPay',
+            products_title: '🛍️ Productos', products_sub: 'Haz clic en cualquier producto para comprar con UP. Todos los enlaces van a tiendas reales.',
+            companies_title: '🏢 Empresas', companies_sub: 'Haz clic en cualquier empresa para visitar su sitio web. Todas aceptan UP.',
+            fintech_title: '🏦 FinTech y Financiación Comercial',
+            fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 Instrumentos de financiación comercial',
+            fintech_sblc: 'Carta de crédito standby', fintech_lc: 'Carta de crédito', fintech_bg: 'Garantía bancaria',
+            fintech_po: 'PO / Factoring', fintech_rwa: '🌐 Tokenización de activos reales',
+            cards_title: '💳 Tarjetas virtuales', cards_sub: 'Genera, personaliza, congela, cambia límites y colores.',
+            card_generate: 'Generar', card_freeze: 'Congelar', card_copy: 'Copiar',
+            card_limit: 'Límite', card_color: 'Color', card_2fa: '2FA', card_parents: 'Padres', card_auto: 'Auto',
+            community_title: '👥 Comunidad', community_sub: 'Chat, DAO, eventos y gobernanza.',
+            community_send: 'Enviar', community_dao: 'Voto DAO',
+            dao_proposal: 'Propuesta: ¿Añadir 100 empresas más?'
+        },
+        fr: {
+            nav_home: 'Accueil', nav_products: 'Produits', nav_companies: 'Entreprises',
+            nav_fintech: 'FinTech', nav_cards: 'Cartes', nav_community: 'Communauté',
+            hero_title: 'Écosystème UnionPay', hero_sub: 'Produits réels, entreprises réelles, instruments FinTech réels',
+            hero_shop: 'Acheter', hero_fintech: 'Finances',
+            stat_products: 'Produits', stat_companies: 'Entreprises', stat_fintech: 'FinTech', stat_cards: 'Cartes',
+            qr_scan: 'Scannez pour payer avec UnionPay',
+            products_title: '🛍️ Produits', products_sub: 'Cliquez sur un produit pour l\'acheter avec UP. Tous les liens mènent à des magasins réels.',
+            companies_title: '🏢 Entreprises', companies_sub: 'Cliquez sur une entreprise pour visiter son site web. Toutes acceptent UP.',
+            fintech_title: '🏦 FinTech & Finance Commerciale',
+            fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 Instruments de financement commercial',
+            fintech_sblc: 'Lettre de crédit stand-by', fintech_lc: 'Lettre de crédit', fintech_bg: 'Garantie bancaire',
+            fintech_po: 'PO / Affacturage', fintech_rwa: '🌐 Tokenisation d\'actifs réels',
+            cards_title: '💳 Cartes virtuelles', cards_sub: 'Générez, personnalisez, gelez, modifiez les limites et couleurs.',
+            card_generate: 'Générer', card_freeze: 'Geler', card_copy: 'Copier',
+            card_limit: 'Limite', card_color: 'Couleur', card_2fa: '2FA', card_parents: 'Parents', card_auto: 'Auto',
+            community_title: '👥 Communauté', community_sub: 'Chat, DAO, événements et gouvernance.',
+            community_send: 'Envoyer', community_dao: 'Vote DAO',
+            dao_proposal: 'Proposition: Ajouter 100 entreprises de plus?'
+        },
+        de: {
+            nav_home: 'Start', nav_products: 'Produkte', nav_companies: 'Unternehmen',
+            nav_fintech: 'FinTech', nav_cards: 'Karten', nav_community: 'Community',
+            hero_title: 'UnionPay Ökosystem', hero_sub: 'Echte Produkte, echte Unternehmen, echte FinTech-Instrumente',
+            hero_shop: 'Jetzt kaufen', hero_fintech: 'Finanzen',
+            stat_products: 'Produkte', stat_companies: 'Unternehmen', stat_fintech: 'FinTech', stat_cards: 'Karten',
+            qr_scan: 'Scannen Sie zum Bezahlen mit UnionPay',
+            products_title: '🛍️ Produkte', products_sub: 'Klicken Sie auf ein Produkt, um es mit UP zu kaufen. Alle Links führen zu echten Geschäften.',
+            companies_title: '🏢 Unternehmen', companies_sub: 'Klicken Sie auf ein Unternehmen, um dessen Website zu besuchen. Alle akzeptieren UP.',
+            fintech_title: '🏦 FinTech & Handelsfinanzierung',
+            fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 Handelsfinanzierungsinstrumente',
+            fintech_sblc: 'Standby-Akkreditiv', fintech_lc: 'Akkreditiv', fintech_bg: 'Bankgarantie',
+            fintech_po: 'PO / Factoring', fintech_rwa: '🌐 Tokenisierung realer Vermögenswerte',
+            cards_title: '💳 Virtuelle Karten', cards_sub: 'Generieren, anpassen, einfrieren, Limits und Farben ändern.',
+            card_generate: 'Generieren', card_freeze: 'Einfrieren', card_copy: 'Kopieren',
+            card_limit: 'Limit', card_color: 'Farbe', card_2fa: '2FA', card_parents: 'Eltern', card_auto: 'Auto',
+            community_title: '👥 Community', community_sub: 'Chat, DAO, Events und Governance.',
+            community_send: 'Senden', community_dao: 'DAO-Abstimmung',
+            dao_proposal: 'Vorschlag: 100 weitere Unternehmen hinzufügen?'
+        },
+        ja: {
+            nav_home: 'ホーム', nav_products: '商品', nav_companies: '企業',
+            nav_fintech: 'フィンテック', nav_cards: 'カード', nav_community: 'コミュニティ',
+            hero_title: 'UnionPay エコシステム', hero_sub: '実際の製品、実際の企業、実際のFinTech手段',
+            hero_shop: '購入する', hero_fintech: '金融',
+            stat_products: '商品', stat_companies: '企業', stat_fintech: 'フィンテック', stat_cards: 'カード',
+            qr_scan: 'スキャンして UnionPay で支払う',
+            products_title: '🛍️ 商品', products_sub: '商品をクリックして UP で購入。すべてのリンクは実際のストアにリンクしています。',
+            companies_title: '🏢 企業', companies_sub: '企業をクリックしてウェブサイトを訪問。すべて UP を受け入れています。',
+            fintech_title: '🏦 フィンテック＆貿易金融',
+            fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 貿易金融商品',
+            fintech_sblc: 'スタンドバイ・クレジット', fintech_lc: '信用状', fintech_bg: '銀行保証',
+            fintech_po: 'PO / ファクタリング', fintech_rwa: '🌐 現実資産のトークン化',
+            cards_title: '💳 バーチャルカード', cards_sub: '生成、カスタマイズ、凍結、限度額と色の変更。',
+            card_generate: '生成', card_freeze: '凍結', card_copy: 'コピー',
+            card_limit: '限度額', card_color: '色', card_2fa: '2FA', card_parents: '保護者', card_auto: '自動',
+            community_title: '👥 コミュニティ', community_sub: 'チャット、DAO、イベント、ガバナンス。',
+            community_send: '送信', community_dao: 'DAO投票',
+            dao_proposal: '提案: さらに100社追加しますか？'
+        },
+        ar: {
+            nav_home: 'الرئيسية', nav_products: 'المنتجات', nav_companies: 'الشركات',
+            nav_fintech: 'التكنولوجيا المالية', nav_cards: 'البطاقات', nav_community: 'المجتمع',
+            hero_title: 'نظام UnionPay البيئي', hero_sub: 'منتجات حقيقية، شركات حقيقية، أدوات مالية حقيقية',
+            hero_shop: 'تسوق الآن', hero_fintech: 'التمويل',
+            stat_products: 'المنتجات', stat_companies: 'الشركات', stat_fintech: 'التكنولوجيا المالية', stat_cards: 'البطاقات',
+            qr_scan: 'امسح للدفع باستخدام UnionPay',
+            products_title: '🛍️ المنتجات', products_sub: 'انقر على أي منتج للشراء بـ UP. جميع الروابط تؤدي إلى متاجر حقيقية.',
+            companies_title: '🏢 الشركات', companies_sub: 'انقر على أي شركة لزيارة موقعها. جميعها تقبل UP.',
+            fintech_title: '🏦 التكنولوجيا المالية والتمويل التجاري',
+            fintech_sub: 'SBLC, LC, BG, RWA, SWIFT, SEPA, S2S, IP2IP, L2L, M0/M1',
+            fintech_trade: '📜 أدوات التمويل التجاري',
+            fintech_sblc: 'خطاب اعتماد احتياطي', fintech_lc: 'خطاب اعتماد', fintech_bg: 'ضمان بنكي',
+            fintech_po: 'PO / التخصيم', fintech_rwa: '🌐 ترميز الأصول الحقيقية',
+            cards_title: '💳 البطاقات الافتراضية', cards_sub: 'إنشاء، تخصيص، تجميد، تغيير الحدود والألوان.',
+            card_generate: 'إنشاء', card_freeze: 'تجميد', card_copy: 'نسخ',
+            card_limit: 'الحد', card_color: 'اللون', card_2fa: '2FA', card_parents: 'الآباء', card_auto: 'تلقائي',
+            community_title: '👥 المجتمع', community_sub: 'الدردشة، DAO، الفعاليات والحوكمة.',
+            community_send: 'إرسال', community_dao: 'تصويت DAO',
+            dao_proposal: 'اقتراح: إضافة 100 شركة أخرى؟'
+        }
+    };
+
+    let currentLang = 'en';
+
+    // ===== ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА =====
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-selector button').forEach(b => {
+            b.classList.toggle('active', b.dataset.lang === lang);
+        });
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+            const key = el.dataset.langKey;
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
+            }
+        });
+        showToast('🌐 Language: ' + lang.toUpperCase());
+    }
+
+    document.querySelectorAll('.lang-selector button').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+
     // ===== TOAST =====
     function showToast(msg) {
         const old = document.querySelector('.toast-premium');
@@ -635,7 +767,7 @@
     function initProducts() {
         const grid = document.getElementById('productGrid');
         grid.innerHTML = products.map(p => `
-            <div class="product-card" onclick="window.open('${p.link}','_blank')">
+            <div class="product-card" onclick="window.open('${p.link}','_blank')" data-aos="fade-up">
                 <div style="font-size:2rem;">🛍️</div>
                 <h4>${p.name}</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">${p.company}</div>
@@ -643,6 +775,8 @@
                 <button class="btn-gold" style="font-size:0.6rem;padding:0.2rem 1rem;">Buy with UP</button>
             </div>
         `).join('');
+        // Re-init AOS for new elements
+        AOS.refresh();
     }
     initProducts();
 
@@ -665,13 +799,14 @@
     function initCompanies() {
         const grid = document.getElementById('companyGrid');
         grid.innerHTML = companies.map(c => `
-            <div class="product-card" onclick="window.open('${c.link}','_blank')">
+            <div class="product-card" onclick="window.open('${c.link}','_blank')" data-aos="fade-up" data-aos-delay="100">
                 <div style="font-size:2rem;">🏢</div>
                 <h4>${c.name}</h4>
                 <div style="color:var(--muted);font-size:0.6rem;">${c.category}</div>
                 <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit</button>
             </div>
         `).join('');
+        AOS.refresh();
     }
     initCompanies();
 
@@ -738,7 +873,7 @@
         setTimeout(() => { document.getElementById('daoPoll').style.display = 'none'; }, 2000);
     }
 
-    showToast('🚀 UnionPay ecosystem loaded');
+    showToast('🚀 UnionPay ecosystem loaded • 8 languages');
 </script>
 </body>
 </html>
