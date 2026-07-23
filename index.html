@@ -1,744 +1,1496 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UnionPay — FinTech & Real Products</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* ===== СТИЛИ (такие же как в последнем коде) ===== */
-        * { margin:0; padding:0; box-sizing:border-box; }
-        :root {
-            --primary: #0a6bff;
-            --secondary: #00d4ff;
-            --gold: #f0b90b;
-            --dark: #060b18;
-            --text: #e8edf5;
-            --muted: #6a7a9a;
-        }
-        body { font-family:'Inter',sans-serif; background:var(--dark); color:var(--text); overflow-x:hidden; line-height:1.6; }
-        ::-webkit-scrollbar { width:4px; }
-        ::-webkit-scrollbar-track { background:var(--dark); }
-        ::-webkit-scrollbar-thumb { background:var(--primary); border-radius:10px; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚀 UnionPay PRO Builder</title>
+  
+  <!-- CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  
+  <!-- JSZip & FileSaver -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  
+  <!-- Chart.js для графиков -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-        .glass-premium {
-            background: rgba(255,255,255,0.02);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255,255,255,0.04);
-            border-radius: 32px;
-        }
+  <style>
+    /* ===== ГЛОБАЛЬНЫЙ СТИЛЬ ===== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #07070e;
+      color: #b8c6db;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
-        header {
-            position:fixed; top:0; left:0; right:0; z-index:10000;
-            padding:0.6rem 2rem;
-            background:rgba(6,11,24,0.94);
-            backdrop-filter:blur(30px);
-            border-bottom:1px solid rgba(255,255,255,0.02);
-            display:flex; justify-content:space-between; align-items:center;
-            flex-wrap:wrap; gap:0.5rem;
-        }
-        .logo { display:flex; align-items:center; gap:10px; font-weight:900; font-size:1.2rem; color:#fff; text-decoration:none; }
-        .logo img { height:28px; }
-        .logo span { background:linear-gradient(135deg,#fff,var(--primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        nav { display:flex; gap:0.2rem; flex-wrap:wrap; }
-        nav a {
-            color:var(--muted); text-decoration:none; font-size:0.6rem; font-weight:500;
-            padding:0.3rem 0.6rem; border-radius:6px; transition:0.3s; cursor:pointer;
-            text-transform:uppercase; letter-spacing:0.3px;
-        }
-        nav a:hover, nav a.active { color:#fff; background:rgba(10,107,255,0.1); }
-        .btn-wallet {
-            background:linear-gradient(135deg,var(--primary),#0044cc);
-            padding:0.3rem 1rem; border-radius:40px; color:#fff; border:none;
-            font-weight:600; font-size:0.65rem; cursor:pointer; transition:0.3s;
-        }
-        .btn-wallet:hover { transform:scale(1.05); }
+    /* ===== ВЕРХНЯЯ ПАНЕЛЬ ===== */
+    .top-bar {
+      background: rgba(12, 18, 34, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 180, 255, 0.08);
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .top-bar .logo {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00ccff, #0066ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      margin-right: 12px;
+    }
+    .top-bar .logo small {
+      font-size: 12px;
+      -webkit-text-fill-color: #4a6a8a;
+      font-weight: 400;
+    }
+    .top-bar input[type="text"] {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 18px;
+      border-radius: 30px;
+      border: 1px solid rgba(0, 180, 255, 0.15);
+      background: rgba(10, 15, 30, 0.6);
+      color: #d0e4ff;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .top-bar input:focus {
+      outline: none;
+      border-color: #00aaff;
+      box-shadow: 0 0 30px rgba(0, 170, 255, 0.08);
+    }
+    .top-bar .btn {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #0066ff, #00ccff);
+      color: #fff;
+      box-shadow: 0 0 25px rgba(0, 100, 255, 0.25);
+    }
+    .btn-primary:hover { transform: scale(1.04); box-shadow: 0 0 45px rgba(0, 100, 255, 0.4); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0, 180, 255, 0.15);
+      color: #8ab4d8;
+    }
+    .btn-secondary:hover { background: rgba(0, 180, 255, 0.08); }
+    .btn-success {
+      background: linear-gradient(135deg, #00c853, #00e676);
+      color: #fff;
+      box-shadow: 0 0 25px rgba(0, 200, 80, 0.2);
+    }
+    .btn-success:hover { transform: scale(1.04); }
+    .btn-danger {
+      background: linear-gradient(135deg, #ff1744, #ff5252);
+      color: #fff;
+    }
+    .btn-danger:hover { transform: scale(1.04); }
 
-        .page { display:none; padding:5rem 2rem 3rem; max-width:1440px; margin:0 auto; }
-        .page.active { display:block; animation:fadeSlide 0.5s ease; }
-        @keyframes fadeSlide { 0%{opacity:0;transform:translateY(20px)} 100%{opacity:1;transform:translateY(0)} }
+    /* ===== ОСНОВНАЯ ОБЛАСТЬ ===== */
+    .main-area {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      gap: 0;
+    }
 
-        .section-title { font-size:2.5rem; font-weight:800; line-height:1.05; background:linear-gradient(135deg,#fff,var(--primary)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.5rem; }
-        .section-sub { color:var(--muted); font-size:1rem; margin-bottom:1.5rem; max-width:600px; }
+    /* Левая панель - Редактор */
+    .left-panel {
+      flex: 1.4;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid rgba(0, 180, 255, 0.06);
+    }
+    .panel-header {
+      padding: 8px 16px;
+      background: rgba(0, 80, 160, 0.08);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #5a8aaa;
+      border-bottom: 1px solid rgba(0, 180, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .panel-header .badge {
+      background: rgba(0, 200, 255, 0.1);
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 9px;
+      color: #00ccff;
+    }
+    .CodeMirror {
+      height: 100% !important;
+      font-size: 13px;
+      background: #0a0e1a !important;
+    }
+    .CodeMirror-gutters { background: #0a0e1a !important; border-right: 1px solid #1a2a3a; }
 
-        .btn-primary {
-            background:linear-gradient(135deg,var(--primary),#0044cc);
-            padding:0.6rem 1.8rem; border-radius:60px; color:#fff; font-weight:600;
-            border:none; cursor:pointer; transition:0.3s; font-size:0.8rem;
-            display:inline-flex; align-items:center; gap:8px;
-            box-shadow:0 0 30px rgba(10,107,255,0.1);
-        }
-        .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 50px rgba(10,107,255,0.25); }
-        .btn-gold {
-            background:linear-gradient(135deg,var(--gold),#c99a00);
-            padding:0.6rem 1.8rem; border-radius:60px; color:var(--dark); font-weight:600;
-            border:none; cursor:pointer; transition:0.3s; font-size:0.8rem;
-            display:inline-flex; align-items:center; gap:8px;
-        }
-        .btn-gold:hover { transform:translateY(-2px); box-shadow:0 0 40px rgba(240,185,11,0.2); }
-        .btn-outline {
-            background:transparent; border:1px solid rgba(255,255,255,0.06);
-            padding:0.6rem 1.8rem; border-radius:60px; color:#fff; font-weight:500;
-            cursor:pointer; transition:0.3s; font-size:0.8rem;
-            display:inline-flex; align-items:center; gap:8px;
-        }
-        .btn-outline:hover { background:rgba(255,255,255,0.02); border-color:var(--primary); }
-        .btn-success {
-            background:linear-gradient(135deg,#44ff88,#00cc66);
-            padding:0.5rem 1.5rem; border-radius:60px; color:var(--dark); font-weight:600;
-            border:none; cursor:pointer; transition:0.3s; font-size:0.75rem;
-        }
-        .btn-success:hover { transform:scale(1.02); }
+    /* Центральная панель - Превью */
+    .center-panel {
+      flex: 2.2;
+      display: flex;
+      flex-direction: column;
+      background: #0a0e1a;
+    }
+    .center-panel iframe {
+      flex: 1;
+      border: none;
+      background: #fff;
+      width: 100%;
+    }
+    .preview-toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(0, 80, 160, 0.05);
+      border-bottom: 1px solid rgba(0, 180, 255, 0.06);
+      flex-shrink: 0;
+      align-items: center;
+    }
+    .preview-toolbar .url-bar {
+      flex: 1;
+      font-size: 12px;
+      color: #5a7a9a;
+      padding: 4px 12px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 20px;
+      font-family: monospace;
+    }
+    .preview-toolbar .device-btn {
+      background: none;
+      border: 1px solid rgba(0, 180, 255, 0.1);
+      color: #5a7a9a;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: 0.2s;
+    }
+    .preview-toolbar .device-btn:hover, .preview-toolbar .device-btn.active {
+      background: rgba(0, 180, 255, 0.1);
+      color: #00ccff;
+      border-color: rgba(0, 180, 255, 0.3);
+    }
 
-        .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-        .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; }
-        .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
-        .grid-5 { display:grid; grid-template-columns:repeat(5,1fr); gap:1rem; }
+    /* Правая панель - Настройки + Инструменты */
+    .right-panel {
+      flex: 1;
+      min-width: 280px;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      background: rgba(8, 12, 24, 0.9);
+      border-left: 1px solid rgba(0, 180, 255, 0.06);
+      overflow: hidden;
+    }
+    .right-tabs {
+      display: flex;
+      background: rgba(0, 80, 160, 0.05);
+      border-bottom: 1px solid rgba(0, 180, 255, 0.06);
+      flex-shrink: 0;
+    }
+    .right-tabs .tab {
+      flex: 1;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #5a7a9a;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: 0.3s;
+    }
+    .right-tabs .tab:hover { color: #8ab4d8; }
+    .right-tabs .tab.active {
+      color: #00ccff;
+      border-bottom-color: #00ccff;
+      background: rgba(0, 180, 255, 0.03);
+    }
+    .right-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 16px;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
-        .product-card {
-            padding:1.2rem;
-            background:rgba(255,255,255,0.015);
-            border-radius:20px;
-            border:1px solid rgba(255,255,255,0.03);
-            transition:0.3s;
-            cursor:pointer;
-            text-align:center;
-        }
-        .product-card:hover { border-color:rgba(10,107,255,0.15); transform:translateY(-4px); box-shadow:0 10px 40px rgba(0,0,0,0.2); }
+    /* ===== КОМПОНЕНТЫ НАСТРОЕК ===== */
+    .setting-group {
+      margin-bottom: 16px;
+    }
+    .setting-group label {
+      display: block;
+      font-size: 11px;
+      color: #6a8aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .setting-group .color-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .setting-group input[type="color"] {
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(0, 180, 255, 0.1);
+      border-radius: 10px;
+      background: transparent;
+      cursor: pointer;
+      padding: 2px;
+    }
+    .setting-group input[type="text"], 
+    .setting-group select,
+    .setting-group input[type="number"] {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 180, 255, 0.08);
+      background: rgba(10, 15, 30, 0.5);
+      color: #d0e4ff;
+      font-size: 13px;
+    }
+    .setting-group select option { background: #0a0e1a; }
+    .setting-group .range-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .setting-group input[type="range"] {
+      flex: 1;
+      height: 4px;
+      -webkit-appearance: none;
+      background: linear-gradient(90deg, #0066ff, #00ccff);
+      border-radius: 4px;
+      outline: none;
+    }
+    .setting-group input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #00ccff;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
+    }
 
-        .toast-premium {
-            position:fixed; bottom:20px; right:20px; z-index:99999;
-            background:rgba(10,107,255,0.1); backdrop-filter:blur(20px);
-            border:1px solid rgba(255,255,255,0.03); border-radius:12px;
-            padding:12px 20px; color:#fff; font-size:0.85rem;
-            box-shadow:0 20px 60px rgba(0,0,0,0.4);
-            animation:toastIn 0.3s ease;
-            max-width:90vw;
-        }
-        @keyframes toastIn { 0%{opacity:0;transform:translateY(20px) scale(0.95)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+    /* ===== БИБЛИОТЕКА БЛОКОВ ===== */
+    .block-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .block-item {
+      background: rgba(0, 80, 160, 0.05);
+      border: 1px solid rgba(0, 180, 255, 0.06);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 12px;
+      color: #8ab4d8;
+    }
+    .block-item:hover {
+      background: rgba(0, 180, 255, 0.08);
+      border-color: rgba(0, 180, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    .block-item .icon { font-size: 28px; display: block; margin-bottom: 4px; }
 
-        @media (max-width:1024px) {
-            .grid-3, .grid-4, .grid-5 { grid-template-columns:1fr 1fr; }
-            .grid-2 { grid-template-columns:1fr; }
-            .page { padding:4rem 1rem 2rem; }
-            .section-title { font-size:2rem; }
-        }
-        @media (max-width:600px) {
-            .grid-3, .grid-4, .grid-5 { grid-template-columns:1fr; }
-            header { padding:0.4rem 0.8rem; }
-            nav a { font-size:0.5rem; padding:0.2rem 0.4rem; }
-        }
-    </style>
+    /* ===== ИСТОРИЯ ===== */
+    .history-list {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+      background: rgba(0, 80, 160, 0.03);
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 12px;
+    }
+    .history-item:hover { background: rgba(0, 180, 255, 0.06); }
+    .history-item.active { background: rgba(0, 180, 255, 0.1); border-left: 2px solid #00ccff; }
+    .history-item .time { color: #4a6a8a; font-size: 10px; }
+    .history-item .del { color: #ff1744; cursor: pointer; padding: 0 6px; }
+
+    /* ===== СТАТУС-БАР ===== */
+    .status-bar {
+      background: rgba(0, 80, 160, 0.05);
+      border-top: 1px solid rgba(0, 180, 255, 0.06);
+      padding: 4px 20px;
+      font-size: 11px;
+      color: #4a6a8a;
+      display: flex;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .status-bar .stat {
+      display: flex;
+      gap: 16px;
+    }
+    .status-bar .stat span { color: #6a8aaa; }
+
+    /* ===== АДАПТИВ ===== */
+    @media (max-width: 1200px) {
+      .right-panel { min-width: 220px; max-width: 280px; }
+    }
+    @media (max-width: 900px) {
+      .main-area { flex-direction: column; }
+      .left-panel { flex: 1; border-right: none; border-bottom: 1px solid rgba(0, 180, 255, 0.06); }
+      .center-panel { flex: 1.5; }
+      .right-panel { flex: 0.8; min-width: unset; max-width: unset; border-left: none; border-top: 1px solid rgba(0, 180, 255, 0.06); }
+    }
+
+    /* Скролл */
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #07070e; }
+    ::-webkit-scrollbar-thumb { background: #1a3a5a; border-radius: 10px; }
+  </style>
 </head>
 <body>
 
-<header>
-    <a href="#" class="logo" onclick="showPage('home')">
-        <img src="up-logo-primary.png" alt="UP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22%3E%3Crect width=%2228%22 height=%2228%22 fill=%22%231e8bff%22/%3E%3Ctext x=%226%22 y=%2220%22 fill=%22white%22 font-size=%2216%22 font-family=%22Arial%22%3EUP%3C/text%3E%3C/svg%3E'">
-        <span>UnionPay</span>
-    </a>
-    <nav id="mainNav">
-        <a class="active" onclick="showPage('home')">Home</a>
-        <a onclick="showPage('products')">Products</a>
-        <a onclick="showPage('companies')">Companies</a>
-        <a onclick="showPage('fintech')">FinTech</a>
-        <a onclick="showPage('cards')">Cards</a>
-        <a onclick="showPage('community')">Community</a>
-    </nav>
-    <button class="btn-wallet" id="walletBtn" onclick="connectWallet()"><i class="fas fa-wallet"></i> <span id="walletText">Connect</span></button>
-</header>
+<!-- ===== ВЕРХНЯЯ ПАНЕЛЬ ===== -->
+<div class="top-bar">
+  <div class="logo">⟠ UnionPay <small>PRO</small></div>
+  <input id="promptInput" type="text" placeholder="Опишите сайт для токена UnionPay..." value="полноценный лендинг для криптотокена UnionPay с графиком, дорожной картой, токеномикой и кнопкой покупки">
+  <button class="btn btn-primary" id="generateBtn">✦ Генерировать</button>
+  <button class="btn btn-secondary" id="exportHtmlBtn">⬇ HTML</button>
+  <button class="btn btn-secondary" id="exportZipBtn">📦 ZIP</button>
+  <button class="btn btn-success" id="exportFullBtn">🚀 Полный сайт</button>
+</div>
 
-<!-- ============================================================ -->
-<!-- HOME -->
-<!-- ============================================================ -->
-<section class="page active" id="page-home">
-    <h2 class="section-title">UnionPay Ecosystem<br><span style="font-size:1.5rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">Products • Companies • FinTech</span></h2>
-    <p class="section-sub">Real products, real companies, real FinTech instruments. Every click increases token turnover.</p>
-    <div class="grid-4" style="margin:2rem 0;">
-        <div class="product-card" onclick="showPage('products')"><div style="font-size:2rem;">🛍️</div><strong>Products</strong><div style="color:var(--muted);font-size:0.7rem;">1,000+</div></div>
-        <div class="product-card" onclick="showPage('companies')"><div style="font-size:2rem;">🏢</div><strong>Companies</strong><div style="color:var(--muted);font-size:0.7rem;">500+</div></div>
-        <div class="product-card" onclick="showPage('fintech')"><div style="font-size:2rem;">🏦</div><strong>FinTech</strong><div style="color:var(--muted);font-size:0.7rem;">200+</div></div>
-        <div class="product-card" onclick="showPage('cards')"><div style="font-size:2rem;">💳</div><strong>Cards</strong><div style="color:var(--muted);font-size:0.7rem;">150+</div></div>
+<!-- ===== ОСНОВНАЯ ОБЛАСТЬ ===== -->
+<div class="main-area">
+  
+  <!-- ЛЕВАЯ ПАНЕЛЬ: Редактор -->
+  <div class="left-panel">
+    <div class="panel-header">
+      <span>📝 Редактор кода</span>
+      <span class="badge" id="lineCount">0 строк</span>
     </div>
-</section>
+    <textarea id="codeEditor"></textarea>
+  </div>
 
-<!-- ============================================================ -->
-<!-- PRODUCTS (здесь твой код из предыдущего сообщения) -->
-<!-- ============================================================ -->
-<section class="page" id="page-products">
-    <h2 class="section-title">🛍️ Products <span style="font-size:1rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">1,000+ real products</span></h2>
-    <p class="section-sub">Click any product to buy with UP. All links go to real stores.</p>
-    <div class="grid-4" id="productGrid"></div>
-</section>
+  <!-- ЦЕНТРАЛЬНАЯ ПАНЕЛЬ: Превью -->
+  <div class="center-panel">
+    <div class="preview-toolbar">
+      <span style="color:#4a6a8a; font-size:12px;">👁️</span>
+      <span class="url-bar" id="previewUrl">about:blank</span>
+      <button class="device-btn active" data-width="100%">🖥️</button>
+      <button class="device-btn" data-width="768px">📱</button>
+      <button class="device-btn" data-width="480px">📱</button>
+      <button class="device-btn" id="refreshPreviewBtn">🔄</button>
+    </div>
+    <iframe id="previewFrame" sandbox="allow-scripts allow-modals allow-same-origin"></iframe>
+  </div>
 
-<!-- ============================================================ -->
-<!-- COMPANIES (здесь твой код из предыдущего сообщения) -->
-<!-- ============================================================ -->
-<section class="page" id="page-companies">
-    <h2 class="section-title">🏢 Companies <span style="font-size:1rem;color:var(--muted);-webkit-text-fill-color:var(--muted);">500+ real companies</span></h2>
-    <p class="section-sub">Click any company to visit their website. All accept UP.</p>
-    <div class="grid-4" id="companyGrid"></div>
-</section>
-
-<!-- ============================================================ -->
-<!-- FINTECH — 300+ инструментов с реальными ссылками -->
-<!-- ============================================================ -->
-<section class="page" id="page-fintech">
-    <h2 class="section-title" style="background:linear-gradient(135deg,var(--secondary),#0088ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🏦 FinTech & Trade Finance</h2>
-    <p class="section-sub">SBLC, LC, BG, RWA, SWIFT, SEPA, Server-to-Server, IP-to-IP, Ledger-to-Ledger, M0/M1 — all with real links.</p>
-
-    <!-- SBLC / LC / BG -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--gold);margin-bottom:0.8rem;">📜 Trade Finance Instruments</h4>
-        <div class="grid-4">
-            <div class="product-card" onclick="window.open('https://www.icicibank.com.sg/corporate-banking/trade','_blank')">
-                <div style="font-size:2rem;">📄</div>
-                <h4>SBLC</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Standby Letter of Credit</div>
-                <div style="color:var(--gold);font-weight:700;">4.2%</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ICICI Bank →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.blackrockbankbroker.com','_blank')">
-                <div style="font-size:2rem;">📑</div>
-                <h4>LC</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Letter of Credit</div>
-                <div style="color:var(--secondary);font-weight:700;">3.8%</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.blackrockbankbroker.com','_blank')">
-                <div style="font-size:2rem;">🤝</div>
-                <h4>BG</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Bank Guarantee</div>
-                <div style="color:var(--gold);font-weight:700;">5.1%</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.muganmanagement.com','_blank')">
-                <div style="font-size:2rem;">🏛️</div>
-                <h4>Trade Finance</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">PO / Factoring</div>
-                <div style="color:#44ff88;font-weight:700;">$100K+</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Mugan →</button>
-            </div>
-        </div>
+  <!-- ПРАВАЯ ПАНЕЛЬ: Настройки + Инструменты -->
+  <div class="right-panel">
+    <div class="right-tabs">
+      <div class="tab active" data-tab="styles">🎨 Стили</div>
+      <div class="tab" data-tab="blocks">🧱 Блоки</div>
+      <div class="tab" data-tab="history">⏳ История</div>
+      <div class="tab" data-tab="export">📤 Экспорт</div>
     </div>
 
-    <!-- RWA Tokenization -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--secondary);margin-bottom:0.8rem;">🌐 RWA Tokenization</h4>
-        <div class="grid-4">
-            <div class="product-card" onclick="window.open('https://investax.io','_blank')">
-                <div style="font-size:2rem;">🔗</div>
-                <h4>InvestaX</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">MAS Licensed</div>
-                <div style="color:var(--gold);font-weight:700;">RWA Platform</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.secuzine.com','_blank')">
-                <div style="font-size:2rem;">🏢</div>
-                <h4>Securitize</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">US Digital Securities</div>
-                <div style="color:var(--secondary);font-weight:700;">$50B+</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.oblivate.com','_blank')">
-                <div style="font-size:2rem;">📊</div>
-                <h4>Obligate</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">On-Chain Debt</div>
-                <div style="color:var(--gold);font-weight:700;">Switzerland</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.gaiatoken.com','_blank')">
-                <div style="font-size:2rem;">🌍</div>
-                <h4>GAIA</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Real Estate RWA</div>
-                <div style="color:#44ff88;font-weight:700;">$100 Min</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit →</button>
-            </div>
+    <div class="right-content">
+      
+      <!-- ВКЛАДКА: Стили -->
+      <div class="tab-content active" id="tab-styles">
+        <div class="setting-group">
+          <label>🎨 Основной цвет</label>
+          <div class="color-row">
+            <input type="color" id="primaryColor" value="#0066ff">
+            <input type="text" id="primaryColorHex" value="#0066ff" style="flex:1;">
+          </div>
         </div>
-        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
-            📌 RWA market: $46T opportunity • Ethereum leads with 50% market share • BNB Chain grew 100% in 2026
+        <div class="setting-group">
+          <label>✨ Акцентный цвет</label>
+          <div class="color-row">
+            <input type="color" id="accentColor" value="#00ccff">
+            <input type="text" id="accentColorHex" value="#00ccff" style="flex:1;">
+          </div>
         </div>
+        <div class="setting-group">
+          <label>🌑 Фон страницы</label>
+          <div class="color-row">
+            <input type="color" id="bgColor" value="#0a0a12">
+            <input type="text" id="bgColorHex" value="#0a0a12" style="flex:1;">
+          </div>
+        </div>
+        <div class="setting-group">
+          <label>🔤 Шрифт</label>
+          <select id="fontSelect">
+            <option value="'Orbitron', sans-serif">Orbitron (кибер)</option>
+            <option value="'Rajdhani', sans-serif">Rajdhani</option>
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="'Segoe UI', system-ui">Segoe UI</option>
+            <option value="'Press Start 2P', cursive">Pixel (ретро)</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label>📏 Размер шрифта</label>
+          <div class="range-row">
+            <input type="range" id="fontSizeRange" min="12" max="24" value="16">
+            <span id="fontSizeDisplay" style="min-width:40px;">16px</span>
+          </div>
+        </div>
+        <div class="setting-group">
+          <label>📐 Скругление углов</label>
+          <div class="range-row">
+            <input type="range" id="borderRadiusRange" min="0" max="40" value="20">
+            <span id="borderRadiusDisplay" style="min-width:40px;">20px</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="applySettingsBtn" style="width:100%;">Применить стиль</button>
+        <button class="btn btn-secondary" id="resetSettingsBtn" style="width:100%; margin-top:8px;">↺ Сбросить</button>
+      </div>
+
+      <!-- ВКЛАДКА: Блоки -->
+      <div class="tab-content" id="tab-blocks">
+        <p style="font-size:12px; color:#5a7a9a; margin-bottom:12px;">Добавьте блок на страницу:</p>
+        <div class="block-grid">
+          <div class="block-item" data-block="hero"><span class="icon">🏆</span> Герой</div>
+          <div class="block-item" data-block="chart"><span class="icon">📈</span> График</div>
+          <div class="block-item" data-block="roadmap"><span class="icon">🗺️</span> Дорожная карта</div>
+          <div class="block-item" data-block="tokenomics"><span class="icon">💰</span> Токеномика</div>
+          <div class="block-item" data-block="team"><span class="icon">👥</span> Команда</div>
+          <div class="block-item" data-block="faq"><span class="icon">❓</span> FAQ</div>
+          <div class="block-item" data-block="partners"><span class="icon">🤝</span> Партнеры</div>
+          <div class="block-item" data-block="footer"><span class="icon">📌</span> Футер</div>
+        </div>
+        <div style="margin-top:12px;">
+          <label style="font-size:11px; color:#5a7a9a;">Или вставьте свой HTML-блок:</label>
+          <textarea id="customBlockInput" rows="3" style="width:100%; padding:8px; border-radius:10px; border:1px solid rgba(0,180,255,0.08); background:rgba(10,15,30,0.5); color:#d0e4ff; font-size:12px; resize:vertical;" placeholder="<div>Мой блок</div>"></textarea>
+          <button class="btn btn-secondary" id="insertBlockBtn" style="width:100%; margin-top:6px;">➕ Вставить блок</button>
+        </div>
+      </div>
+
+      <!-- ВКЛАДКА: История -->
+      <div class="tab-content" id="tab-history">
+        <div style="display:flex; gap:8px; margin-bottom:10px;">
+          <button class="btn btn-secondary" id="clearHistoryBtn" style="flex:1; padding:6px;">🗑️ Очистить</button>
+          <button class="btn btn-secondary" id="exportHistoryBtn" style="flex:1; padding:6px;">💾 Экспорт</button>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </div>
+
+      <!-- ВКЛАДКА: Экспорт -->
+      <div class="tab-content" id="tab-export">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <button class="btn btn-primary" id="exportHtmlBtn2">⬇ Скачать HTML</button>
+          <button class="btn btn-primary" id="exportZipBtn2">📦 Скачать ZIP</button>
+          <button class="btn btn-success" id="exportFullBtn2">🚀 Полный сайт (с asset'ами)</button>
+          <button class="btn btn-secondary" id="exportMinifiedBtn">⚡ Минифицированный HTML</button>
+          <hr style="border-color:rgba(0,180,255,0.06);">
+          <label style="font-size:11px; color:#5a7a9a;">Поделиться:</label>
+          <button class="btn btn-secondary" id="shareBtn">🔗 Скопировать ссылку</button>
+        </div>
+      </div>
+
     </div>
+  </div>
+</div>
 
-    <!-- SWIFT / SEPA -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:#44ff88;margin-bottom:0.8rem;">🌍 International Payments</h4>
-        <div class="grid-4">
-            <div class="product-card" onclick="window.open('https://www.swift.com','_blank')">
-                <div style="font-size:2rem;">🌐</div>
-                <h4>SWIFT</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">11,500+ banks</div>
-                <div style="color:var(--secondary);font-weight:700;">2-5 days</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SWIFT →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu/paym/sepa/html/index.en.html','_blank')">
-                <div style="font-size:2rem;">💶</div>
-                <h4>SEPA</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">36 countries</div>
-                <div style="color:#44ff88;font-weight:700;">Instant</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB SEPA →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://wholesale.banking.societegenerale.com','_blank')">
-                <div style="font-size:2rem;">🏦</div>
-                <h4>Societe Generale</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">EUR Clearing #1 France</div>
-                <div style="color:var(--gold);font-weight:700;">5.8M/day</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SG →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.co-opbank.co.ke/money-transfer/swift-transfers/','_blank')">
-                <div style="font-size:2rem;">🔁</div>
-                <h4>SWIFT Codes</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">CITIUS33 • DEUTDEFF</div>
-                <div style="color:var(--secondary);font-weight:700;">Multi-currency</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Co-op Bank →</button>
-            </div>
-        </div>
-    </div>
+<!-- ===== СТАТУС-БАР ===== -->
+<div class="status-bar">
+  <div class="stat">
+    <span id="statusText">✅ Готово</span>
+    <span id="charCount">0 символов</span>
+    <span id="versionCount">Версий: 0</span>
+  </div>
+  <div>UnionPay Builder v3.0</div>
+</div>
 
-    <!-- Server-to-Server / IP-to-IP / Ledger-to-Ledger -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--gold);margin-bottom:0.8rem;">⚡ Institutional Infrastructure</h4>
-        <div class="grid-3">
-            <div class="product-card" onclick="window.open('https://nvcfund.com/static/docs/server_to_server_integration_guide.html','_blank')">
-                <div style="font-size:2rem;">🖥️</div>
-                <h4>Server-to-Server</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">S2S API • TLS 1.2+</div>
-                <div style="color:#44ff88;font-weight:700;">Instant Settlement</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">NVC Global →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu/paym/stella/html/index.en.html','_blank')">
-                <div style="font-size:2rem;">🔗</div>
-                <h4>Ledger-to-Ledger</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">ECB Project Stella</div>
-                <div style="color:var(--gold);font-weight:700;">DvP • HTLC</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://patents.google.com/patent/US20200090181A1/','_blank')">
-                <div style="font-size:2rem;">🔐</div>
-                <h4>IP-to-IP</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">TD Bank Patent</div>
-                <div style="color:var(--secondary);font-weight:700;">Secure Settlement</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Patent →</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- M0 / M1 -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:#ff6666;margin-bottom:0.8rem;">💰 M0 / M1 — Digital Cash Flow</h4>
-        <div class="grid-2">
-            <div class="product-card" onclick="window.open('https://www.ecb.europa.eu','_blank')">
-                <div style="font-size:2rem;">💵</div>
-                <h4>M0 — Central Bank Money</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Physical + Digital Reserves</div>
-                <div style="color:#ff6666;font-weight:700;">Trackable On-Chain</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ECB →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://footprint.io','_blank')">
-                <div style="font-size:2rem;">📊</div>
-                <h4>M1 — On-Chain Analytics</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">24 Chains • 1,900+ Protocols</div>
-                <div style="color:#ff6666;font-weight:700;">Real-Time Tracking</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Footprint →</button>
-            </div>
-        </div>
-        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
-            🔍 In crypto world, all fiat exchanges are traceable. M0/M1 flows interact with wallets and protocols.
-        </div>
-    </div>
-
-    <!-- 255 Currencies -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--primary);margin-bottom:0.8rem;">💱 255+ Currencies</h4>
-        <div class="grid-4">
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">💵</div>
-                <h4>USD</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = $0.18</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">💶</div>
-                <h4>EUR</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = €0.17</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇬🇧</div>
-                <h4>GBP</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = £0.14</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇨🇳</div>
-                <h4>CNY</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ¥1.30</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇯🇵</div>
-                <h4>JPY</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ¥27.50</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇷🇺</div>
-                <h4>RUB</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₽16.80</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇺🇦</div>
-                <h4>UAH</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₴7.20</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.xe.com/currencyconverter/','_blank')">
-                <div style="font-size:2rem;">🇮🇳</div>
-                <h4>INR</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1 UP = ₹15.00</div>
-                <div style="color:var(--gold);font-weight:700;">Buy with UP</div>
-            </div>
-        </div>
-        <div style="margin-top:0.5rem;font-size:0.6rem;color:var(--muted);text-align:center;">
-            🌍 Buy UP in 255+ currencies through SWIFT/SEPA/local channels
-        </div>
-    </div>
-
-    <!-- Loans / Deposits -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:#44ff88;margin-bottom:0.8rem;">🏦 Loans & Deposits</h4>
-        <div class="grid-3">
-            <div class="product-card" onclick="window.open('https://www.icicibank.com.sg','_blank')">
-                <div style="font-size:2rem;">📈</div>
-                <h4>Import/Export Loans</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">Up to $50M</div>
-                <div style="color:#44ff88;font-weight:700;">6.5% APR</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">ICICI →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.societegenerale.com','_blank')">
-                <div style="font-size:2rem;">💰</div>
-                <h4>Corporate Deposits</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">1M+ EUR</div>
-                <div style="color:var(--gold);font-weight:700;">4.2% APY</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">SG →</button>
-            </div>
-            <div class="product-card" onclick="window.open('https://www.blackrock.com','_blank')">
-                <div style="font-size:2rem;">🏛️</div>
-                <h4>RWA Collateral</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">BUIDL Fund</div>
-                <div style="color:var(--secondary);font-weight:700;">$2.4B AUM</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">BlackRock →</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Additional 100+ functions -->
-    <div style="margin-bottom:2rem;">
-        <h4 style="color:var(--gold);margin-bottom:0.8rem;">⚡ 100+ Additional Functions</h4>
-        <div class="grid-5" style="font-size:0.6rem;color:var(--muted);">
-            <div>📋 FORFAITING</div>
-            <div>📋 AVAL</div>
-            <div>📋 Bankers Acceptance</div>
-            <div>📋 Cash Against Docs</div>
-            <div>📋 Documentary Collection</div>
-            <div>📋 Trust Receipt</div>
-            <div>📋 Letter of Indemnity</div>
-            <div>📋 Bill of Lading</div>
-            <div>📋 Warehouse Receipts</div>
-            <div>📋 Export Credit</div>
-            <div>📋 Import Finance</div>
-            <div>📋 Pre-Shipment</div>
-            <div>📋 Post-Shipment</div>
-            <div>📋 Working Capital</div>
-            <div>📋 Term Loan</div>
-            <div>📋 Revolving Credit</div>
-            <div>📋 Project Finance</div>
-            <div>📋 Structured Trade</div>
-            <div>📋 Bullion Finance</div>
-            <div>📋 Metal Finance</div>
-            <div>📋 Energy Finance</div>
-            <div>📋 Soft Commodities</div>
-            <div>📋 Agricultural Finance</div>
-            <div>📋 Infrastructure Finance</div>
-            <div>📋 PPP Finance</div>
-            <div>📋 Municipal Finance</div>
-            <div>📋 Sovereign Finance</div>
-            <div>📋 SPV Finance</div>
-            <div>📋 Securitization</div>
-            <div>📋 Asset-Backed</div>
-            <div>📋 Mortgage-Backed</div>
-            <div>📋 Collateralized</div>
-            <div>📋 Debt</div>
-            <div>📋 Equity</div>
-            <div>📋 Mezzanine</div>
-            <div>📋 Bridge</div>
-            <div>📋 Acquisition</div>
-            <div>📋 Leveraged</div>
-            <div>📋 Development</div>
-            <div>📋 Construction</div>
-            <div>📋 Permanent</div>
-            <div>📋 Take-Out</div>
-            <div>📋 Convertible</div>
-            <div>📋 Participating</div>
-            <div>📋 Syndicated</div>
-            <div>📋 Bilateral</div>
-            <div>📋 Multilateral</div>
-            <div>📋 ECA</div>
-            <div>📋 OPIC</div>
-            <div>📋 MIGA</div>
-            <div>📋 IFC</div>
-            <div>📋 ADB</div>
-            <div>📋 EBRD</div>
-            <div>📋 IDB</div>
-            <div>📋 AFDB</div>
-            <div>📋 IsDB</div>
-            <div>📋 AIIB</div>
-            <div>📋 NDB</div>
-            <div>📋 EIB</div>
-            <div>📋 NIB</div>
-            <div>📋 COFACE</div>
-            <div>📋 EDC</div>
-            <div>📋 EKN</div>
-            <div>📋 SACE</div>
-            <div>📋 HERMES</div>
-            <div>📋 SINOSURE</div>
-            <div>📋 KSURE</div>
-            <div>📋 NEXI</div>
-            <div>📋 ECGC</div>
-            <div>📋 EGFI</div>
-            <div>📋 BPI</div>
-            <div>📋 JBIC</div>
-            <div>📋 KEXIM</div>
-            <div>📋 EIP</div>
-            <div>📋 FEC</div>
-            <div>📋 ONCE</div>
-            <div>📋 ATI</div>
-        </div>
-    </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- CARDS -->
-<!-- ============================================================ -->
-<section class="page" id="page-cards">
-    <h2 class="section-title">💳 Virtual Cards</h2>
-    <p class="section-sub">Generate, customize, freeze, export, share, set limits, change colors.</p>
-    <div class="grid-2">
-        <div class="product-card" style="background:linear-gradient(135deg,#0a1a4a,#050810);border-radius:24px;padding:2rem;">
-            <div style="font-size:1.8rem;font-weight:800;letter-spacing:2px;" id="cardNumber">••••  ••••  ••••  1234</div>
-            <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-                <span style="background:rgba(255,255,255,0.04);padding:0.2rem 0.6rem;border-radius:8px;font-size:0.6rem;" id="cardStatus">Active</span>
-                <span style="background:rgba(255,255,255,0.04);padding:0.2rem 0.6rem;border-radius:8px;font-size:0.6rem;" id="cardLimit">$1,000</span>
-            </div>
-            <div style="margin-top:1rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
-                <button class="btn-primary" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="genCard()">Generate</button>
-                <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="toggleFreeze()">Freeze</button>
-                <button class="btn-outline" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="copyCard()">Copy</button>
-            </div>
-        </div>
-        <div style="display:grid;gap:0.8rem;">
-            <div><label style="font-size:0.7rem;color:var(--muted);">Limit</label><input type="range" min="100" max="100000" step="100" value="1000" style="width:100%;background:rgba(255,255,255,0.04);height:3px;appearance:none;" oninput="setLimit(this.value)"><span style="float:right;color:var(--primary);" id="limitDisplay">$1,000</span></div>
-            <div><label style="font-size:0.7rem;color:var(--muted);">Color</label><select style="width:100%;padding:0.5rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;color:#fff;font-size:0.7rem;" onchange="setColor(this.value)"><option value="#0a1a4a">Blue</option><option value="#1a1a1a">Black</option><option value="#c99a00">Gold</option></select></div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.3rem;">
-                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="add2FA()">2FA</button>
-                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="parentalControl()">Parents</button>
-                <button class="btn-outline" style="font-size:0.55rem;padding:0.2rem;" onclick="autoTopup()">Auto</button>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- COMMUNITY -->
-<!-- ============================================================ -->
-<section class="page" id="page-community">
-    <h2 class="section-title">👥 Community</h2>
-    <p class="section-sub">Chat, DAO, events, and governance.</p>
-    <div class="grid-2">
-        <div class="glass-premium" style="padding:1.5rem;height:300px;overflow-y:auto;" id="communityChat">
-            <div style="padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.02);"><span style="color:var(--primary);font-weight:600;">@alex</span> <span style="float:right;font-size:0.6rem;color:var(--muted);">12:34</span><br>Bought a laptop with UP today!</div>
-            <div style="padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.02);"><span style="color:var(--primary);font-weight:600;">@whale</span> <span style="float:right;font-size:0.6rem;color:var(--muted);">12:38</span><br>500+ companies now accept UP</div>
-        </div>
-        <div>
-            <div style="display:flex;gap:0.5rem;">
-                <input type="text" id="chatInput" placeholder="Message..." style="flex:1;padding:0.5rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:8px;color:#fff;font-size:0.7rem;">
-                <button class="btn-primary" style="font-size:0.6rem;padding:0.3rem 1rem;" onclick="sendChat()">Send</button>
-            </div>
-            <div style="margin-top:1rem;">
-                <button class="btn-gold" style="font-size:0.7rem;padding:0.4rem 1.2rem;width:100%;" onclick="openDAOPoll()"><i class="fas fa-vote-yea"></i> DAO Vote</button>
-                <div id="daoPoll" style="display:none;margin-top:0.5rem;padding:0.8rem;background:rgba(255,255,255,0.02);border-radius:12px;font-size:0.7rem;">
-                    <p>Proposal: Add 100 more companies?</p>
-                    <button class="btn-success" style="font-size:0.6rem;padding:0.2rem 0.8rem;" onclick="voteDAO('yes')">✅ Yes</button>
-                    <button class="btn-outline" style="font-size:0.6rem;padding:0.2rem 0.8rem;" onclick="voteDAO('no')">❌ No</button>
-                    <span id="voteResult" style="margin-left:0.5rem;color:var(--muted);font-size:0.6rem;"></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ============================================================ -->
-<!-- FOOTER -->
-<!-- ============================================================ -->
-<footer style="padding:2rem 2rem 1rem;border-top:1px solid rgba(255,255,255,0.02);max-width:1440px;margin:0 auto;text-align:center;font-size:0.6rem;color:var(--muted);">
-    © 2026 UnionPay — 1,000+ Products • 500+ Companies • 200+ FinTech Instruments. Contract: 71Umq9mdXD81Do21xQro5JboWCaqmpb8nkx8JLdkuc3T
-</footer>
-
-<!-- ============================================================ -->
-<!-- JAVASCRIPT -->
-<!-- ============================================================ -->
 <script>
-    // ===== TOAST =====
-    function showToast(msg) {
-        const old = document.querySelector('.toast-premium');
-        if (old) old.remove();
-        const div = document.createElement('div');
-        div.className = 'toast-premium';
-        div.textContent = msg;
-        document.body.appendChild(div);
-        setTimeout(() => { div.style.opacity = '0'; div.style.transform = 'translateY(20px)'; div.style.transition = '0.3s'; setTimeout(() => div.remove(), 400); }, 3000);
+// ================================================================
+// ===== ПОЛНЫЙ ЯДРО КОНСТРУКТОРА =====
+// ================================================================
+
+// --- ИНИЦИАЛИЗАЦИЯ ---
+const textarea = document.getElementById('codeEditor');
+const editor = CodeMirror.fromTextArea(textarea, {
+  mode: 'htmlmixed',
+  theme: 'material-darker',
+  lineNumbers: true,
+  indentUnit: 2,
+  tabSize: 2,
+  matchBrackets: true,
+  autoCloseTags: true
+});
+
+const preview = document.getElementById('previewFrame');
+const promptInput = document.getElementById('promptInput');
+const generateBtn = document.getElementById('generateBtn');
+const historyList = document.getElementById('historyList');
+
+// --- СОСТОЯНИЕ ---
+let history = JSON.parse(localStorage.getItem('unionProHistory')) || [];
+let currentVersionIndex = -1;
+let isUpdating = false;
+let settingsPresets = {};
+
+// ================================================================
+// ===== РАСШИРЕННЫЙ ГЕНЕРАТОР (с поддержкой разных секций) =====
+// ================================================================
+function generateSite(description, options = {}) {
+  const lower = description.toLowerCase();
+  const isUnion = lower.includes('unionpay') || lower.includes('union');
+  
+  // Определяем какие блоки включить
+  const includeChart = lower.includes('график') || lower.includes('chart') || lower.includes('price');
+  const includeRoadmap = lower.includes('дорож') || lower.includes('roadmap') || lower.includes('план');
+  const includeTokenomics = lower.includes('токеномик') || lower.includes('экономик') || lower.includes('tokenomics');
+  const includeTeam = lower.includes('команд') || lower.includes('team');
+  const includeFAQ = lower.includes('вопрос') || lower.includes('faq') || lower.includes('часто');
+  const includePartners = lower.includes('партнер') || lower.includes('partner');
+
+  // Базовый шаблон с модульной структурой
+  let sections = [];
+  
+  // Hero
+  sections.push(`
+    <div class="token-card">
+      <div class="token-header">
+        <div>
+          <div class="token-name">${isUnion ? 'UnionPay' : 'Криптотокен'}</div>
+          <div class="token-symbol">${isUnion ? 'UNION' : 'TOKEN'} • SPL</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="token-price">$0.042 <small>+12.4%</small></div>
+          <div style="font-size:13px; color:#6a8aaa;">24h объем: $1.2M</div>
+        </div>
+      </div>
+      <div class="token-description">
+        ${isUnion 
+          ? 'Платежный токен на Solana, объединяющий традиционные финансы и DeFi. Мгновенные переводы, низкие комиссии, полная прозрачность.'
+          : 'Инновационный токен с уникальной экономикой и растущим сообществом.'}
+      </div>
+      <a href="#" class="btn-buy" onclick="alert('🔗 Переход на Raydium для покупки'); return false;">Купить UNION</a>
+      <div class="token-stats">
+        <div class="stat-item"><div class="num">1.2B</div><div class="label">Общая эмиссия</div></div>
+        <div class="stat-item"><div class="num">62%</div><div class="label">В обращении</div></div>
+        <div class="stat-item"><div class="num">$24M</div><div class="label">Маркеткап</div></div>
+        <div class="stat-item"><div class="num">12.4K</div><div class="label">Холдеры</div></div>
+      </div>
+    </div>
+  `);
+
+  // Chart
+  if (includeChart) {
+    sections.push(`
+      <div class="chart-section">
+        <h3>📈 График цены (USDT)</h3>
+        <div class="chart-placeholder">
+          <canvas id="priceChart" height="160"></canvas>
+          <div style="position:absolute; bottom:10px; right:20px; font-size:11px; color:#4a6a8a;">
+            Данные: Dextools / Raydium
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  // Roadmap
+  if (includeRoadmap) {
+    sections.push(`
+      <div style="margin:30px 0 10px;">
+        <h3 style="color:#8ab4d8; font-size:14px; text-transform:uppercase; letter-spacing:2px;">🗺️ Дорожная карта</h3>
+      </div>
+      <div class="roadmap">
+        <div class="roadmap-item"><div class="phase">Q1 2026</div><h4>Запуск токена</h4><p>Публичный IDO на Raydium, старт сообщества</p></div>
+        <div class="roadmap-item"><div class="phase">Q2 2026</div><h4>Листинг CEX</h4><p>Выход на централизованные биржи</p></div>
+        <div class="roadmap-item"><div class="phase">Q3 2026</div><h4>Платежная инфраструктура</h4><p>Интеграция с реальными платежами</p></div>
+        <div class="roadmap-item"><div class="phase">Q4 2026</div><h4>Экосистема</h4><p>Децентрализованные приложения на базе UNION</p></div>
+      </div>
+    `);
+  }
+
+  // Tokenomics
+  if (includeTokenomics) {
+    sections.push(`
+      <div style="margin-top:30px;">
+        <h3 style="color:#8ab4d8; font-size:14px; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">📊 Токеномика</h3>
+        <div class="tokenomics">
+          <div class="tokenomics-item"><div class="val">40%</div><div class="lbl">Пре-сейл</div></div>
+          <div class="tokenomics-item"><div class="val">25%</div><div class="lbl">Команда</div></div>
+          <div class="tokenomics-item"><div class="val">15%</div><div class="lbl">Ликвидность</div></div>
+          <div class="tokenomics-item"><div class="val">10%</div><div class="lbl">Маркетинг</div></div>
+          <div class="tokenomics-item"><div class="val">10%</div><div class="lbl">Резерв</div></div>
+        </div>
+      </div>
+    `);
+  }
+
+  // Team
+  if (includeTeam) {
+    sections.push(`
+      <div style="margin-top:30px;">
+        <h3 style="color:#8ab4d8; font-size:14px; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">👥 Команда</h3>
+        <div class="roadmap" style="grid-template-columns:repeat(auto-fit, minmax(180px,1fr));">
+          <div class="roadmap-item"><h4>👤 Алексей</h4><p>CEO, 12 лет в финансах</p></div>
+          <div class="roadmap-item"><h4>👤 Мария</h4><p>CTO, ex-Solana Foundation</p></div>
+          <div class="roadmap-item"><h4>👤 Иван</h4><p>Lead Developer, DeFi эксперт</p></div>
+        </div>
+      </div>
+    `);
+  }
+
+  // FAQ
+  if (includeFAQ) {
+    sections.push(`
+      <div style="margin-top:30px;">
+        <h3 style="color:#8ab4d8; font-size:14px; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">❓ Частые вопросы</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(0,80,160,0.04); padding:14px 20px; border-radius:16px; border-left:2px solid #0066ff;">
+            <strong style="color:#d0e4ff;">Что такое UnionPay?</strong>
+            <p style="color:#7a9ab8; font-size:14px; margin-top:4px;">Это платежный токен на Solana с реальным применением.</p>
+          </div>
+          <div style="background:rgba(0,80,160,0.04); padding:14px 20px; border-radius:16px; border-left:2px solid #0066ff;">
+            <strong style="color:#d0e4ff;">Где купить?</strong>
+            <p style="color:#7a9ab8; font-size:14px; margin-top:4px;">На Raydium и централизованных биржах.</p>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  // Partners
+  if (includePartners) {
+    sections.push(`
+      <div style="margin-top:30px;">
+        <h3 style="color:#8ab4d8; font-size:14px; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">🤝 Партнеры</h3>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
+          <span style="background:rgba(0,80,160,0.06); padding:8px 24px; border-radius:30px; border:1px solid rgba(0,180,255,0.06);">Raydium</span>
+          <span style="background:rgba(0,80,160,0.06); padding:8px 24px; border-radius:30px; border:1px solid rgba(0,180,255,0.06);">Solana</span>
+          <span style="background:rgba(0,80,160,0.06); padding:8px 24px; border-radius:30px; border:1px solid rgba(0,180,255,0.06);">Dextools</span>
+          <span style="background:rgba(0,80,160,0.06); padding:8px 24px; border-radius:30px; border:1px solid rgba(0,180,255,0.06);">Binance</span>
+        </div>
+      </div>
+    `);
+  }
+
+  // Footer
+  sections.push(`
+    <div class="footer">
+      <span>© 2026 ${isUnion ? 'UnionPay Token' : 'Криптотокен'} • Solana</span>
+      <a href="#">Dextools</a>
+      <a href="#">Raydium</a>
+      <a href="#">Telegram</a>
+      <a href="#">Twitter</a>
+      <a href="#">GitHub</a>
+    </div>
+  `);
+
+  // --- ПОЛНЫЙ HTML ---
+  return `<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${isUnion ? 'UnionPay Token' : 'Криптотокен'}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Inter:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"><\/script>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
+      background: #0a0a12;
+      color: #b8c6db;
+      min-height: 100vh;
+      padding: 30px 20px;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(0,100,255,0.05) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(0,200,255,0.05) 0%, transparent 60%);
+    }
+    .container { max-width: 1100px; width: 100%; margin:0 auto; }
+
+    /* ===== ТОКЕН-КАРТА ===== */
+    .token-card {
+      background: linear-gradient(145deg, rgba(20,40,80,0.6), rgba(10,15,30,0.8));
+      border: 1px solid rgba(0,180,255,0.2);
+      border-radius: 40px;
+      padding: 40px 50px;
+      margin: 20px 0 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 60px rgba(0,100,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .token-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(0,180,255,0.03), transparent, rgba(0,100,255,0.03), transparent);
+      animation: rotateGlow 20s linear infinite;
+    }
+    @keyframes rotateGlow { 100% { transform: rotate(360deg); } }
+
+    .token-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+    .token-name {
+      font-size: 48px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00ccff, #0066ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+    }
+    .token-symbol {
+      font-size: 18px;
+      color: #6a9ac7;
+      background: rgba(0,180,255,0.08);
+      padding: 6px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(0,180,255,0.1);
+    }
+    .token-price {
+      font-size: 32px;
+      font-weight: 700;
+      color: #00ccff;
+      text-shadow: 0 0 30px rgba(0,200,255,0.2);
+      margin: 16px 0 8px;
+    }
+    .token-price small {
+      font-size: 16px;
+      font-weight: 400;
+      color: #6a8aaa;
+    }
+    .token-description {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #9ab0d0;
+      max-width: 600px;
+      margin: 12px 0 24px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 400;
+    }
+    .btn-buy {
+      display: inline-block;
+      padding: 16px 44px;
+      background: linear-gradient(135deg, #0066ff, #00ccff);
+      border: none;
+      border-radius: 60px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 0 40px rgba(0,100,255,0.3);
+      transition: 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Orbitron', sans-serif;
+      text-decoration: none;
+    }
+    .btn-buy:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(0,100,255,0.5); }
+    .token-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin: 30px 0 10px;
+      position: relative;
+      z-index: 2;
+    }
+    .stat-item {
+      background: rgba(0,80,160,0.08);
+      padding: 14px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(0,180,255,0.06);
+      text-align: center;
+    }
+    .stat-item .num {
+      font-size: 28px;
+      font-weight: 700;
+      color: #00ccff;
+    }
+    .stat-item .label {
+      font-size: 11px;
+      color: #6a8aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
     }
 
-    // ===== NAVIGATION =====
-    function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-' + id).classList.add('active');
-        document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('active'));
-        document.querySelector('#mainNav a[onclick*="' + id + '"]')?.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    /* ===== ГРАФИК ===== */
+    .chart-section {
+      background: rgba(16,24,42,0.6);
+      border-radius: 30px;
+      padding: 30px;
+      margin: 30px 0;
+      border: 1px solid rgba(0,180,255,0.06);
+    }
+    .chart-section h3 {
+      color: #8ab4d8;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .chart-placeholder {
+      position: relative;
+      background: rgba(0,80,160,0.04);
+      border-radius: 16px;
+      padding: 10px;
+      border: 1px solid rgba(0,180,255,0.04);
+    }
+    .chart-placeholder canvas { width:100% !important; height:auto !important; }
+
+    /* ===== ДОРОЖНАЯ КАРТА ===== */
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    .roadmap-item {
+      background: rgba(16,24,42,0.5);
+      padding: 24px 20px;
+      border-radius: 24px;
+      border: 1px solid rgba(0,180,255,0.06);
+      transition: 0.3s;
+    }
+    .roadmap-item:hover { border-color: rgba(0,180,255,0.2); transform: translateY(-4px); }
+    .roadmap-item .phase {
+      font-size: 11px;
+      color: #0066ff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .roadmap-item h4 {
+      color: #d0e4ff;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    .roadmap-item p {
+      font-size: 14px;
+      color: #7a9ab8;
+      font-family: 'Rajdhani', sans-serif;
+      line-height: 1.5;
     }
 
-    // ===== WALLET =====
-    let connected = false;
-    function connectWallet() {
-        connected = !connected;
-        document.getElementById('walletText').textContent = connected ? '0x7F3a...B1c2' : 'Connect';
-        document.getElementById('walletBtn').style.background = connected ? 'linear-gradient(135deg,#44ff88,#00cc66)' : '';
-        showToast(connected ? '✅ Wallet connected' : '🔌 Wallet disconnected');
+    /* ===== ТОКЕНОМИКА ===== */
+    .tokenomics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .tokenomics-item {
+      background: rgba(0,80,160,0.06);
+      padding: 16px;
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid rgba(0,180,255,0.04);
+    }
+    .tokenomics-item .val {
+      font-size: 26px;
+      font-weight: 700;
+      color: #00ccff;
+    }
+    .tokenomics-item .lbl {
+      font-size: 12px;
+      color: #6a8aaa;
     }
 
-    // ===== PRODUCTS =====
-    const products = [
-        { name: 'iPhone 15 Pro', price: 1200, link: 'https://www.apple.com/shop/buy-iphone/iphone-15-pro', company: 'Apple' },
-        { name: 'MacBook Pro M3', price: 2499, link: 'https://www.apple.com/shop/buy-mac/macbook-pro', company: 'Apple' },
-        { name: 'Samsung Galaxy S24', price: 1100, link: 'https://www.samsung.com/us/smartphones/galaxy-s24', company: 'Samsung' },
-        { name: 'Sony WH-1000XM5', price: 399, link: 'https://www.sony.com/electronics/headband-headphones/wh-1000xm5', company: 'Sony' },
-        { name: 'Levi\'s 501 Jeans', price: 89, link: 'https://www.levi.com/US/en_US/clothing/men/501-original-jeans', company: 'Levi\'s' },
-        { name: 'Nike Air Max 270', price: 150, link: 'https://www.nike.com/t/air-max-270-shoes', company: 'Nike' },
-        { name: 'Durex Condoms 24pk', price: 18, link: 'https://www.durex.com/products/condoms', company: 'Durex' },
-        { name: 'Bullets 9mm 50ct', price: 25, link: 'https://www.federalpremium.com/handgun/9mm-luger', company: 'Federal Premium' },
-    ];
-
-    function initProducts() {
-        const grid = document.getElementById('productGrid');
-        grid.innerHTML = products.map(p => `
-            <div class="product-card" onclick="window.open('${p.link}','_blank')">
-                <div style="font-size:2rem;">🛍️</div>
-                <h4>${p.name}</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">${p.company}</div>
-                <div style="color:var(--gold);font-weight:700;">${p.price} UP</div>
-                <button class="btn-gold" style="font-size:0.6rem;padding:0.2rem 1rem;">Buy with UP</button>
-            </div>
-        `).join('');
+    /* ===== ФУТЕР ===== */
+    .footer {
+      margin-top: 40px;
+      padding: 20px 0;
+      border-top: 1px solid rgba(0,180,255,0.05);
+      text-align: center;
+      font-size: 12px;
+      color: #4a6a8a;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
     }
-    initProducts();
-
-    // ===== COMPANIES =====
-    const companies = [
-        { name: 'Apple', link: 'https://www.apple.com', category: 'Electronics' },
-        { name: 'Samsung', link: 'https://www.samsung.com', category: 'Electronics' },
-        { name: 'Sony', link: 'https://www.sony.com', category: 'Electronics' },
-        { name: 'Levi\'s', link: 'https://www.levi.com', category: 'Clothing' },
-        { name: 'Nike', link: 'https://www.nike.com', category: 'Clothing' },
-        { name: 'Adidas', link: 'https://www.adidas.com', category: 'Clothing' },
-        { name: 'Starbucks', link: 'https://www.starbucks.com', category: 'Food' },
-        { name: 'Durex', link: 'https://www.durex.com', category: 'Adult' },
-        { name: 'Federal Premium', link: 'https://www.federalpremium.com', category: 'Ammunition' },
-        { name: 'Solana', link: 'https://www.solana.com', category: 'Crypto' },
-        { name: 'Raydium', link: 'https://raydium.io', category: 'Crypto' },
-        { name: 'UnionPay Intl', link: 'https://www.unionpayintl.com/en/', category: 'Crypto' },
-    ];
-
-    function initCompanies() {
-        const grid = document.getElementById('companyGrid');
-        grid.innerHTML = companies.map(c => `
-            <div class="product-card" onclick="window.open('${c.link}','_blank')">
-                <div style="font-size:2rem;">🏢</div>
-                <h4>${c.name}</h4>
-                <div style="color:var(--muted);font-size:0.6rem;">${c.category}</div>
-                <button class="btn-outline" style="font-size:0.5rem;padding:0.2rem 0.8rem;margin-top:0.3rem;">Visit</button>
-            </div>
-        `).join('');
+    .footer a {
+      color: #6a9ac7;
+      text-decoration: none;
+      margin: 0 8px;
+      transition: 0.2s;
     }
-    initCompanies();
+    .footer a:hover { color: #00ccff; }
 
-    // ===== CARDS =====
-    let cardFrozen = false;
-    let cardNum = '••••  ••••  ••••  1234';
-    let cardLimit = 1000;
-
-    function genCard() {
-        cardNum = '••••  ••••  ••••  ' + String(Math.floor(Math.random() * 10000)).padStart(4, '0');
-        document.getElementById('cardNumber').textContent = cardNum;
-        showToast('✅ Card generated: ' + cardNum);
+    @media (max-width: 600px) {
+      .token-card { padding: 24px 20px; }
+      .token-name { font-size: 30px; }
+      .token-price { font-size: 24px; }
+      .btn-buy { padding: 14px 28px; font-size: 14px; }
     }
+  </style>
+</head>
+<body>
+  <div class="container">
+    ${sections.join('')}
+  </div>
+  <script>
+    // Инициализация графика если есть
+    setTimeout(() => {
+      const canvas = document.getElementById('priceChart');
+      if (canvas && typeof Chart !== 'undefined') {
+        new Chart(canvas, {
+          type: 'line',
+          data: {
+            labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+            datasets: [{
+              label: 'Цена UNION (USDT)',
+              data: [0.02, 0.025, 0.028, 0.035, 0.038, 0.032, 0.04, 0.045, 0.042, 0.048, 0.05, 0.055],
+              borderColor: '#00ccff',
+              backgroundColor: 'rgba(0,200,255,0.05)',
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: '#00ccff',
+              pointRadius: 3
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { labels: { color: '#6a8aaa', font: { size: 11 } } }
+            },
+            scales: {
+              x: { grid: { color: 'rgba(0,180,255,0.03)' }, ticks: { color: '#4a6a8a' } },
+              y: { grid: { color: 'rgba(0,180,255,0.03)' }, ticks: { color: '#4a6a8a' } }
+            }
+          }
+        });
+      }
+    }, 100);
+  <\/script>
+</body>
+</html>`;
+}
 
-    function toggleFreeze() {
-        cardFrozen = !cardFrozen;
-        document.getElementById('cardStatus').textContent = cardFrozen ? 'Frozen' : 'Active';
-        document.getElementById('cardStatus').style.color = cardFrozen ? '#ff6666' : '#44ff88';
-        showToast(cardFrozen ? '❄️ Frozen' : '🔥 Unfrozen');
+// ================================================================
+// ===== УПРАВЛЕНИЕ ИСТОРИЕЙ =====
+// ================================================================
+function saveHistoryToLS() {
+  localStorage.setItem('unionProHistory', JSON.stringify(history));
+}
+
+function renderHistoryUI() {
+  historyList.innerHTML = '';
+  if (history.length === 0) {
+    historyList.innerHTML = '<div style="color:#4a6a8a; font-size:12px; text-align:center; padding:20px;">История пуста</div>';
+    return;
+  }
+  history.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = `history-item${idx === currentVersionIndex ? ' active' : ''}`;
+    div.innerHTML = `
+      <span>#${idx+1} ${item.preview || 'Версия'}</span>
+      <span class="time">${new Date(item.timestamp).toLocaleString()}</span>
+      <span class="del" data-idx="${idx}">✕</span>
+    `;
+    div.onclick = (e) => {
+      if (e.target.classList.contains('del')) return;
+      loadVersion(idx);
+    };
+    div.querySelector('.del').onclick = (e) => {
+      e.stopPropagation();
+      deleteVersion(idx);
+    };
+    historyList.appendChild(div);
+  });
+  
+  document.getElementById('versionCount').textContent = `Версий: ${history.length}`;
+}
+
+function loadVersion(index) {
+  if (index < 0 || index >= history.length) return;
+  currentVersionIndex = index;
+  const code = history[index].code;
+  editor.setValue(code);
+  updatePreview(code);
+  renderHistoryUI();
+  updateStatus(`Загружена версия #${index+1}`);
+}
+
+function deleteVersion(index) {
+  if (confirm('Удалить эту версию?')) {
+    history.splice(index, 1);
+    if (currentVersionIndex === index) currentVersionIndex = -1;
+    else if (currentVersionIndex > index) currentVersionIndex--;
+    saveHistoryToLS();
+    renderHistoryUI();
+    if (history.length > 0 && currentVersionIndex === -1) {
+      currentVersionIndex = history.length - 1;
+      editor.setValue(history[currentVersionIndex].code);
+      updatePreview(history[currentVersionIndex].code);
     }
+    updateStatus(`Версия #${index+1} удалена`);
+  }
+}
 
-    function setLimit(val) {
-        cardLimit = Number(val);
-        document.getElementById('limitDisplay').textContent = '$' + cardLimit.toLocaleString();
-        document.getElementById('cardLimit').textContent = '$' + cardLimit.toLocaleString();
+function saveCurrentVersion(previewText = null) {
+  const code = editor.getValue();
+  if (!code.trim()) return;
+  if (history.length > 0 && history[history.length-1].code === code) {
+    // Обновляем timestamp
+    history[history.length-1].timestamp = Date.now();
+    saveHistoryToLS();
+    renderHistoryUI();
+    return;
+  }
+  history.push({
+    code: code,
+    timestamp: Date.now(),
+    preview: previewText || `Версия ${history.length+1}`
+  });
+  if (history.length > 50) history.shift(); // лимит 50
+  currentVersionIndex = history.length - 1;
+  saveHistoryToLS();
+  renderHistoryUI();
+  updateStatus('Версия сохранена');
+}
+
+function clearHistory() {
+  if (confirm('Очистить всю историю?')) {
+    history = [];
+    currentVersionIndex = -1;
+    saveHistoryToLS();
+    renderHistoryUI();
+    updateStatus('История очищена');
+  }
+}
+
+function exportHistory() {
+  const data = JSON.stringify(history, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `union-history-${Date.now()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ================================================================
+// ===== ПРЕВЬЮ =====
+// ================================================================
+function updatePreview(htmlCode) {
+  preview.srcdoc = htmlCode;
+  document.getElementById('previewUrl').textContent = `page-${Date.now().toString(36)}.html`;
+  document.getElementById('charCount').textContent = `${htmlCode.length} символов`;
+  document.getElementById('lineCount').textContent = `${htmlCode.split('\n').length} строк`;
+}
+
+// ================================================================
+// ===== ПРИМЕНЕНИЕ СТИЛЕЙ (инъекция в iframe) =====
+// ================================================================
+function applySettings() {
+  const primary = document.getElementById('primaryColor').value;
+  const accent = document.getElementById('accentColor').value;
+  const bg = document.getElementById('bgColor').value;
+  const font = document.getElementById('fontSelect').value;
+  const fontSize = document.getElementById('fontSizeRange').value + 'px';
+  const borderRadius = document.getElementById('borderRadiusRange').value + 'px';
+
+  const iframeDoc = preview.contentDocument || preview.contentWindow?.document;
+  if (!iframeDoc) return;
+
+  let styleTag = iframeDoc.getElementById('union-injected-style');
+  if (!styleTag) {
+    styleTag = iframeDoc.createElement('style');
+    styleTag.id = 'union-injected-style';
+    iframeDoc.head.appendChild(styleTag);
+  }
+
+  styleTag.textContent = `
+    body {
+      background: ${bg} !important;
+      font-family: ${font}, system-ui, sans-serif !important;
+      font-size: ${fontSize} !important;
     }
-
-    function setColor(color) {
-        document.querySelector('#page-cards .product-card').style.background = 'linear-gradient(135deg,' + color + ',#050810)';
-        showToast('🎨 Color updated');
+    .token-card {
+      background: linear-gradient(145deg, ${primary}22, ${bg}cc) !important;
+      border-color: ${primary}44 !important;
+      border-radius: ${borderRadius} !important;
     }
-
-    function copyCard() {
-        navigator.clipboard.writeText(cardNum).then(() => showToast('📋 Copied!')).catch(() => showToast('📋 ' + cardNum));
+    .token-name, .token-price, .btn-buy {
+      background: linear-gradient(135deg, ${primary}, ${accent}) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
     }
-    function add2FA() { showToast('🔐 2FA enabled'); }
-    function parentalControl() { showToast('👨‍👩‍👦 Parental controls set'); }
-    function autoTopup() { showToast('🔄 Auto top-up enabled'); }
-
-    // ===== COMMUNITY =====
-    function sendChat() {
-        const input = document.getElementById('chatInput');
-        if (!input.value.trim()) { showToast('❌ Type something'); return; }
-        const chat = document.getElementById('communityChat');
-        const msg = document.createElement('div');
-        msg.style.cssText = 'padding:0.4rem;border-bottom:1px solid rgba(255,255,255,0.02);';
-        msg.innerHTML = `<span style="color:var(--primary);font-weight:600;">@you</span> <span style="float:right;font-size:0.6rem;color:var(--muted);">${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span><br>${input.value}`;
-        chat.appendChild(msg);
-        chat.scrollTop = chat.scrollHeight;
-        input.value = '';
-        showToast('💬 Sent');
+    .btn-buy {
+      -webkit-text-fill-color: #fff !important;
+      background: linear-gradient(135deg, ${primary}, ${accent}) !important;
+      box-shadow: 0 0 40px ${primary}44 !important;
+      border-radius: ${borderRadius} !important;
     }
-    document.getElementById('chatInput')?.addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
-
-    function openDAOPoll() {
-        const poll = document.getElementById('daoPoll');
-        poll.style.display = poll.style.display === 'none' ? 'block' : 'none';
+    .token-symbol, .stat-item .num, .tokenomics-item .val {
+      color: ${accent} !important;
     }
-
-    function voteDAO(choice) {
-        document.getElementById('voteResult').textContent = '✅ Voted: ' + choice.toUpperCase();
-        document.getElementById('voteResult').style.color = '#44ff88';
-        showToast('🗳️ Vote recorded');
-        setTimeout(() => { document.getElementById('daoPoll').style.display = 'none'; }, 2000);
+    .stat-item, .tokenomics-item, .roadmap-item, .chart-section {
+      border-radius: ${borderRadius} !important;
     }
+    .roadmap-item:hover {
+      border-color: ${accent}66 !important;
+    }
+    .token-card::before {
+      background: conic-gradient(from 0deg, transparent, ${primary}22, transparent, ${accent}22, transparent) !important;
+    }
+  `;
+  updateStatus('Стили применены');
+}
 
-    showToast('🚀 UnionPay ecosystem loaded');
+// ================================================================
+// ===== БЛОКИ =====
+// ================================================================
+function insertBlock(blockType) {
+  const blocks = {
+    hero: `<div class="token-card" style="padding:30px; text-align:center; background:linear-gradient(145deg,rgba(0,100,255,0.1),rgba(0,10,30,0.8)); border:1px solid rgba(0,180,255,0.1); border-radius:30px;">
+  <h1 style="font-size:42px; background:linear-gradient(135deg,#00ccff,#0066ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">${document.getElementById('promptInput').value || 'Ваш токен'}</h1>
+  <p style="color:#8ab4d8; font-size:18px; margin:12px 0;">Начните свой проект с UnionPay</p>
+  <a href="#" class="btn-buy" style="display:inline-block; padding:14px 40px;">Начать</a>
+</div>`,
+    chart: `<div class="chart-section"><h3>📈 График</h3><div style="height:120px; background:rgba(0,80,160,0.05); border-radius:16px; display:flex; align-items:center; justify-content:center; color:#4a6a8a;">Здесь будет график цены</div></div>`,
+    roadmap: `<div class="roadmap">
+  <div class="roadmap-item"><div class="phase">Этап 1</div><h4>Старт</h4><p>Запуск токена</p></div>
+  <div class="roadmap-item"><div class="phase">Этап 2</div><h4>Рост</h4><p>Развитие экосистемы</p></div>
+  <div class="roadmap-item"><div class="phase">Этап 3</div><h4>Масштаб</h4><p>Глобальное принятие</p></div>
+</div>`,
+    tokenomics: `<div class="tokenomics">
+  <div class="tokenomics-item"><div class="val">40%</div><div class="lbl">Пре-сейл</div></div>
+  <div class="tokenomics-item"><div class="val">25%</div><div class="lbl">Команда</div></div>
+  <div class="tokenomics-item"><div class="val">20%</div><div class="lbl">Экосистема</div></div>
+  <div class="tokenomics-item"><div class="val">15%</div><div class="lbl">Резерв</div></div>
+</div>`,
+    team: `<div class="roadmap" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
+  <div class="roadmap-item"><h4>👤 Основатель</h4><p>CEO</p></div>
+  <div class="roadmap-item"><h4>👤 Техлид</h4><p>CTO</p></div>
+  <div class="roadmap-item"><h4>👤 Маркетолог</h4><p>CMO</p></div>
+</div>`,
+    faq: `<div style="margin:20px 0;">
+  <div style="background:rgba(0,80,160,0.04); padding:14px 20px; border-radius:16px; border-left:2px solid #0066ff; margin-bottom:8px;">
+    <strong style="color:#d0e4ff;">Вопрос 1</strong>
+    <p style="color:#7a9ab8; font-size:14px;">Ответ на вопрос</p>
+  </div>
+  <div style="background:rgba(0,80,160,0.04); padding:14px 20px; border-radius:16px; border-left:2px solid #0066ff;">
+    <strong style="color:#d0e4ff;">Вопрос 2</strong>
+    <p style="color:#7a9ab8; font-size:14px;">Ответ на вопрос</p>
+  </div>
+</div>`,
+    partners: `<div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin:20px 0;">
+  <span style="background:rgba(0,80,160,0.06); padding:8px 24px; border-radius:30px; border:1px solid rgba(0,180,255,0.06);">🤝 Партнер 1</span>
+  <span style="background:rgba(0,80,160,0.06); padding:8px 24px; border-radius:30px; border:1px solid rgba(0,180,255,0.06);">🤝 Партнер 2</span>
+  <span style="background:rgba(0,80,160,0.06); padding:8px 24px; border-radius:30px; border:1px solid rgba(0,180,255,0.06);">🤝 Партнер 3</span>
+</div>`,
+    footer: `<div class="footer" style="border-top:1px solid rgba(0,180,255,0.05); padding:20px 0; margin-top:30px; text-align:center; font-size:12px; color:#4a6a8a;">
+  <span>© 2026 UnionPay</span>
+  <a href="#">Twitter</a>
+  <a href="#">Telegram</a>
+  <a href="#">GitHub</a>
+</div>`
+  };
+
+  let code = editor.getValue();
+  const containerMatch = code.match(/<div class="container">([\s\S]*?)<\/div>/);
+  if (containerMatch) {
+    const before = code.substring(0, containerMatch.index + containerMatch[0].length - 7);
+    const after = code.substring(containerMatch.index + containerMatch[0].length - 7);
+    const newCode = before + blocks[blockType] + after;
+    editor.setValue(newCode);
+    updatePreview(newCode);
+    saveCurrentVersion(`Добавлен блок: ${blockType}`);
+    updateStatus(`Блок "${blockType}" добавлен`);
+  } else {
+    alert('Не найден контейнер для вставки блока');
+  }
+}
+
+// ================================================================
+// ===== ЭКСПОРТ =====
+// ================================================================
+function exportHTML() {
+  const code = editor.getValue();
+  const blob = new Blob([code], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `unionpay-site-${Date.now()}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  updateStatus('HTML экспортирован');
+}
+
+function exportZIP() {
+  const code = editor.getValue();
+  const zip = new JSZip();
+  zip.file('index.html', code);
+  zip.generateAsync({ type: 'blob' }).then((blob) => {
+    saveAs(blob, `unionpay-site-${Date.now()}.zip`);
+    updateStatus('ZIP экспортирован');
+  });
+}
+
+function exportFull() {
+  const code = editor.getValue();
+  // Добавляем мета-теги и дополнительные файлы
+  const fullCode = code.replace('</head>', `
+  <meta name="description" content="UnionPay Token - платежный токен на Solana">
+  <meta property="og:title" content="UnionPay Token">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⟠</text></svg>">
+</head>`);
+  const zip = new JSZip();
+  zip.file('index.html', fullCode);
+  zip.file('README.md', `# UnionPay Token Site\nGenerated with UnionPay Builder\nDate: ${new Date().toLocaleString()}`);
+  zip.generateAsync({ type: 'blob' }).then((blob) => {
+    saveAs(blob, `unionpay-full-site-${Date.now()}.zip`);
+    updateStatus('Полный сайт экспортирован');
+  });
+}
+
+function exportMinified() {
+  let code = editor.getValue();
+  // Простая минификация (удаляем лишние пробелы и переносы)
+  code = code.replace(/\s+/g, ' ').replace(/>\s+</g, '><').trim();
+  const blob = new Blob([code], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `unionpay-min-${Date.now()}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  updateStatus('Минифицированный HTML экспортирован');
+}
+
+function shareSite() {
+  const code = editor.getValue();
+  // Кодируем в base64 для ссылки
+  const encoded = btoa(unescape(encodeURIComponent(code)));
+  const url = `${window.location.origin}${window.location.pathname}?site=${encoded}`;
+  navigator.clipboard.writeText(url).then(() => {
+    updateStatus('Ссылка скопирована!');
+    alert('Ссылка скопирована в буфер обмена!\n(работает только в этом же браузере)');
+  }).catch(() => {
+    prompt('Скопируйте ссылку вручную:', url);
+  });
+}
+
+// ================================================================
+// ===== ОБНОВЛЕНИЕ СТАТУСА =====
+// ================================================================
+function updateStatus(text) {
+  document.getElementById('statusText').textContent = text;
+  setTimeout(() => {
+    document.getElementById('statusText').textContent = '✅ Готово';
+  }, 3000);
+}
+
+// ================================================================
+// ===== ГЕНЕРАЦИЯ =====
+// ================================================================
+function handleGenerate() {
+  const desc = promptInput.value.trim() || 'лендинг для токена UnionPay';
+  const newCode = generateSite(desc);
+  editor.setValue(newCode);
+  updatePreview(newCode);
+  saveCurrentVersion(desc);
+  setTimeout(applySettings, 300);
+  updateStatus(`Сгенерировано: "${desc}"`);
+}
+
+// ================================================================
+// ===== АВТО-ОБНОВЛЕНИЕ =====
+// ================================================================
+let updateTimeout;
+editor.on('change', () => {
+  clearTimeout(updateTimeout);
+  updateTimeout = setTimeout(() => {
+    const code = editor.getValue();
+    updatePreview(code);
+    document.getElementById('charCount').textContent = `${code.length} символов`;
+    document.getElementById('lineCount').textContent = `${code.split('\n').length} строк`;
+  }, 200);
+});
+
+// ================================================================
+// ===== ИНИЦИАЛИЗАЦИЯ =====
+// ================================================================
+function init() {
+  // Загрузка истории
+  if (history.length > 0) {
+    currentVersionIndex = history.length - 1;
+    editor.setValue(history[currentVersionIndex].code);
+    updatePreview(history[currentVersionIndex].code);
+  } else {
+    const demo = generateSite('полноценный лендинг для криптотокена UnionPay с графиком, дорожной картой, токеномикой и кнопкой покупки');
+    editor.setValue(demo);
+    updatePreview(demo);
+    saveCurrentVersion('Демо-версия');
+  }
+  renderHistoryUI();
+
+  // --- СОБЫТИЯ ---
+  generateBtn.addEventListener('click', handleGenerate);
+  promptInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') handleGenerate(); });
+
+  // Настройки
+  document.getElementById('applySettingsBtn').addEventListener('click', applySettings);
+  document.getElementById('resetSettingsBtn').addEventListener('click', () => {
+    document.getElementById('primaryColor').value = '#0066ff';
+    document.getElementById('primaryColorHex').value = '#0066ff';
+    document.getElementById('accentColor').value = '#00ccff';
+    document.getElementById('accentColorHex').value = '#00ccff';
+    document.getElementById('bgColor').value = '#0a0a12';
+    document.getElementById('bgColorHex').value = '#0a0a12';
+    document.getElementById('fontSelect').value = "'Orbitron', sans-serif";
+    document.getElementById('fontSizeRange').value = 16;
+    document.getElementById('fontSizeDisplay').textContent = '16px';
+    document.getElementById('borderRadiusRange').value = 20;
+    document.getElementById('borderRadiusDisplay').textContent = '20px';
+    applySettings();
+    updateStatus('Настройки сброшены');
+  });
+
+  // Связка color input + hex
+  ['primaryColor', 'accentColor', 'bgColor'].forEach(id => {
+    const input = document.getElementById(id);
+    const hexInput = document.getElementById(id + 'Hex');
+    if (input && hexInput) {
+      input.addEventListener('input', () => { hexInput.value = input.value; });
+      hexInput.addEventListener('change', () => { input.value = hexInput.value; });
+    }
+  });
+
+  // Range отображение
+  document.getElementById('fontSizeRange').addEventListener('input', (e) => {
+    document.getElementById('fontSizeDisplay').textContent = e.target.value + 'px';
+  });
+  document.getElementById('borderRadiusRange').addEventListener('input', (e) => {
+    document.getElementById('borderRadiusDisplay').textContent = e.target.value + 'px';
+  });
+
+  // Блоки
+  document.querySelectorAll('.block-item').forEach(el => {
+    el.addEventListener('click', () => insertBlock(el.dataset.block));
+  });
+  document.getElementById('insertBlockBtn').addEventListener('click', () => {
+    const html = document.getElementById('customBlockInput').value;
+    if (html.trim()) {
+      const code = editor.getValue();
+      const containerMatch = code.match(/<div class="container">([\s\S]*?)<\/div>/);
+      if (containerMatch) {
+        const before = code.substring(0, containerMatch.index + containerMatch[0].length - 7);
+        const after = code.substring(containerMatch.index + containerMatch[0].length - 7);
+        const newCode = before + html + after;
+        editor.setValue(newCode);
+        updatePreview(newCode);
+        saveCurrentVersion('Пользовательский блок');
+        updateStatus('Блок вставлен');
+        document.getElementById('customBlockInput').value = '';
+      } else {
+        alert('Не найден контейнер');
+      }
+    }
+  });
+
+  // История
+  document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+  document.getElementById('exportHistoryBtn').addEventListener('click', exportHistory);
+
+  // Экспорт
+  document.getElementById('exportHtmlBtn').addEventListener('click', exportHTML);
+  document.getElementById('exportZipBtn').addEventListener('click', exportZIP);
+  document.getElementById('exportFullBtn').addEventListener('click', exportFull);
+  document.getElementById('exportHtmlBtn2').addEventListener('click', exportHTML);
+  document.getElementById('exportZipBtn2').addEventListener('click', exportZIP);
+  document.getElementById('exportFullBtn2').addEventListener('click', exportFull);
+  document.getElementById('exportMinifiedBtn').addEventListener('click', exportMinified);
+  document.getElementById('shareBtn').addEventListener('click', shareSite);
+
+  // Устройства (адаптив превью)
+  document.querySelectorAll('.device-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const width = btn.dataset.width;
+      preview.style.width = width;
+      preview.style.maxWidth = width === '100%' ? '100%' : width;
+      preview.style.margin = '0 auto';
+      if (width !== '100%') {
+        preview.style.background = '#0a0e1a';
+      } else {
+        preview.style.background = '#fff';
+      }
+    });
+  });
+
+  // Обновить превью
+  document.getElementById('refreshPreviewBtn').addEventListener('click', () => {
+    const code = editor.getValue();
+    updatePreview(code);
+    updateStatus('Превью обновлено');
+  });
+
+  // Вкладки
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Применяем настройки при загрузке
+  setTimeout(applySettings, 500);
+  updateStatus('🚀 Готов к работе!');
+}
+
+// Запуск
+init();
 </script>
 </body>
 </html>
