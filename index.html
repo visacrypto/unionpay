@@ -4,320 +4,316 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UnionPay Token</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
-        background: #0a0a12;
-        color: #b8c6db;
-        min-height: 100vh;
-        padding: 30px 20px;
-        background-image: 
-            radial-gradient(ellipse at 20% 50%, rgba(0,100,255,0.05) 0%, transparent 60%),
-            radial-gradient(ellipse at 80% 50%, rgba(0,200,255,0.05) 0%, transparent 60%);
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-    }
-    .container {
-        max-width: 1100px;
-        width: 100%;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a12;
+            color: #b8c6db;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(ellipse at 20% 50%, rgba(0,100,255,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(0,200,255,0.08) 0%, transparent 60%);
+        }
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
 
-    /* ===== ТОКЕН-КАРТА ===== */
-    .token-card {
-        background: linear-gradient(145deg, rgba(20,40,80,0.6), rgba(10,15,30,0.8));
-        border: 1px solid rgba(0,180,255,0.2);
-        border-radius: 40px;
-        padding: 40px 50px;
-        margin: 20px 0 40px;
-        backdrop-filter: blur(12px);
-        box-shadow: 0 0 60px rgba(0,100,255,0.08);
-        position: relative;
-        overflow: hidden;
-    }
-    .token-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: conic-gradient(from 0deg, transparent, rgba(0,180,255,0.03), transparent, rgba(0,100,255,0.03), transparent);
-        animation: rotateGlow 20s linear infinite;
-    }
-    @keyframes rotateGlow {
-        100% { transform: rotate(360deg); }
-    }
-
-    .token-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 2;
-    }
-    .token-name {
-        font-size: 48px;
-        font-weight: 900;
-        background: linear-gradient(135deg, #00ccff, #0066ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: 2px;
-    }
-    .token-symbol {
-        font-size: 18px;
-        color: #6a9ac7;
-        background: rgba(0,180,255,0.08);
-        padding: 6px 20px;
-        border-radius: 30px;
-        border: 1px solid rgba(0,180,255,0.1);
-    }
-    .token-price {
-        font-size: 32px;
-        font-weight: 700;
-        color: #00ccff;
-        text-shadow: 0 0 30px rgba(0,200,255,0.2);
-        margin: 16px 0 8px;
-    }
-    .token-price small {
-        font-size: 16px;
-        font-weight: 400;
-        color: #6a8aaa;
-    }
-    .token-description {
-        font-size: 18px;
-        line-height: 1.7;
-        color: #9ab0d0;
-        max-width: 600px;
-        margin: 12px 0 24px;
-        font-family: 'Rajdhani', sans-serif;
-        font-weight: 400;
-    }
-    .btn-buy {
-        display: inline-block;
-        padding: 16px 44px;
-        background: linear-gradient(135deg, #0066ff, #00ccff);
-        border: none;
-        border-radius: 60px;
-        color: #fff;
-        font-weight: 700;
-        font-size: 18px;
-        cursor: pointer;
-        box-shadow: 0 0 40px rgba(0,100,255,0.3);
-        transition: 0.3s;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-family: 'Orbitron', sans-serif;
-        text-decoration: none;
-    }
-    .btn-buy:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 60px rgba(0,100,255,0.5);
-    }
-
-    .token-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 20px;
-        margin: 30px 0 10px;
-        position: relative;
-        z-index: 2;
-    }
-    .stat-item {
-        background: rgba(0,80,160,0.08);
-        padding: 14px 20px;
-        border-radius: 20px;
-        border: 1px solid rgba(0,180,255,0.06);
-        text-align: center;
-    }
-    .stat-item .num {
-        font-size: 28px;
-        font-weight: 700;
-        color: #00ccff;
-    }
-    .stat-item .label {
-        font-size: 11px;
-        color: #6a8aaa;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 4px;
-    }
-
-    /* ===== ГРАФИК ===== */
-    .chart-section {
-        background: rgba(16,24,42,0.6);
-        border-radius: 30px;
-        padding: 30px;
-        margin: 30px 0;
-        border: 1px solid rgba(0,180,255,0.06);
-    }
-    .chart-section h3 {
-        color: #8ab4d8;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 16px;
-    }
-    .chart-placeholder {
-        height: 140px;
-        background: linear-gradient(90deg, rgba(0,100,255,0.05), rgba(0,200,255,0.08), rgba(0,100,255,0.05));
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #4a6a8a;
-        font-size: 14px;
-        border: 1px dashed rgba(0,180,255,0.08);
-        position: relative;
-        overflow: hidden;
-    }
-    .chart-placeholder .line {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        right: 20px;
-        height: 2px;
-        background: linear-gradient(90deg, #0066ff, #00ccff, #0066ff);
-        opacity: 0.3;
-    }
-    .chart-placeholder .dots {
-        display: flex;
-        justify-content: space-between;
-        width: 80%;
-        position: relative;
-        z-index: 1;
-    }
-    .chart-placeholder .dot {
-        width: 8px;
-        height: 8px;
-        background: #00ccff;
-        border-radius: 50%;
-        box-shadow: 0 0 20px rgba(0,200,255,0.3);
-    }
-
-    /* ===== ДОРОЖНАЯ КАРТА ===== */
-    .roadmap {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin: 30px 0;
-    }
-    .roadmap-item {
-        background: rgba(16,24,42,0.5);
-        padding: 24px 20px;
-        border-radius: 24px;
-        border: 1px solid rgba(0,180,255,0.06);
-        transition: 0.3s;
-    }
-    .roadmap-item:hover {
-        border-color: rgba(0,180,255,0.2);
-        transform: translateY(-4px);
-    }
-    .roadmap-item .phase {
-        font-size: 11px;
-        color: #0066ff;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 700;
-    }
-    .roadmap-item h4 {
-        color: #d0e4ff;
-        margin: 8px 0;
-        font-size: 16px;
-    }
-    .roadmap-item p {
-        font-size: 14px;
-        color: #7a9ab8;
-        font-family: 'Rajdhani', sans-serif;
-        line-height: 1.5;
-    }
-
-    /* ===== ТОКЕНОМИКА ===== */
-    .tokenomics {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 16px;
-        margin: 20px 0;
-    }
-    .tokenomics-item {
-        background: rgba(0,80,160,0.06);
-        padding: 16px;
-        border-radius: 20px;
-        text-align: center;
-        border: 1px solid rgba(0,180,255,0.04);
-    }
-    .tokenomics-item .val {
-        font-size: 26px;
-        font-weight: 700;
-        color: #00ccff;
-    }
-    .tokenomics-item .lbl {
-        font-size: 12px;
-        color: #6a8aaa;
-    }
-
-    /* ===== ФУТЕР ===== */
-    .footer {
-        margin-top: 40px;
-        padding: 20px 0;
-        border-top: 1px solid rgba(0,180,255,0.05);
-        text-align: center;
-        font-size: 12px;
-        color: #4a6a8a;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 12px;
-    }
-    .footer a {
-        color: #6a9ac7;
-        text-decoration: none;
-        margin: 0 8px;
-        transition: 0.2s;
-    }
-    .footer a:hover {
-        color: #00ccff;
-    }
-
-    /* ===== АДАПТИВ ===== */
-    @media (max-width: 600px) {
+        /* Карточка токена */
         .token-card {
-            padding: 24px 20px;
+            background: linear-gradient(145deg, rgba(20,40,80,0.7), rgba(10,15,30,0.9));
+            border: 1px solid rgba(0,180,255,0.25);
+            border-radius: 40px;
+            padding: 40px 45px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 80px rgba(0,100,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .token-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0,180,255,0.04), transparent, rgba(0,100,255,0.04), transparent);
+            animation: rotateGlow 25s linear infinite;
+        }
+        @keyframes rotateGlow {
+            100% { transform: rotate(360deg); }
+        }
+
+        .token-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
         .token-name {
-            font-size: 30px;
+            font-size: 46px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ccff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+        .token-symbol {
+            font-size: 16px;
+            color: #6a9ac7;
+            background: rgba(0,180,255,0.08);
+            padding: 6px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(0,180,255,0.12);
+            display: inline-block;
+            margin-top: 4px;
         }
         .token-price {
-            font-size: 24px;
+            font-size: 30px;
+            font-weight: 700;
+            color: #00ccff;
+            text-shadow: 0 0 30px rgba(0,200,255,0.15);
+        }
+        .token-price small {
+            font-size: 15px;
+            font-weight: 400;
+            color: #6a8aaa;
+        }
+        .token-description {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #9ab0d0;
+            max-width: 600px;
+            margin: 14px 0 22px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
         }
         .btn-buy {
-            padding: 14px 28px;
-            font-size: 14px;
+            display: inline-block;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #0066ff, #00ccff);
+            border: none;
+            border-radius: 60px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(0,100,255,0.25);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
         }
-        .token-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 12px;
+        .btn-buy:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 60px rgba(0,100,255,0.4);
         }
+
         .token-stats {
-            grid-template-columns: 1fr 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-top: 28px;
+            position: relative;
+            z-index: 2;
+        }
+        .stat-item {
+            background: rgba(0,80,160,0.06);
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(0,180,255,0.06);
+            text-align: center;
+        }
+        .stat-item .num {
+            font-size: 26px;
+            font-weight: 700;
+            color: #00ccff;
+        }
+        .stat-item .label {
+            font-size: 10px;
+            color: #6a8aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* График */
+        .chart-section {
+            background: rgba(16,24,42,0.5);
+            border-radius: 28px;
+            padding: 24px 28px;
+            margin: 24px 0;
+            border: 1px solid rgba(0,180,255,0.06);
+        }
+        .chart-section h3 {
+            color: #8ab4d8;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+        }
+        .chart-placeholder {
+            height: 120px;
+            background: rgba(0,80,160,0.04);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a6a8a;
+            font-size: 13px;
+            border: 1px dashed rgba(0,180,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .chart-placeholder .dots {
+            display: flex;
+            justify-content: space-between;
+            width: 85%;
+            position: relative;
+            z-index: 1;
+        }
+        .chart-placeholder .dot {
+            width: 7px;
+            height: 7px;
+            background: #00ccff;
+            border-radius: 50%;
+            box-shadow: 0 0 16px rgba(0,200,255,0.2);
+        }
+        .chart-placeholder .line {
+            position: absolute;
+            bottom: 18px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, #0066ff, #00ccff, #0066ff);
+            opacity: 0.2;
+        }
+
+        /* Дорожная карта */
+        .section-title {
+            color: #8ab4d8;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 20px 0 12px;
         }
         .roadmap {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
         }
-    }
+        .roadmap-item {
+            background: rgba(16,24,42,0.4);
+            padding: 20px 18px;
+            border-radius: 22px;
+            border: 1px solid rgba(0,180,255,0.06);
+            transition: 0.3s;
+        }
+        .roadmap-item:hover {
+            border-color: rgba(0,180,255,0.15);
+            transform: translateY(-3px);
+        }
+        .roadmap-item .phase {
+            font-size: 10px;
+            color: #0066ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        .roadmap-item h4 {
+            color: #d0e4ff;
+            margin: 6px 0 4px;
+            font-size: 15px;
+        }
+        .roadmap-item p {
+            font-size: 13px;
+            color: #7a9ab8;
+            font-family: 'Rajdhani', sans-serif;
+            line-height: 1.4;
+        }
+
+        /* Токеномика */
+        .tokenomics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin: 12px 0 20px;
+        }
+        .tokenomics-item {
+            background: rgba(0,80,160,0.04);
+            padding: 14px;
+            border-radius: 18px;
+            text-align: center;
+            border: 1px solid rgba(0,180,255,0.04);
+        }
+        .tokenomics-item .val {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00ccff;
+        }
+        .tokenomics-item .lbl {
+            font-size: 11px;
+            color: #6a8aaa;
+        }
+
+        /* Футер */
+        .footer {
+            margin-top: 30px;
+            padding: 16px 0;
+            border-top: 1px solid rgba(0,180,255,0.05);
+            text-align: center;
+            font-size: 11px;
+            color: #4a6a8a;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .footer a {
+            color: #6a9ac7;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .footer a:hover {
+            color: #00ccff;
+        }
+
+        /* Адаптив */
+        @media (max-width: 600px) {
+            .token-card { padding: 24px 18px; }
+            .token-name { font-size: 30px; }
+            .token-price { font-size: 22px; }
+            .btn-buy { padding: 12px 28px; font-size: 14px; }
+            .token-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .token-stats { grid-template-columns: 1fr 1fr; }
+            .roadmap { grid-template-columns: 1fr; }
+            .tokenomics { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ===== ТОКЕН-КАРТА ===== -->
+
+        <!-- КАРТОЧКА ТОКЕНА -->
         <div class="token-card">
             <div class="token-header">
                 <div>
@@ -326,138 +322,99 @@
                 </div>
                 <div style="text-align:right;">
                     <div class="token-price">$0.042 <small>+12.4%</small></div>
-                    <div style="font-size:13px; color:#6a8aaa;">24h объем: $1.2M</div>
+                    <div style="font-size:12px; color:#6a8aaa;">24h объем: $1.2M</div>
                 </div>
             </div>
             <div class="token-description">
-                Платежный токен на Solana, объединяющий традиционные финансы и DeFi. 
+                Платежный токен на Solana, объединяющий традиционные финансы и DeFi.
                 Мгновенные переводы, низкие комиссии, полная прозрачность.
             </div>
             <a href="#" class="btn-buy" onclick="alert('🔗 Переход на Raydium для покупки'); return false;">
                 Купить UNION
             </a>
             <div class="token-stats">
-                <div class="stat-item">
-                    <div class="num">1.2B</div>
-                    <div class="label">Общая эмиссия</div>
-                </div>
-                <div class="stat-item">
-                    <div class="num">62%</div>
-                    <div class="label">В обращении</div>
-                </div>
-                <div class="stat-item">
-                    <div class="num">$24M</div>
-                    <div class="label">Маркеткап</div>
-                </div>
-                <div class="stat-item">
-                    <div class="num">12.4K</div>
-                    <div class="label">Холдеры</div>
-                </div>
+                <div class="stat-item"><div class="num">1.2B</div><div class="label">Эмиссия</div></div>
+                <div class="stat-item"><div class="num">62%</div><div class="label">В обращении</div></div>
+                <div class="stat-item"><div class="num">$24M</div><div class="label">Маркеткап</div></div>
+                <div class="stat-item"><div class="num">12.4K</div><div class="label">Холдеры</div></div>
             </div>
         </div>
 
-        <!-- ===== ГРАФИК ===== -->
+        <!-- ГРАФИК -->
         <div class="chart-section">
             <h3>📈 График цены (USDT)</h3>
             <div class="chart-placeholder">
                 <div class="dots">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
                 </div>
                 <div class="line"></div>
-                <span style="position:relative;z-index:2;background:#0a0a12;padding:4px 16px;border-radius:20px;font-size:12px;border:1px solid rgba(0,180,255,0.05);">
+                <span style="position:relative;z-index:2;background:#0a0a12;padding:4px 14px;border-radius:16px;font-size:11px;border:1px solid rgba(0,180,255,0.06);">
                     📊 Dextools / Raydium
                 </span>
             </div>
         </div>
 
-        <!-- ===== ДОРОЖНАЯ КАРТА ===== -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin: 10px 0 0;">
-            <h3 style="color:#8ab4d8; font-size:14px; text-transform:uppercase; letter-spacing:2px;">🗺️ Дорожная карта</h3>
-        </div>
+        <!-- ДОРОЖНАЯ КАРТА -->
+        <div class="section-title">🗺️ Дорожная карта</div>
         <div class="roadmap">
             <div class="roadmap-item">
                 <div class="phase">Q1 2026</div>
                 <h4>🚀 Запуск токена</h4>
-                <p>Публичный IDO на Raydium, старт сообщества</p>
+                <p>Публичный IDO на Raydium</p>
             </div>
             <div class="roadmap-item">
                 <div class="phase">Q2 2026</div>
                 <h4>🏦 Листинг CEX</h4>
-                <p>Выход на централизованные биржи</p>
+                <p>Выход на биржи</p>
             </div>
             <div class="roadmap-item">
                 <div class="phase">Q3 2026</div>
-                <h4>💳 Платежная инфраструктура</h4>
-                <p>Интеграция с реальными платежами</p>
+                <h4>💳 Платежи</h4>
+                <p>Интеграция с реальным сектором</p>
             </div>
             <div class="roadmap-item">
                 <div class="phase">Q4 2026</div>
                 <h4>🌐 Экосистема</h4>
-                <p>Децентрализованные приложения на базе UNION</p>
+                <p>DeFi-приложения на UNION</p>
             </div>
         </div>
 
-        <!-- ===== ТОКЕНОМИКА ===== -->
-        <div style="margin-top:20px;">
-            <h3 style="color:#8ab4d8; font-size:14px; text-transform:uppercase; letter-spacing:2px; margin-bottom:12px;">📊 Токеномика</h3>
-            <div class="tokenomics">
-                <div class="tokenomics-item">
-                    <div class="val">40%</div>
-                    <div class="lbl">Пре-сейл</div>
-                </div>
-                <div class="tokenomics-item">
-                    <div class="val">25%</div>
-                    <div class="lbl">Команда</div>
-                </div>
-                <div class="tokenomics-item">
-                    <div class="val">15%</div>
-                    <div class="lbl">Ликвидность</div>
-                </div>
-                <div class="tokenomics-item">
-                    <div class="val">10%</div>
-                    <div class="lbl">Маркетинг</div>
-                </div>
-                <div class="tokenomics-item">
-                    <div class="val">10%</div>
-                    <div class="lbl">Резерв</div>
-                </div>
-            </div>
+        <!-- ТОКЕНОМИКА -->
+        <div class="section-title">📊 Токеномика</div>
+        <div class="tokenomics">
+            <div class="tokenomics-item"><div class="val">40%</div><div class="lbl">Пре-сейл</div></div>
+            <div class="tokenomics-item"><div class="val">25%</div><div class="lbl">Команда</div></div>
+            <div class="tokenomics-item"><div class="val">15%</div><div class="lbl">Ликвидность</div></div>
+            <div class="tokenomics-item"><div class="val">10%</div><div class="lbl">Маркетинг</div></div>
+            <div class="tokenomics-item"><div class="val">10%</div><div class="lbl">Резерв</div></div>
         </div>
 
-        <!-- ===== ФУТЕР ===== -->
+        <!-- ФУТЕР -->
         <div class="footer">
             <span>© 2026 UnionPay Token • Solana</span>
             <a href="#">Dextools</a>
             <a href="#">Raydium</a>
             <a href="#">Telegram</a>
             <a href="#">Twitter</a>
-            <a href="#">GitHub</a>
         </div>
+
     </div>
 
     <script>
-        // Небольшая анимация для карточки при загрузке
+        // Плавное появление
         document.addEventListener('DOMContentLoaded', () => {
             const card = document.querySelector('.token-card');
             if (card) {
                 card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
+                card.style.transform = 'translateY(24px)';
                 setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease-out';
+                    card.style.transition = 'all 0.7s ease-out';
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
-                }, 100);
+                }, 80);
             }
         });
     </script>
